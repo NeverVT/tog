@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 98b3d3ccfb50f8540bcf5b83f718f103
+timeCreated: 1480042258
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Emily_s_Brush_Handwriting_2
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

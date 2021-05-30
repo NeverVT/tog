@@ -1,0 +1,12 @@
+{
+    "git.scanRepositories": [
+        "D:\\",
+        "D:\\Git\\cmd",
+        "D:\\Git\\cmd\\git.exe"
+    ],
+    "launch": {
+
+        "configurations": [],
+        "compounds": []
+    }
+}

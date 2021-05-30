@@ -1,0 +1,1102 @@
+fileFormatVersion: 2
+guid: c6bf5f6f60fa6d641bd5b63ab7f7cde1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4186917442939546855
+    second: Buttons_Sprite 1_0
+  - first:
+      213: 4512801679325179979
+    second: Buttons_Sprite 1_1
+  - first:
+      213: 1252317523761920365
+    second: Buttons_Sprite 1_2
+  - first:
+      213: 8161323312202688321
+    second: Buttons_Sprite 1_3
+  - first:
+      213: -7533469356815451306
+    second: Buttons_Sprite 1_4
+  - first:
+      213: 5190735668599631656
+    second: Buttons_Sprite 1_5
+  - first:
+      213: -8937089823535749579
+    second: Buttons_Sprite 1_6
+  - first:
+      213: 6113956656248842463
+    second: Buttons_Sprite 1_7
+  - first:
+      213: 470241993204965296
+    second: Buttons_Sprite 1_8
+  - first:
+      213: -8882592758298810538
+    second: Buttons_Sprite 1_9
+  - first:
+      213: -679595653528897223
+    second: Buttons_Sprite 1_10
+  - first:
+      213: 3862027454046502010
+    second: Buttons_Sprite 1_11
+  - first:
+      213: 8515131188103470526
+    second: Buttons_Sprite 1_12
+  - first:
+      213: -1415666486887461187
+    second: Buttons_Sprite 1_13
+  - first:
+      213: -5731634791146368213
+    second: Buttons_Sprite 1_14
+  - first:
+      213: 4889878493549136161
+    second: Buttons_Sprite 1_15
+  - first:
+      213: 1308246701482445119
+    second: Buttons_Sprite 1_16
+  - first:
+      213: 6461489997781050040
+    second: Buttons_Sprite 1_17
+  - first:
+      213: 3115818776741079213
+    second: Buttons_Sprite 1_18
+  - first:
+      213: -993665174108180893
+    second: Buttons_Sprite 1_19
+  - first:
+      213: 4000602753338232810
+    second: Buttons_Sprite 1_20
+  - first:
+      213: -9028340305116585977
+    second: Buttons_Sprite 1_21
+  - first:
+      213: 2818559108262040281
+    second: Buttons_Sprite 1_22
+  - first:
+      213: -4073133962823263800
+    second: Buttons_Sprite 1_23
+  - first:
+      213: -6524904465627245050
+    second: Buttons_Sprite 1_24
+  - first:
+      213: -5096632063921406183
+    second: Buttons_Sprite 1_25
+  - first:
+      213: 373404097914631911
+    second: Buttons_Sprite 1_26
+  - first:
+      213: 5315601725845360756
+    second: Buttons_Sprite 1_27
+  - first:
+      213: 8211268569331723646
+    second: Buttons_Sprite 1_28
+  - first:
+      213: -1960884483590555186
+    second: Buttons_Sprite 1_29
+  - first:
+      213: 7519271779480781662
+    second: Buttons_Sprite 1_30
+  - first:
+      213: -8836906587010351637
+    second: Buttons_Sprite 1_31
+  - first:
+      213: -4874171022462909342
+    second: Buttons_Sprite 1_32
+  - first:
+      213: 3848695645786087026
+    second: Buttons_Sprite 1_33
+  - first:
+      213: -6166078993866413154
+    second: Buttons_Sprite 1_34
+  - first:
+      213: 1116009015960080817
+    second: Buttons_Sprite 1_35
+  - first:
+      213: 7460042023126858024
+    second: Buttons_Sprite 1_36
+  - first:
+      213: -3594955949774175233
+    second: Buttons_Sprite 1_37
+  - first:
+      213: 3958532814912590726
+    second: Buttons_Sprite 1_38
+  - first:
+      213: -1403960606750919769
+    second: Buttons_Sprite 1_39
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_0
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 1668
+        width: 796
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ec6c4a2b3bea1a30800000000000000
+      internalID: 4186917442939546855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_1
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 1668
+        width: 796
+        height: 365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b40b6fda731b0ae30800000000000000
+      internalID: 4512801679325179979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_2
+      rect:
+        serializedVersion: 2
+        x: 1747
+        y: 1668
+        width: 793
+        height: 358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6973dd1720216110800000000000000
+      internalID: 1252317523761920365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_3
+      rect:
+        serializedVersion: 2
+        x: 2570
+        y: 1668
+        width: 783
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 147a4f8df48d24170800000000000000
+      internalID: 8161323312202688321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_4
+      rect:
+        serializedVersion: 2
+        x: 3392
+        y: 1668
+        width: 776
+        height: 342
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65b79b4b88db37790800000000000000
+      internalID: -7533469356815451306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_5
+      rect:
+        serializedVersion: 2
+        x: 4201
+        y: 1668
+        width: 777
+        height: 339
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82fa4d1c692390840800000000000000
+      internalID: 5190735668599631656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_6
+      rect:
+        serializedVersion: 2
+        x: 5007
+        y: 1668
+        width: 777
+        height: 339
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 536a46ef72419f380800000000000000
+      internalID: -8937089823535749579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_7
+      rect:
+        serializedVersion: 2
+        x: 5823
+        y: 1668
+        width: 777
+        height: 339
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd8e8db8f2329d450800000000000000
+      internalID: 6113956656248842463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_8
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 1286
+        width: 819
+        height: 365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bf1473f992a68600800000000000000
+      internalID: 470241993204965296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_9
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 1293
+        width: 816
+        height: 358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6576425c2f0bab480800000000000000
+      internalID: -8882592758298810538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_10
+      rect:
+        serializedVersion: 2
+        x: 1750
+        y: 1303
+        width: 810
+        height: 348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 939b2809a579196f0800000000000000
+      internalID: -679595653528897223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_11
+      rect:
+        serializedVersion: 2
+        x: 2576
+        y: 1306
+        width: 800
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7c7f3fe18da89530800000000000000
+      internalID: 3862027454046502010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_12
+      rect:
+        serializedVersion: 2
+        x: 3402
+        y: 1306
+        width: 790
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebdd1c253b2db2670800000000000000
+      internalID: 8515131188103470526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_13
+      rect:
+        serializedVersion: 2
+        x: 4218
+        y: 1306
+        width: 786
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbec5a8a4da8a5ce0800000000000000
+      internalID: -1415666486887461187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_14
+      rect:
+        serializedVersion: 2
+        x: 5021
+        y: 1306
+        width: 792
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b23537366842570b0800000000000000
+      internalID: -5731634791146368213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_15
+      rect:
+        serializedVersion: 2
+        x: 5830
+        y: 1306
+        width: 806
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12981da05965cd340800000000000000
+      internalID: 4889878493549136161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_16
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 888
+        width: 819
+        height: 365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3900709173d72210800000000000000
+      internalID: 1308246701482445119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_17
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 895
+        width: 816
+        height: 358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b2aa752be2dba950800000000000000
+      internalID: 6461489997781050040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_18
+      rect:
+        serializedVersion: 2
+        x: 1757
+        y: 905
+        width: 806
+        height: 348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da8e42c4bac9d3b20800000000000000
+      internalID: 3115818776741079213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_19
+      rect:
+        serializedVersion: 2
+        x: 2586
+        y: 908
+        width: 799
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36eea9fe9cac532f0800000000000000
+      internalID: -993665174108180893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_20
+      rect:
+        serializedVersion: 2
+        x: 3402
+        y: 908
+        width: 790
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aefcc20120ff48730800000000000000
+      internalID: 4000602753338232810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_21
+      rect:
+        serializedVersion: 2
+        x: 4221
+        y: 908
+        width: 786
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7002f22a354e4b280800000000000000
+      internalID: -9028340305116585977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_22
+      rect:
+        serializedVersion: 2
+        x: 5034
+        y: 908
+        width: 793
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d2966a53988d1720800000000000000
+      internalID: 2818559108262040281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_23
+      rect:
+        serializedVersion: 2
+        x: 5823
+        y: 908
+        width: 806
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c9175fbd325977c0800000000000000
+      internalID: -4073133962823263800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_24
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 507
+        width: 773
+        height: 378
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6069dec75f1e275a0800000000000000
+      internalID: -6524904465627245050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_25
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 507
+        width: 770
+        height: 375
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91f391714202549b0800000000000000
+      internalID: -5096632063921406183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_26
+      rect:
+        serializedVersion: 2
+        x: 1744
+        y: 507
+        width: 766
+        height: 365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e670e57c099e2500800000000000000
+      internalID: 373404097914631911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_27
+      rect:
+        serializedVersion: 2
+        x: 2579
+        y: 507
+        width: 760
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 470577c3b9fc4c940800000000000000
+      internalID: 5315601725845360756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_28
+      rect:
+        serializedVersion: 2
+        x: 3402
+        y: 507
+        width: 753
+        height: 338
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7de856324944f170800000000000000
+      internalID: 8211268569331723646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_29
+      rect:
+        serializedVersion: 2
+        x: 4231
+        y: 507
+        width: 747
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec9720e83f989c4e0800000000000000
+      internalID: -1960884483590555186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_30
+      rect:
+        serializedVersion: 2
+        x: 5034
+        y: 507
+        width: 747
+        height: 329
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e53429938d1d95860800000000000000
+      internalID: 7519271779480781662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_31
+      rect:
+        serializedVersion: 2
+        x: 5843
+        y: 507
+        width: 750
+        height: 335
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bed30ff67400d5580800000000000000
+      internalID: -8836906587010351637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_32
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 105
+        width: 816
+        height: 369
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 264889f87477b5cb0800000000000000
+      internalID: -4874171022462909342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_33
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 105
+        width: 816
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27e1caf6c40596530800000000000000
+      internalID: 3848695645786087026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_34
+      rect:
+        serializedVersion: 2
+        x: 1757
+        y: 105
+        width: 809
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9b289903dfad6aa0800000000000000
+      internalID: -6166078993866413154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_35
+      rect:
+        serializedVersion: 2
+        x: 2579
+        y: 105
+        width: 797
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b11f62894cdc7f00800000000000000
+      internalID: 1116009015960080817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_36
+      rect:
+        serializedVersion: 2
+        x: 3405
+        y: 105
+        width: 790
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82976fde1b4678760800000000000000
+      internalID: 7460042023126858024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_37
+      rect:
+        serializedVersion: 2
+        x: 4221
+        y: 105
+        width: 790
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff3888e4c962c1ec0800000000000000
+      internalID: -3594955949774175233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_38
+      rect:
+        serializedVersion: 2
+        x: 5037
+        y: 105
+        width: 790
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68397983f988fe630800000000000000
+      internalID: 3958532814912590726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons_Sprite 1_39
+      rect:
+        serializedVersion: 2
+        x: 5856
+        y: 105
+        width: 793
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a338f34441248ce0800000000000000
+      internalID: -1403960606750919769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

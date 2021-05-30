@@ -1,0 +1,1030 @@
+fileFormatVersion: 2
+guid: 7b95c27c66bd87348b4f347c02848215
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: ManaToolTip
+  - first:
+      213: 21300002
+    second: GoblinToolTip
+  - first:
+      213: 21300004
+    second: SwordToolTip
+  - first:
+      213: 21300006
+    second: CoinToolTip
+  - first:
+      213: 21300008
+    second: HealthToolTip
+  - first:
+      213: 21300010
+    second: RubbleToolTip
+  - first:
+      213: 21300012
+    second: BombToolTip
+  - first:
+      213: 21300014
+    second: HelixToolTip
+  - first:
+      213: 21300016
+    second: SkeletonMageToolTip
+  - first:
+      213: 21300018
+    second: RatToolTip
+  - first:
+      213: 21300020
+    second: SkeletonKnightToolTip
+  - first:
+      213: 21300022
+    second: GreenGenieToolTip
+  - first:
+      213: 21300024
+    second: BlueGenieToolTip
+  - first:
+      213: 21300026
+    second: SlimeToolTip
+  - first:
+      213: 21300028
+    second: ArtifactToolTip
+  - first:
+      213: 21300030
+    second: EquipmentToolTip
+  - first:
+      213: 21300032
+    second: SkillToolTip
+  - first:
+      213: 21300034
+    second: ShopKeeperToolTip
+  - first:
+      213: 21300036
+    second: OverpowerToolTip
+  - first:
+      213: 21300038
+    second: ExecuteToolTip
+  - first:
+      213: 21300040
+    second: BloodlustToolTip
+  - first:
+      213: 21300042
+    second: DisciplineToolTip
+  - first:
+      213: 21300044
+    second: EnrageToolTip
+  - first:
+      213: 21300046
+    second: CrystalmancyToolTip
+  - first:
+      213: 21300048
+    second: BlinkToolTip
+  - first:
+      213: 21300050
+    second: FreezeToolTip
+  - first:
+      213: 21300052
+    second: Tooltips Spritesheet_28
+  - first:
+      213: 21300054
+    second: MagicMissleToolTip
+  - first:
+      213: 21300056
+    second: AppraiseToolTip
+  - first:
+      213: 21300058
+    second: CriticalHitToolTip
+  - first:
+      213: 21300060
+    second: VanishToolTip
+  - first:
+      213: 21300062
+    second: BloodshotToolTip
+  - first:
+      213: 21300064
+    second: MurderToolTip
+  - first:
+      213: 21300066
+    second: GatherToolTip
+  - first:
+      213: 21300068
+    second: DummyToolTip
+  - first:
+      213: 21300070
+    second: DoubleShotToolTip
+  - first:
+      213: 21300072
+    second: TrapToolTip
+  - first:
+      213: 21300074
+    second: HideToolTip
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ManaToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 6552
+        width: 1269
+        height: 499
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1d7fa8a843d1b546ab43d57d0893058
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GoblinToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 6552
+        width: 1265
+        height: 499
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00262fb1057bd3248ba8c38277772f65
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwordToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 6552
+        width: 1262
+        height: 499
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f2a7c987a1e7ce46ba9279df44d91f8
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CoinToolTip
+      rect:
+        serializedVersion: 2
+        x: 4312
+        y: 6552
+        width: 1262
+        height: 499
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08139f8c8ebd6c843bd64627c43f51ad
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthToolTip
+      rect:
+        serializedVersion: 2
+        x: 5729
+        y: 6552
+        width: 1262
+        height: 499
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d9cdbbac9d9add498ff7998fcd1fcbe
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RubbleToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 5778
+        width: 1269
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c413b17dc1302894c9fd59f83633c7ef
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 5778
+        width: 1265
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b93a0cbbc133a7f4fa82779fbc04ed5e
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HelixToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 5778
+        width: 1262
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bb1df966834b2f43ae016501b1df71b
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonMageToolTip
+      rect:
+        serializedVersion: 2
+        x: 4312
+        y: 5778
+        width: 1262
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5122c830e6fd5044bb28209b56168e09
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RatToolTip
+      rect:
+        serializedVersion: 2
+        x: 5724
+        y: 5778
+        width: 1267
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fd234eb9350cad48867052c91023999
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonKnightToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 4992
+        width: 1269
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 983c4b13935069945bce5596d07c4fa8
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenGenieToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 4992
+        width: 1265
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e2df1b236cb2064fb5ff46d8b56dafb
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueGenieToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 4992
+        width: 1262
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adae3b6c151369844ae502aeeddd80ce
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlimeToolTip
+      rect:
+        serializedVersion: 2
+        x: 4312
+        y: 4992
+        width: 1262
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52e0439c57710574191fe3dccfc4ccea
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArtifactToolTip
+      rect:
+        serializedVersion: 2
+        x: 5724
+        y: 4992
+        width: 1267
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af61805664004b141a140ff413deccab
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EquipmentToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 4266
+        width: 1269
+        height: 492
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e76785a539669742b3e536dc4dadbc5
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkillToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 4266
+        width: 1265
+        height: 492
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84097036a04020f4b8d0dee32116bb67
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShopKeeperToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 4266
+        width: 1262
+        height: 492
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02ec76f5bfc4d7644a897663e1cd01af
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OverpowerToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 3486
+        width: 1269
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89ca530c17ac7264e8d24b5a35dab6a2
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExecuteToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 3486
+        width: 1265
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5938da3c5c5f07d4fb8567b846193ff8
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BloodlustToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 3489
+        width: 1262
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34efa64e23c5d694bba4ca41c2371027
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DisciplineToolTip
+      rect:
+        serializedVersion: 2
+        x: 4315
+        y: 3486
+        width: 1262
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 904a68386ede15c418b9d8c7e4ff7661
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnrageToolTip
+      rect:
+        serializedVersion: 2
+        x: 5732
+        y: 3489
+        width: 1262
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3203b676e78145b4e868913d2b0e0983
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalmancyToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 2700
+        width: 1269
+        height: 507
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a1cd666740e7e44fbbfdbd21e269bef
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlinkToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 2700
+        width: 1265
+        height: 508
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7393751422d5f841bd410c11c2bc59b
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FreezeToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 2700
+        width: 1262
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff3fc57b4509a6e44a33c4bc320b1b80
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tooltips Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 4312
+        y: 2700
+        width: 1262
+        height: 507
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff004866ae08f374883ea2fc749cbdf0
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagicMissleToolTip
+      rect:
+        serializedVersion: 2
+        x: 5724
+        y: 2700
+        width: 1267
+        height: 507
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bccd7c99e8ab3641a3e7c48de593d4c
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppraiseToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 1974
+        width: 1269
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bba2396224c7167498d3622682621663
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CriticalHitToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 1974
+        width: 1269
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78ebee936a9515144ab9de9c3fdf32a1
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VanishToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 1977
+        width: 1262
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9abeacf2e23ed444b9c619af737f2a07
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BloodshotToolTip
+      rect:
+        serializedVersion: 2
+        x: 4312
+        y: 1974
+        width: 1262
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a112b37dd57aa364c9315639ff52519f
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MurderToolTip
+      rect:
+        serializedVersion: 2
+        x: 5724
+        y: 1974
+        width: 1267
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fa7f315628ecaf4fa615bb6ad85f647
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GatherToolTip
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 1194
+        width: 1269
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31f8b3a3162345145b92a190ade3c0b5
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DummyToolTip
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 1194
+        width: 1265
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12115a410c0d8e940bfbf0b6c3a8318e
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DoubleShotToolTip
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 1194
+        width: 1267
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f21b8019b0d3b745857af4aabf17c7d
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrapToolTip
+      rect:
+        serializedVersion: 2
+        x: 4312
+        y: 1197
+        width: 1262
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b3bf8b5040a79844b8e1fbfdbbe5993
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HideToolTip
+      rect:
+        serializedVersion: 2
+        x: 5729
+        y: 1194
+        width: 1262
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c0115ef8769d2f44bde83eb5fa7b9ed
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
