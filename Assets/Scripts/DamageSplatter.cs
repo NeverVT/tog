@@ -5,6 +5,4 @@ using UnityEngine;
 public class DamageSplatter : MonoBehaviour
 {
     public Sprite[] splatters;
-    //test
-
 }
