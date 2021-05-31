@@ -85,20 +85,20 @@ public class CharacterControl : MonoBehaviour
             if(GetComponent<Artifacts>().reanimateStone)
             {
                 GetComponent<Artifacts>().reanimateStone = false;
-                setCurrentHealth(getMaxHealth / 2);
+                setCurrentHealth(getMaxHealth() / 2);
             }
             else
             {
                 Debug.Log("----- GAME OVER -----");
                 ScoreControl.saveHighScore();
                 GameControl.gold = 0;
-                characterControl.setCurrentHealth(characterControl.getMaxHealth());
-                characterControl.cOneSkillOne.GetComponent<Spell>().coolDown = 0;
-                characterControl.cOneSkillTwo.GetComponent<Spell>().coolDown = 0;
-                characterControl.cTwoSkillOne.GetComponent<Spell>().coolDown = 0;
-                characterControl.cTwoSkillTwo.GetComponent<Spell>().coolDown = 0;
-                characterControl.cThreeSkillOne.GetComponent<Spell>().coolDown = 0;
-                characterControl.cThreeSkillTwo.GetComponent<Spell>().coolDown = 0;
+                setCurrentHealth(getMaxHealth());
+                cOneSkillOne.GetComponent<Spell>().coolDown = 0;
+                cOneSkillTwo.GetComponent<Spell>().coolDown = 0;
+                cTwoSkillOne.GetComponent<Spell>().coolDown = 0;
+                cTwoSkillTwo.GetComponent<Spell>().coolDown = 0;
+                cThreeSkillOne.GetComponent<Spell>().coolDown = 0;
+                cThreeSkillTwo.GetComponent<Spell>().coolDown = 0;
                 SceneManager.LoadScene("Scenes/GameOver");
             }
                         

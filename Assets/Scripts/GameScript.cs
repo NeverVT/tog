@@ -1864,7 +1864,7 @@ public class GameScript : MonoBehaviour
             }
         }
         if (GetComponent<Artifacts>().vampireFang) //Vampire Fang Funtion
-            healthGain += Math.Floor(damageDone / vampireFangValue);
+            healthGain += (int)Math.Floor((double)damageDone / vampireFangValue);
         if(characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Vamp")) //Vamp Function
         {
             if (characterControl.getCurrentHealth() + 1 >= characterControl.getMaxHealth())
@@ -2093,14 +2093,14 @@ public class GameScript : MonoBehaviour
                     if(r == i && c == j)
                     {
                         board[i,j].GetComponent<Tile>().empowered = true;
-                        board[i,j].transform.GetChild(8).SetActive(false);
-                        board[i,j].transform.GetChild(9).SetActive(true);
+                        board[i,j].transform.GetChild(8).gameObject.SetActive(false);
+                        board[i,j].transform.GetChild(9).gameObject.SetActive(true);
                     }
                     else
                     {
                         board[i,j].GetComponent<Tile>().empowered = false;
-                        board[i,j].transform.GetChild(8).SetActive(true);
-                        board[i,j].transform.GetChild(9).SetActive(false);
+                        board[i,j].transform.GetChild(8).gameObject.SetActive(true);
+                        board[i,j].transform.GetChild(9).gameObject.SetActive(false);
                     }           
                 }               
             }
