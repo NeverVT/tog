@@ -201,9 +201,23 @@ public class GameScript : MonoBehaviour
             for (int i =0 ; i < myArray.Length; i++)
             {               
                 if (myArray[i].GetComponent<Tile>().mType == "Health")
-                    pHealth++;
+                {                   
+                    if (myArray[i].GetComponent<Tile>().empowered)
+                    {
+                        pHealth += 2;
+                    }
+                    else
+                        pHealth++;
+                }
                 if (myArray[i].GetComponent<Tile>().mType == "Coin")
-                    pGold++;             
+                {
+                    if (myArray[i].GetComponent<Tile>().empowered)
+                    {
+                        pGold += 2;
+                    }
+                    else
+                        pGold++;
+                }                                
                 if(myArray[i].GetComponent<Tile>().mType == "Goblin")
                 {
                     myGoblins.Push(myArray[i]);                                        
@@ -230,6 +244,17 @@ public class GameScript : MonoBehaviour
                     int col = tempGoblin.GetComponent<Tile>().mCol;
                     board[row, col].GetComponent<Enemy>().predictedDamage = 0;
                     damage = characterControl.getAttack() + swords;
+                    if (GetComponent<Artifacts>().amuletOfPain) 
+                    {
+                        damage += Math.Floor(characterControl.getMaxHealth() - characterControl.getCurrentHealth() / 10);
+                    }
+                    if(GetComponent<Artifacts>().faetouchedAmulet)
+                    {
+                        if(i % 3 == 0)
+                            damage += 2;
+                    }
+                    if(GetComponent<Artifacts>().whetstone)
+                        damage += whetstoneValue;
                     if (GameControl.overpowered)
                         damage *= 2;
                     if (GameControl.sacrifice)
@@ -340,7 +365,7 @@ public class GameScript : MonoBehaviour
             if (pHealth > 0)
             {
                 if (GetComponent<Artifacts>().prism)
-                    pHealth += prismValue;
+                    pHealth *= prismValue;
                 if (GameControl.doubleShot > 0)
                     pHealth = (int)(pHealth * .75);
                 predictText.pHealth = pHealth;
@@ -664,6 +689,11 @@ public class GameScript : MonoBehaviour
                     else if (tier == 4)
                         items[i].GetComponent<Item>().mCost = 30 + (int)(turnCounter) + temp; //Turn8 | min:39 max:53 avg:46
 
+                    if(GetComponent<Artifacts>().coupon)
+                    {
+                        items[i].GetComponent<Item>().mCost = (int)(items[i].GetComponent<Item>().mCost * .2); //Coupon Function
+                    }
+
                     if (type == "Armor" || type == "Light Armor" || type == "Helmets" || type == "Shields")
                         items[i].GetComponent<Item>().mArmor = 2 + ((int)(turnCounter) / 15) + (tier);
                     else
@@ -950,8 +980,11 @@ public class GameScript : MonoBehaviour
                 {                   
                     Tile.numCollectedH++;
                     obj.SetActive(true);
-                    obj.GetComponent<Tile>().collected = true;                  
-                    healthGain++;                     
+                    obj.GetComponent<Tile>().collected = true;      
+                    if(obj.GetComponent<Tile>().empowered)
+                        healthGain += 2;
+                    else            
+                        healthGain++;                     
                 }
                 else if (type == "Coin")
                 {
@@ -961,9 +994,23 @@ public class GameScript : MonoBehaviour
                     if (GetComponent<Artifacts>().dragonSickness) //Dragon Sickness Function 
                     {
                         if (count > 3 && count < 7)
-                            goldCollected++;
-                        else
-                            goldCollected += 2;
+                        {
+                            if(obj.GetComponent<Tile>().empowered)
+                            {
+                                goldCollected += 2;
+                            }
+                            else
+                                goldCollected++;
+                        }                           
+                        else if (count > 7)
+                        {
+                            if(obj.GetComponent<Tile>().empowered)
+                            {
+                                goldCollected += 3;
+                            }
+                            else
+                                goldCollected += 2;
+                        }
                     }
                     else
                         goldCollected++;
@@ -993,7 +1040,9 @@ public class GameScript : MonoBehaviour
                 else if (obj.GetComponent<Tile>().mType == "Rubble")
                 {
                     rubbleCollected++;
-                    temp = UnityEngine.Random.Range(1, 100); 
+                    temp = UnityEngine.Random.Range(1, 101); 
+                    if(GetComponent<Artifacts>().leatherGloves) //Leather Gloves Function
+                        temp = UnityEngine.Random.Range(1, 21); 
                     if (temp <= 10) 
                     {
                         Tile.numCollectedH++;
@@ -1027,18 +1076,7 @@ public class GameScript : MonoBehaviour
                     {
                         //ToDo
                     }
-                    if (Artifacts.leatherGloves) //Leather Gloves Function
-                    {                
-                        /*
-                        int col = obj.GetComponent<Tile>().mCol;
-                        int row = obj.GetComponent<Tile>().mRow;
-                        Destroy(obj);
-                        Destroy(board[row, col]);
-
-                        float X = 0.5F + col + (col * 0.1F);
-                        float Y = -2.95F - row - (row * 0.1f) + 0.1f;
-                        Vector3 position = new Vector3(X, Y, 0.0F);                        
-                    }               */
+                    */
                 }
                 else if (obj.GetComponent<Tile>().mType == "Mana")
                 {                   
@@ -1089,7 +1127,6 @@ public class GameScript : MonoBehaviour
                 if (GetComponent<Artifacts>().prism) //Prism Function
                     healthGain *= prismValue;                                    
             }
-            //if (clover > 0) //Four Leaf Clover function
             if(mana > 0)
             {
                 for (int i = 0; i < spellsOnCD.Count; i++)
@@ -1103,7 +1140,7 @@ public class GameScript : MonoBehaviour
                     }                
                 }                    
             }
-            if(GetComponent<Artifacts>().fourLeafClover)           
+            if(GetComponent<Artifacts>().fourLeafClover) //Four Leaf Clover Function         
                 goldCollected += (goldCollected / 3);
             if (goldCollected >= 1)
                 UpdateText.updateText = "Gold Collected = " + goldCollected + " + " + goldCollected;
@@ -1190,7 +1227,11 @@ public class GameScript : MonoBehaviour
                 GameControl.doubleShot--;
             
             unfreeze();           
-            checkGhosts();                                          
+            checkGhosts();    
+            if(GetComponent<Artifacts>().chaosStone)
+            {
+                chaosStone();
+            }
             //exp = 0;
             swords = 0;
             rubbleCollected = 0;                          
@@ -1606,7 +1647,6 @@ public class GameScript : MonoBehaviour
 
     int dealDamage(double swords)
     {
-        int amuletCount = 0;
         int healthGain = 0;
         int damageDone = 0;               
         int count = enemies.Count;
@@ -1616,11 +1656,14 @@ public class GameScript : MonoBehaviour
             GameObject enemy = enemies.Pop();
             if (board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].GetComponent<Enemy>().pDamage == 1) //Weapon Bonuses
                 damage += 1;
-            if (GetComponent<Artifacts>().faetouchedAmulet) //Faetouched Amulet Function
+            if (GetComponent<Artifacts>().amuletOfPain) //Amulet of Pain Function
             {
-                amuletCount++;
-                if (amuletCount % 3 == 0)
-                    damage *= 2;
+                damage += Math.Floor(characterControl.getMaxHealth() - characterControl.getCurrentHealth() / 10);
+            }
+            if(GetComponent<Artifacts>().faetouchedAmulet) //Faetouched Amulet Function
+            {
+                if(i % 3 == 0)
+                    damage += 2;
             }
             if (enemy.GetComponent<Tile>().boss == "Skull")
                 damage /= 2;
@@ -1638,16 +1681,8 @@ public class GameScript : MonoBehaviour
                     damage *= 2;
                 }
             }
-            if (GetComponent<Artifacts>().amuletOfPain) //AmuletOfPain Function
-            {
-                if (characterControl.getCurrentHealth() != characterControl.getMaxHealth())
-                {
-                    double bonus = (characterControl.getMaxHealth() - characterControl.getCurrentHealth()) / characterControl.getMaxHealth();
-                    double newDamage = damage * bonus;
-                    damage += newDamage;
-                }
-            }
-            if (GetComponent<Artifacts>().whetstone) damage += whetstoneValue; //Whetstone Function
+            if (GetComponent<Artifacts>().whetstone) 
+                damage += whetstoneValue; //Whetstone Function
 
             if (GameControl.overpowered)//Overpower Function
             {
@@ -1829,7 +1864,7 @@ public class GameScript : MonoBehaviour
             }
         }
         if (GetComponent<Artifacts>().vampireFang) //Vampire Fang Funtion
-            healthGain += (int)(damageDone / vampireFangValue);
+            healthGain += Math.Floor(damageDone / vampireFangValue);
         if(characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Vamp")) //Vamp Function
         {
             if (characterControl.getCurrentHealth() + 1 >= characterControl.getMaxHealth())
@@ -2045,6 +2080,32 @@ public class GameScript : MonoBehaviour
         }
     }
 
+    public void chaosStone()
+    {
+        int r = UnityEngine.Random.Range(0, 6);
+        int c = UnityEngine.Random.Range(0, 6);
+        for(int i = 0; i < 6; i++)
+        {
+            for(int j = 0; j < 6; j++)
+            {
+                if(board[i,j].GetComponent<Tile>().mType != "goblin")
+                {
+                    if(r == i && c == j)
+                    {
+                        board[i,j].GetComponent<Tile>().empowered = true;
+                        board[i,j].transform.GetChild(8).SetActive(false);
+                        board[i,j].transform.GetChild(9).SetActive(true);
+                    }
+                    else
+                    {
+                        board[i,j].GetComponent<Tile>().empowered = false;
+                        board[i,j].transform.GetChild(8).SetActive(true);
+                        board[i,j].transform.GetChild(9).SetActive(false);
+                    }           
+                }               
+            }
+        }
+    }
     public void HexBall(GameObject temp)
     {
         int col = temp.GetComponent<Tile>().mCol;
@@ -2623,7 +2684,10 @@ public class GameScript : MonoBehaviour
                                     }
                                 }
                                 if (GetComponent<Artifacts>().thorns)
+                                {
+                                    Debug.Log("Thorns");
                                     temp.GetComponent<Enemy>().health -= thornsValue; //Thorns Function
+                                }                                   
                                 if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Spiked")) //Spiked Function
                                     temp.GetComponent<Enemy>().health -= 1;
                                 if (characterControl.GetComponent<CharacterControl>().searchTraitAll("Shrapnel") != -1)
@@ -2967,8 +3031,8 @@ public class GameScript : MonoBehaviour
                         board[i, j] = (GameObject)Instantiate(shopkeeper, position, Quaternion.identity);
                         board[i, j].GetComponent<Tile>().mType = "Shopkeeper";
                     }
-                    //else if (turnCounter % 10 == 0 && !GameControl.miniBossUp && !GameControl.bossUp) //Bait Function
-                    else if (turnCounter == 2 && !GameControl.miniBossUp)
+                    else if (turnCounter % 10 == 0 && !GameControl.miniBossUp && !GameControl.bossUp) //Bait Function
+                    //else if (turnCounter == 2 && !GameControl.miniBossUp)
                     {
                         //GameControl.bossUp = true;
                         temp = UnityEngine.Random.Range(1, 7);
@@ -2987,7 +3051,7 @@ public class GameScript : MonoBehaviour
                         {
                             temp = 9;
                         }                                          
-                        temp = 1;
+                        //temp = 1;
                         if(temp == 1)
                         {
                             board[i, j] = (GameObject)Instantiate(slime, position, Quaternion.identity);

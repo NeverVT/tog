@@ -82,9 +82,26 @@ public class CharacterControl : MonoBehaviour
     {
         if(totalCurrentHealth <= 0)
         {
-            Debug.Log("----- GAME OVER -----");
-            ScoreControl.saveHighScore();
-            SceneManager.LoadScene("Scenes/GameOver");            
+            if(GetComponent<Artifacts>().reanimateStone)
+            {
+                GetComponent<Artifacts>().reanimateStone = false;
+                setCurrentHealth(getMaxHealth / 2);
+            }
+            else
+            {
+                Debug.Log("----- GAME OVER -----");
+                ScoreControl.saveHighScore();
+                GameControl.gold = 0;
+                characterControl.setCurrentHealth(characterControl.getMaxHealth());
+                characterControl.cOneSkillOne.GetComponent<Spell>().coolDown = 0;
+                characterControl.cOneSkillTwo.GetComponent<Spell>().coolDown = 0;
+                characterControl.cTwoSkillOne.GetComponent<Spell>().coolDown = 0;
+                characterControl.cTwoSkillTwo.GetComponent<Spell>().coolDown = 0;
+                characterControl.cThreeSkillOne.GetComponent<Spell>().coolDown = 0;
+                characterControl.cThreeSkillTwo.GetComponent<Spell>().coolDown = 0;
+                SceneManager.LoadScene("Scenes/GameOver");
+            }
+                        
         }
     }
     public bool searchPirates() //Searches the party for a trait, active or inactive, and return which character has it
