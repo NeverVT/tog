@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class CharacterControl : MonoBehaviour
 {
+    public GameScript game;
     public Character[] characters;
     public GameObject cOneSkillOne;
     public GameObject cOneSkillTwo;
@@ -82,9 +83,9 @@ public class CharacterControl : MonoBehaviour
     {
         if(totalCurrentHealth <= 0)
         {
-            if(GetComponent<Artifacts>().reanimateStone)
+            if(game.GetComponent<Artifacts>().reanimateStone)
             {
-                GetComponent<Artifacts>().reanimateStone = false;
+                game.GetComponent<Artifacts>().reanimateStone = false;
                 setCurrentHealth(getMaxHealth() / 2);
             }
             else

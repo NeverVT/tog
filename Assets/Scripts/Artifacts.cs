@@ -92,9 +92,75 @@ public class Artifacts : MonoBehaviour
                 artifact = "yellowBird";
             else reroll = true;    
         }
-        Debug.Log(artifact);
         return artifact;
     }
+
+    public string rollArtifactRubble()
+    {
+        string artifact = "";
+        bool reroll = true;
+        while (reroll)
+        {
+            reroll = false;
+            int roll = UnityEngine.Random.Range(1, 8);
+            if (roll == 1 && !bait)
+                artifact = "bait";
+            else if (roll == 2 && !coupon)
+                artifact = "coupon";
+            else if (roll == 3 && !fourLeafClover)
+                artifact = "fourLeafClover";
+            else if (roll == 4 && !potionOfGiantsStrength)
+                artifact = "potionOfGiantsStrength";
+            else if (roll == 5 && !thorns)
+                artifact = "thorns";
+            else if (roll == 6 && !vampireFang)
+                artifact = "vampireFang";
+            else if (roll == 7 && !whetstone)
+                artifact = "whetstone";
+            else reroll = true;    
+        }
+        return artifact;
+    }
+
+    public string rollArtifactBoss()
+    {
+        string artifact = "";
+        bool reroll = true;
+        while (reroll)
+        {
+            reroll = false;
+            int roll = UnityEngine.Random.Range(1, 14);
+            if (roll == 1 && !amuletOfPain)
+                artifact = "amuletOfPain";
+            else if (roll == 2 && !bombBag)
+                artifact = "bombBag";
+            else if (roll == 3 && !chaosStone)
+                artifact = "chaosStone";
+            else if (roll == 4 && !dragonSickness)
+                artifact = "dragonSickness";
+            else if (roll == 5 && !faetouchedAmulet)
+                artifact = "faetouchedAmulet";
+            else if (roll == 6 && !hitList)
+                artifact = "hitList";
+            else if (roll == 7 && !isaacsBinding)
+                artifact = "isaacsBinding";
+            else if (roll == 8 && !leatherGloves)
+                artifact = "leatherGloves";
+            else if (roll == 9 && !loadedDie)
+                artifact = "loadedDie";
+            else if (roll == 10 && !potionOfGiantsStrength)
+                artifact = "potionOfGiantsStrength";
+            else if (roll == 11 && !prism)
+                artifact = "prism";
+            else if (roll == 12 && !reanimateStone)
+                artifact = "reanimateStone";
+            else if (roll == 13 && !stoneShell)
+                artifact = "stoneShell";
+            else reroll = true;    
+        }
+        return artifact;
+    }
+
     public void collectArtifact(GameObject artifact)
     {
         string artifactName = artifact.name;

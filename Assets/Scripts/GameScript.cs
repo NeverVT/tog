@@ -747,7 +747,7 @@ public class GameScript : MonoBehaviour
                 float X = temp.transform.localPosition.x;
                 float Y = temp.transform.localPosition.y;
                 Destroy(temp);   
-                board[row, col].transform.GetChild(8).GetComponent<Animator>().SetBool("Collected", true);
+                board[row, col].transform.GetChild(2).GetComponent<Animator>().SetBool("Collected", true);
                 Destroy(board[row, col].gameObject, 2.10F);
                 Vector3 position = new Vector3(X, Y, 0.0F);
                 GetComponent<Artifacts>().createArtifact(col, row, position, GetComponent<Artifacts>().rollArtifact());
@@ -1040,10 +1040,12 @@ public class GameScript : MonoBehaviour
                 else if (obj.GetComponent<Tile>().mType == "Rubble")
                 {
                     rubbleCollected++;
-                    temp = UnityEngine.Random.Range(1, 101); 
+                    temp = UnityEngine.Random.Range(1, 101);
+                    if(GetComponent<Artifacts>().loadedDie) //Loaded Die Function
+                        temp = UnityEngine.Random.Range(1, 51);
                     if(GetComponent<Artifacts>().leatherGloves) //Leather Gloves Function
-                        temp = UnityEngine.Random.Range(1, 21); 
-                    if (temp <= 10) 
+                        temp = UnityEngine.Random.Range(1, 23); 
+                    if (temp <= 10) //Turn Rubble into Health
                     {
                         Tile.numCollectedH++;
                         GameObject tempHealth;
@@ -1054,7 +1056,7 @@ public class GameScript : MonoBehaviour
                         tempHealth.GetComponent<Tile>().collected = true;
                         healthGain++;
                     }
-                    else if (temp <= 20) 
+                    else if (temp <= 20) //Turn Rubble into Gold
                     {
                         Tile.numCollectedG++;
                         GameObject tempGold;
@@ -1066,17 +1068,15 @@ public class GameScript : MonoBehaviour
                         goldCollected++;
                         gold++;
                     }
+                    else if (temp <= 22) //Turn Rubble into Artifact
+                    {
+                        int col = obj.GetComponent<Tile>().mCol;
+                        int row = obj.GetComponent<Tile>().mRow;
+                        Vector3 pos = obj.transform.position;
+                        Destroy(board[row, col].gameObject);
+                        GetComponent<Artifacts>().createArtifact(col, row, pos, GetComponent<Artifacts>().rollArtifactRubble());
+                    }
                     Destroy(obj.gameObject);
-                    /*
-                    else if (temp <= 25) //Item
-                    {
-                        //ToDo
-                    }
-                    else if (temp <= 26) //Artifact
-                    {
-                        //ToDo
-                    }
-                    */
                 }
                 else if (obj.GetComponent<Tile>().mType == "Mana")
                 {                   
@@ -2071,6 +2071,10 @@ public class GameScript : MonoBehaviour
                     return;
                 }
             }
+            else if (board[row, col].GetComponent<Tile>().mType == "Collected")
+            {
+                
+            }
             else
             {               
                 if(board[row, col].transform.GetChild(8).GetComponent<Animator>() != null)
@@ -2482,7 +2486,6 @@ public class GameScript : MonoBehaviour
                 else if (temp <= 75)
                 {
                     temp = UnityEngine.Random.Range(1, 4);
-                    temp = 1;
                     if (temp == 1)
                         board[i, j] = (GameObject)Instantiate(swords[0], position, Quaternion.identity);
                     else if (temp == 2)
@@ -2600,20 +2603,20 @@ public class GameScript : MonoBehaviour
                                 enemyDamage += temp.GetComponent<Enemy>().damage;
                                 if (temp.GetComponent<Tile>().boss != "" && !temp.GetComponent<Enemy>().justSpawned && temp.GetComponent<Tile>().boss != "BossArms")
                                 {
-                                    if(temp.GetComponent<Enemy>().damage <= armor)
-                                    {   //Blocked
-                                        armor -= temp.GetComponent<Enemy>().damage;
-                                        temp.transform.GetChild(8).GetComponent<Animator>().SetTrigger("blocked");
-                                    }
-                                    else if (armor > 0)
-                                    {   //Breaks Through Last Bit Of Armor
-                                        armor = 0;
-                                        temp.transform.GetChild(8).GetComponent<Animator>().SetTrigger("break");
-                                    }
-                                    else
-                                    {   //No Armor, Full attack
+                                    //if(temp.GetComponent<Enemy>().damage <= armor)
+                                    //{   //Blocked
+                                       // armor -= temp.GetComponent<Enemy>().damage;
+                                        //temp.transform.GetChild(8).GetComponent<Animator>().SetTrigger("blocked");
+                                    //}
+                                    //else if (armor > 0)
+                                    //{   //Breaks Through Last Bit Of Armor
+                                       // armor = 0;
+                                        //temp.transform.GetChild(8).GetComponent<Animator>().SetTrigger("break");
+                                    //}
+                                    //else
+                                    //{   //No Armor, Full attack
                                         temp.transform.GetChild(8).GetComponent<Animator>().SetTrigger("Attacking");
-                                    }
+                                    //}
                                 }                                                                          
                                 else if(temp.GetComponent<Tile>().boss == "")
                                 {              
@@ -3149,7 +3152,12 @@ public class GameScript : MonoBehaviour
                     else
                     {
                         if(GetComponent<Artifacts>().stoneShell || GetComponent<Artifacts>().bombBag) //Stone Shell Function
-                            temp = UnityEngine.Random.Range(1, 105);
+                        {
+                            if(GetComponent<Artifacts>().loadedDie)
+                                temp = UnityEngine.Random.Range(1, 120);
+                            else
+                                temp = UnityEngine.Random.Range(1, 105);
+                        }
                         else
                             temp = UnityEngine.Random.Range(1, 100);
                         if (temp <= 25)
@@ -3206,7 +3214,6 @@ public class GameScript : MonoBehaviour
                         else if (temp <= 65)
                         {
                             temp = UnityEngine.Random.Range(1, 4);
-                            temp = 1;
                             if (temp == 1)
                                 board[i, j] = (GameObject)Instantiate(swords[0], position, Quaternion.identity);
                             else if (temp == 2)
