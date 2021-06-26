@@ -1194,7 +1194,6 @@ public class GameScript : MonoBehaviour
             }   
             //Shift Board
             shiftBoard();
-            unfreeze();           
             yield return new WaitForSeconds(1F);  
             //Reduce Skill CD's
             turnCounter++;  
@@ -1227,6 +1226,7 @@ public class GameScript : MonoBehaviour
             else
                 GameControl.doubleShot--;
             
+            unfreeze();           
             checkGhosts();    
             if(GetComponent<Artifacts>().chaosStone)
             {
@@ -1370,14 +1370,46 @@ public class GameScript : MonoBehaviour
                 {
                     int row = body[k].GetComponent<Tile>().mRow;
                     int col = body[k].GetComponent<Tile>().mCol;
-                    freezeTile(board[row - 1, col - 1]);                   
-                    freezeTile(board[row - 1, col]);
-                    freezeTile(board[row - 1, col + 1]);
-                    freezeTile(board[row, col - 1]);
-                    freezeTile(board[row, col + 1]);
-                    freezeTile(board[row + 1, col - 1]);
-                    freezeTile(board[row + 1, col]);
-                    freezeTile(board[row + 1, col + 1]);                                   
+                    if(board[row - 1, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row - 1, col - 1].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row - 1, col].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row - 1, col].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row - 1, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row - 1, col + 1].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row, col - 1].GetComponent<Tile>().frozen = true;
+                        board[row, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row, col + 1].GetComponent<Tile>().frozen = true;
+                        board[row, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row + 1, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row + 1, col - 1].GetComponent<Tile>().frozen = true;
+                        board[row + 1, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row + 1, col].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row + 1, col].GetComponent<Tile>().frozen = true;
+                        board[row + 1, col].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row + 1, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row + 1, col + 1].GetComponent<Tile>().frozen = true;
+                        board[row + 1, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }                                       
                 }
             }
             else if (temp.GetComponent<Tile>().lastAbilityUsed != "Spell Lock")
@@ -1394,21 +1426,61 @@ public class GameScript : MonoBehaviour
                 temp.gameObject.transform.GetChild(8).GetComponent<Animator>().SetTrigger("Attacking");
             Debug.Log("Freezing");
             if (r > 0)
-                    freezeTile(board[r - 1, c]);                                             
+                if (board[r - 1, c].GetComponent<Tile>().mType != "Goblin" && board[r - 1, c].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r - 1, c].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r - 1, c].GetComponent<Tile>().frozen = true;
+                        board[r - 1, c].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }                                                
             if (c > 0)
-                    freezeTile(board[r, c - 1]); 
+                if (board[r, c - 1].GetComponent<Tile>().mType != "Goblin" && board[r, c - 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r, c - 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r, c - 1].GetComponent<Tile>().frozen = true;
+                        board[r, c - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r > 0 && c > 0)
-                    freezeTile(board[r - 1, c - 1]);
+                if (board[r - 1, c - 1].GetComponent<Tile>().mType != "Goblin" && board[r - 1, c - 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r - 1, c - 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r - 1, c - 1].GetComponent<Tile>().frozen = true;
+                        board[r - 1, c - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r < 5)
-                    freezeTile(board[r + 1, c]);
+                if (board[r + 1, c].GetComponent<Tile>().mType != "Goblin" && board[r + 1, c].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r + 1, c].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r + 1, c].GetComponent<Tile>().frozen = true;
+                        board[r + 1, c].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (c < 5)
-                    freezeTile(board[r, c + 1]);
+                if (board[r, c + 1].GetComponent<Tile>().mType != "Goblin" && board[r, c + 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r, c + 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r, c + 1].GetComponent<Tile>().frozen = true;
+                        board[r, c + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r < 5 && c < 5)
-                    freezeTile(board[r + 1, c + 1]);
+                if (board[r + 1, c + 1].GetComponent<Tile>().mType != "Goblin" && board[r + 1, c + 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r + 1, c + 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r + 1, c + 1].GetComponent<Tile>().frozen = true;
+                        board[r + 1, c + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r > 0 && c < 5)
-                    freezeTile(board[r - 1, c + 1]);
+                if (board[r - 1, c + 1].GetComponent<Tile>().mType != "Goblin" && board[r - 1, c + 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r - 1, c + 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r - 1, c + 1].GetComponent<Tile>().frozen = true;
+                        board[r - 1, c + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (c > 0 && r < 5)
-                    freezeTile(board[r + 1, c - 1]);
+                if (board[r + 1, c - 1].GetComponent<Tile>().mType != "Goblin" && board[r + 1, c - 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r + 1, c - 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r + 1, c - 1].GetComponent<Tile>().frozen = true;
+                        board[r + 1, c - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
         }              
         else if (temp.GetComponent<Tile>().boss == "Spider")                         
         {
@@ -1461,16 +1533,6 @@ public class GameScript : MonoBehaviour
             }
             else
                 turn = 1;
-        }
-    }
-
-    void freezeTile(GameObject obj)
-    {
-        string type = obj.GetComponent<Tile>().mType;
-        if (obj.GetComponent<Tile>().frozenLastTurn == false && type != "Goblin" && type != "Shopkeeper" && type != "Chest")
-        {
-            obj.GetComponent<Tile>().frozen = true;
-            obj.gameObject.transform.GetChild(18).gameObject.SetActive(true);
         }
     }
 
