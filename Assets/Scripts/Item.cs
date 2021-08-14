@@ -45,11 +45,11 @@ public class Item : MonoBehaviour
     public int RollTier()
     {
         temp = UnityEngine.Random.Range(1, 95);
-        if (temp <= 65)
+        if (temp <= 35)
             mTier = 1;
-        else if (temp <= 85)
+        else if (temp <= 65)
             mTier = 2;
-        else if (temp <= 95)
+        else if (temp <= 85)
             mTier = 3;
         else
             mTier = 4;       
@@ -96,7 +96,8 @@ public class Item : MonoBehaviour
             {
                 if (type == "Armor" || type == "Light Armor" || type == "Helmets" || type == "Shields")
                 {
-                    temp = UnityEngine.Random.Range(1, 7);
+                    temp = UnityEngine.Random.Range(1, 2);
+                    temp = 3;
                     switch (temp)
                     {
                         case 1:
@@ -122,7 +123,7 @@ public class Item : MonoBehaviour
                 }
                 else
                 {
-                    temp = UnityEngine.Random.Range(1, 7);
+                    temp = UnityEngine.Random.Range(1, 2);
                     switch (temp)
                     {
                         case 1:
@@ -204,174 +205,6 @@ public class Item : MonoBehaviour
             }
         }
     }         
-
-    public string RollAttribute(string mOne)
-    {
-        string bonus = "";
-        bool run = true;
-        while (run)
-        {
-            temp = UnityEngine.Random.Range(1, 10);
-            switch (temp)
-            {
-                case 1:
-                    if(mOne != "cunning")
-                    {
-                        bonus = "cunning";
-                        run = false;
-                    }                  
-                    break;
-                case 2:
-                    if (mOne != "empath")
-                    {
-                        bonus = "empath";
-                        run = false;
-                    }
-                    break;
-                case 3:
-                    if (mOne != "hunter")
-                    {
-                        bonus = "hunter";
-                        run = false;
-                    }
-                    break;
-                case 4:
-                    if (mOne != "impatient")
-                    {
-                        bonus = "impatient";
-                        run = false;
-                    }
-                    break;
-                case 5:
-                    if (mOne != "lucky")
-                    {
-                        bonus = "lucky";
-                        run = false;
-                    }
-                    break;
-                case 6:
-                    if (mOne != "meek")
-                    {
-                        bonus = "meek";
-                        run = false;
-                    }
-                    break;
-                case 7:
-                    if (mOne != "pickpocket")
-                    {
-                        bonus = "pickpocket";
-                        run = false;
-                    }
-                    break;
-                case 8:
-                    if (mOne != "protector")
-                    {
-                        bonus = "protector";
-                        run = false;
-                    }
-                    break;
-                case 9:
-                    if (mOne != "survivalist")
-                    {
-                        bonus = "survivalist";
-                        run = false;
-                    }
-                    break;
-                case 10:
-                    if (mOne != "tough")
-                    {
-                        bonus = "tough";
-                        run = false;
-                    }
-                    break;
-            }
-        }
-        return bonus;
-    }
-
-    public string RollAttribute(string mOne, string mTwo)
-    {
-        string bonus = "";
-        bool run = true;
-        while (run)
-        {
-            temp = UnityEngine.Random.Range(1, 10);
-            switch (temp)
-            {
-                case 1:
-                    if (mOne != "cunning" && mTwo != "cunning")
-                    {
-                        bonus = "cunning";
-                        run = false;
-                    }
-                    break;
-                case 2:
-                    if (mOne != "empath" && mTwo != "empath")
-                    {
-                        bonus = "empath";
-                        run = false;
-                    }
-                    break;
-                case 3:
-                    if (mOne != "hunter" && mTwo != "hunter")
-                    {
-                        bonus = "hunter";
-                        run = false;
-                    }
-                    break;
-                case 4:
-                    if (mOne != "impatient" && mTwo != "impatient")
-                    {
-                        bonus = "impatient";
-                        run = false;
-                    }
-                    break;
-                case 5:
-                    if (mOne != "lucky" && mTwo != "lucky")
-                    {
-                        bonus = "lucky";
-                        run = false;
-                    }
-                    break;
-                case 6:
-                    if (mOne != "meek" && mTwo != "meek")
-                    {
-                        bonus = "meek";
-                        run = false;
-                    }
-                    break;
-                case 7:
-                    if (mOne != "pickpocket" && mTwo != "pickpocket")
-                    {
-                        bonus = "pickpocket";
-                        run = false;
-                    }
-                    break;
-                case 8:
-                    if (mOne != "protector" && mTwo != "protector")
-                    {
-                        bonus = "protector";
-                        run = false;
-                    }
-                    break;
-                case 9:
-                    if (mOne != "survivalist" && mTwo != "survivalist")
-                    {
-                        bonus = "survivalist";
-                        run = false;
-                    }
-                    break;
-                case 10:
-                    if (mOne != "tough" && mTwo != "tough")
-                    {
-                        bonus = "tough";
-                        run = false;
-                    }
-                    break;
-            }
-        }
-        return bonus;
-    }
 
     public string RollArt(string type, int tier)
     {

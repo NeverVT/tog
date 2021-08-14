@@ -37,6 +37,8 @@ public class Collision : MonoBehaviour
     string tempName;
     public bool cunningUsed = false;
     string savedPreviousType;
+    private bool upgrading = false;
+    private string itemType = "";
 
     private void Start()
     {
@@ -122,7 +124,7 @@ public class Collision : MonoBehaviour
         }
         else if (other.CompareTag("Exit"))
         {
-            if(other.transform.parent.name == "PopUp")
+            if (other.transform.parent.name == "PopUp")
             {
                 other.transform.parent.gameObject.SetActive(false);
             }
@@ -132,7 +134,7 @@ public class Collision : MonoBehaviour
                 Destroy(other.transform.parent.gameObject);
                 Destroy(other.gameObject);
                 gameScript.GetComponent<GameScript>().screenUp = false;
-            }                     
+            }
             for (int i = 0; i < 3; i++)
             {
                 if (gameScript.GetComponent<GameScript>().items[i] != null)
@@ -142,24 +144,24 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "ToTitleScreen" || other.transform.name == "ToShip" || other.transform.name == "ToBarracks")
         {
             other.GetComponent<Animator>().SetTrigger("Pressed");
-            if(gameObject.transform.Find("CharacterScreen(Clone)") != null)
+            if (gameObject.transform.Find("CharacterScreen(Clone)") != null)
             {
                 Debug.Log("Exists");
                 Destroy(gameObject.transform.Find("CharacterScreen(Clone)"));
             }
         }
-        else if(other.transform.name == "ToTSfromGS")
+        else if (other.transform.name == "ToTSfromGS")
         {
             GameControl.gold = 0;
             StartCoroutine(loadScene("TitleScreen"));
         }
         else if (other.transform.name == "ToHighScores")
         {
- 
+
         }
         else if (other.transform.name == "ToSettings")
         {
-            
+
         }
         else if (other.transform.name == "ToGameScreen")
         {
@@ -170,7 +172,7 @@ public class Collision : MonoBehaviour
             Debug.Log("ExitArtifact");
             Destroy(GameObject.Find("Artifact Screen(Clone)"));
         }
-        
+
         else if (other.transform.name == "ArtifactsButton")
         {
             GameObject artifactsPage = (GameObject)Instantiate(Resources.Load("ArtifactsPage"), new Vector3(3.2F, -5.33F, -23.61F), Quaternion.identity);
@@ -195,24 +197,6 @@ public class Collision : MonoBehaviour
                 }
                 gameScript.GetComponent<GameScript>().shopUp = false;
                 gameScript.GetComponent<GameScript>().screenUp = false;
-            }
-        }
-        else if (other.CompareTag("Back"))
-        {
-            characterSelected = -1;
-            Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
-            gameScript.GetComponent<GameScript>().Shop = (GameObject)Instantiate(Resources.Load("Shop/Shopkeeper"), new Vector3(3.15F, -3.85F, -3.06F), Quaternion.identity);
-            gameScript.GetComponent<GameScript>().items[0].transform.position = new Vector3(1.291F, -4.62F, -5.86F);
-            gameScript.GetComponent<GameScript>().items[1].transform.position = new Vector3(4.02F, -4.62F, -5.86F);
-            gameScript.GetComponent<GameScript>().items[2].transform.position = new Vector3(2.68F, -6.64F, -5.86F);
-
-            for(int i = 0; i < 3; i++)
-            {
-                gameScript.GetComponent<GameScript>().items[i].transform.gameObject.SetActive(true);
-                characterControl.characters[i].weapon.gameObject.transform.Find("BorderGold").gameObject.SetActive(false);
-                characterControl.characters[i].weapon.gameObject.SetActive(false);
-                characterControl.characters[i].armor.gameObject.transform.Find("BorderGold").gameObject.SetActive(false);
-                characterControl.characters[i].armor.gameObject.SetActive(false);
             }
         }
         else if (other.CompareTag("Attributes"))
@@ -274,27 +258,27 @@ public class Collision : MonoBehaviour
         }
         else if (other.CompareTag("Trait"))
         {
-            other.gameObject.transform.Find("PopUp").gameObject.SetActive(true);     
+            other.gameObject.transform.Find("PopUp").gameObject.SetActive(true);
         }
         else if (other.CompareTag("TraitAndSkillsCS"))
         {
             if (other.transform.parent.name == "Urp")
             {
-                if(other.transform.name == "Dragon Shot" || other.transform.name == "Bomber Shot")
+                if (other.transform.name == "Dragon Shot" || other.transform.name == "Bomber Shot")
                 {
                     PlayerPrefs.SetString("UrpSkillTwo", other.transform.name);
                 }
-                if(other.transform.name == "Tough" || other.transform.name == "Shrapnel")
+                if (other.transform.name == "Tough" || other.transform.name == "Shrapnel")
                 {
                     PlayerPrefs.SetString("UrpTraitTwo", other.transform.name);
-                }            
+                }
             }
             if (other.transform.parent.name == "Chrisa")
             {
                 if (other.transform.name == "Sleight of Hand" || other.transform.name == "Pickpocket")
                 {
                     PlayerPrefs.SetString("ChrisaTraitTwo", other.transform.name);
-                }                
+                }
             }
             if (other.transform.parent.name == "Kurtzle")
             {
@@ -319,17 +303,17 @@ public class Collision : MonoBehaviour
         }
         else if (other.transform.name == "Recruit Button") //Buying a Character in the Ship Screen
         {
-            if(ScoreControl.playerGold >= 0)
+            if (ScoreControl.playerGold >= 0)
             {
                 other.GetComponent<Animator>().SetTrigger("Pressed");
                 other.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
-                //ScoreControl.playerGold -= 1000;
-                PlayerPrefs.SetInt("PlayerGold", ScoreControl.playerGold);                           
-            }           
+                ScoreControl.playerGold -= 1000;
+                PlayerPrefs.SetInt("PlayerGold", ScoreControl.playerGold);
+            }
         }
         else if (other.CompareTag("Spell"))
         {
-            gameScript.GetComponent<GameScript>().castSpell(other.gameObject);          
+            gameScript.GetComponent<GameScript>().castSpell(other.gameObject);
         }
         else if (other.CompareTag("OK"))
         {
@@ -341,8 +325,10 @@ public class Collision : MonoBehaviour
         }
         else if (other.transform.name == "Swap")
         {
-            other.transform.Find("SwapSelected").gameObject.SetActive(true);                       
+            other.transform.Find("SwapSelected").gameObject.SetActive(true);
         }
+
+                        // ---------- SHOP ---------- //
         else if (other.transform.name == "Shopkeeper Exit")
         {
             Destroy(other.transform.parent.gameObject);
@@ -351,12 +337,46 @@ public class Collision : MonoBehaviour
             Destroy(gameScript.GetComponent<GameScript>().items[2].gameObject);
             gameScript.GetComponent<GameScript>().screenUp = false;
         }
+        else if (other.transform.name == "Shop Back")
+        {
+            respawnShopKeeper();
+        }
         else if (other.transform.name == "Crystal Shop")
         {
-            if(GameControl.gold >= 15)
+            if (GameControl.gold >= 15)
             {
                 characterControl.setCurrentHealth(characterControl.getCurrentHealth() + 15);
                 GameControl.gold -= 15;
+            }
+        }
+        else if (other.transform.name == "Item Stat Upgrade")
+        {
+            if (GameControl.gold >= 15)
+            {
+                characterSelected = -1;
+                upgrading = true;
+                Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
+                for (int i = 0; i < 3; i++)
+                {                   
+                    gameScript.GetComponent<GameScript>().items[i].transform.gameObject.SetActive(false);
+                }
+                gameScript.GetComponent<GameScript>().Shop = (GameObject)Instantiate(Resources.Load("Shop/Shop"), new Vector3(-4.11F, -7.99F, -9.38F), Quaternion.identity);
+                
+                    for (int i = 0; i < 3; i++)
+                    {
+                        characterControl.characters[i].weapon.gameObject.SetActive(true);
+                        characterControl.characters[i].weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].weapon.damage.ToString();
+                        characterControl.characters[i].armor.gameObject.SetActive(true);
+                        characterControl.characters[i].armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].armor.defense.ToString();
+                    /*
+                        if (i == 0)
+                            characterControl.characters[i].armor.gameObject.transform.position = new Vector3(7.34F, 26.5F, -3.11F);
+                        else if (i == 1)
+                            characterControl.characters[i].armor.gameObject.transform.position = new Vector3(17.11F, 25.96F, -3.11F);
+                        else
+                            characterControl.characters[i].armor.gameObject.transform.position = new Vector3(15.56F, 22.99F, -3.11F); */
+                        characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y + 1.5f, characterControl.characters[i].armor.transform.position.z);
+                    }                                                   
             }
         }
         else if (other.CompareTag("Item"))
@@ -382,13 +402,13 @@ public class Collision : MonoBehaviour
                             gameScript.GetComponent<GameScript>().items[i].transform.gameObject.SetActive(false);
                     }
                     gameScript.GetComponent<GameScript>().Shop = (GameObject)Instantiate(Resources.Load("Shop/Shop"), new Vector3(-4.11F, -7.99F, -9.38F), Quaternion.identity);
-                    if(other.GetComponent<Item>().mDamage > 0)
-                    {                      
-                        for(int i = 0; i < 3; i++)
+                    if (other.GetComponent<Item>().mDamage > 0)
+                    {
+                        for (int i = 0; i < 3; i++)
                         {
                             characterControl.characters[i].weapon.gameObject.SetActive(true);
                             characterControl.characters[i].weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].weapon.damage.ToString();
-                        }                      
+                        }
                     }
                     else
                     {
@@ -396,14 +416,22 @@ public class Collision : MonoBehaviour
                         {
                             characterControl.characters[i].armor.gameObject.SetActive(true);
                             characterControl.characters[i].armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].armor.defense.ToString();
+                            /*
+                            if (i == 0)
+                                characterControl.characters[i].armor.gameObject.transform.position = new Vector3(7.34F, 26.5F, -3.11F);
+                            else if (i == 1)
+                                characterControl.characters[i].armor.gameObject.transform.position = new Vector3(17.11F, 25.96F, -3.11F);
+                            else
+                                characterControl.characters[i].armor.gameObject.transform.position = new Vector3(15.56F, 22.99F, -3.11F); */
                         }
-                    }                   
+                    }
                 }
             }
         }
         else if (other.transform.name == "WeaponOne")
         {
             characterSelected = 0;
+            itemType = "Weapon";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
             characterControl.characters[1].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
             characterControl.characters[2].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
@@ -411,6 +439,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "WeaponTwo")
         {
             characterSelected = 1;
+            itemType = "Weapon";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
             characterControl.characters[0].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
             characterControl.characters[2].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
@@ -418,6 +447,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "WeaponThree")
         {
             characterSelected = 2;
+            itemType = "Weapon";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
             characterControl.characters[0].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
             characterControl.characters[1].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
@@ -425,6 +455,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "ArmorOne")
         {
             characterSelected = 0;
+            itemType = "Armor";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
             characterControl.characters[1].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
             characterControl.characters[2].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
@@ -432,6 +463,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "ArmorTwo")
         {
             characterSelected = 1;
+            itemType = "Armor";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
             characterControl.characters[0].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
             characterControl.characters[2].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
@@ -439,6 +471,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "ArmorThree")
         {
             characterSelected = 2;
+            itemType = "Armor";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
             characterControl.characters[0].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
             characterControl.characters[1].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
@@ -446,49 +479,51 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "Replace")
         {
             if (characterSelected != -1)
-            {
-                string type = selectedItem.gameObject.GetComponent<Item>().mType;
-                if(type == "Armor")
+            {             
+                if(selectedItem != null)
+                    itemType = selectedItem.gameObject.GetComponent<Item>().mType;
+                if (itemType == "Armor")
                 {
-                    //characterControl.characters[characterSelected].armor.armorObj = selectedItem.gameObject;
-                    characterControl.characters[characterSelected].armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                    characterControl.characters[characterSelected].armor.defense = selectedItem.GetComponent<Item>().mArmor;
-                    characterControl.characters[characterSelected].armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                    characterControl.characters[characterSelected].armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                    characterControl.characters[characterSelected].armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                    if (upgrading)
+                    {
+                        GameControl.gold -= 15;
+                        characterControl.characters[characterSelected].armor.defense++;
+                    }
+                    else
+                    {
+                        characterControl.characters[characterSelected].armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                        characterControl.characters[characterSelected].armor.defense = selectedItem.GetComponent<Item>().mArmor;
+                        characterControl.characters[characterSelected].armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                        characterControl.characters[characterSelected].armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                        characterControl.characters[characterSelected].armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                        GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
+                    }                  
                 }
                 else
                 {
-                    //characterControl.characters[characterSelected].weapon.weaponObj = selectedItem.gameObject;
-                    characterControl.characters[characterSelected].weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                    characterControl.characters[characterSelected].weapon.damage = selectedItem.GetComponent<Item>().mDamage;
-                    characterControl.characters[characterSelected].weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                    characterControl.characters[characterSelected].weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                    characterControl.characters[characterSelected].weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
-                }
-                GameControl.gold -= selectedItem.GetComponent<Item>().mCost;           
-                
-                for (int i = 0; i < 3; i++)
-                {
-                    Destroy(gameScript.GetComponent<GameScript>().items[i].gameObject);
-                    characterControl.characters[i].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-                    characterControl.characters[i].weapon.weaponObj.SetActive(false);
-                    characterControl.characters[i].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-                    characterControl.characters[i].armor.armorObj.SetActive(false);
-                }                   
-                characterSelected = -1;
-                Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
-                Destroy(selectedItem.gameObject);               
-                gameScript.GetComponent<GameScript>().shopUp = false;
-                gameScript.GetComponent<GameScript>().screenUp = false;
+                    if (upgrading)
+                    {
+                        GameControl.gold -= 15;
+                        characterControl.characters[characterSelected].weapon.damage++;
+                    }
+                    else
+                    {
+                        characterControl.characters[characterSelected].weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                        characterControl.characters[characterSelected].weapon.damage = selectedItem.GetComponent<Item>().mDamage;
+                        characterControl.characters[characterSelected].weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                        characterControl.characters[characterSelected].weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                        characterControl.characters[characterSelected].weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                        GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
+                    }
+                }                              
+                respawnShopKeeper();          
             }
-
         }
         else if (other.transform.name == "AcceptButton")
         {
             SceneManager.LoadScene("TitleScreen");
-        }   
-        else if(GameControl.smite) 
+        }
+        else if (GameControl.smite)
         {
             pos = other.gameObject.transform.position;
             col = other.GetComponent<Tile>().mCol;
@@ -496,21 +531,21 @@ public class Collision : MonoBehaviour
             type = other.GetComponent<Tile>().mType;
             if (type == "Goblin")
             {
-                if(other.GetComponent<Tile>().boss == "Skull")
+                if (other.GetComponent<Tile>().boss == "Skull")
                 {
                     other.GetComponent<Enemy>().health -= (gameScript.GetComponent<GameScript>().smiteSwords.Count / 2);
                 }
                 else
                 {
                     other.GetComponent<Enemy>().health -= gameScript.GetComponent<GameScript>().smiteSwords.Count;
-                }               
-                if(other.GetComponent<Enemy>().health <= 0)
+                }
+                if (other.GetComponent<Enemy>().health <= 0)
                 {
                     other.GetComponent<Enemy>().health = 0;
-                    other.GetComponent<Tile>().mType = "Collected";                
+                    other.GetComponent<Tile>().mType = "Collected";
                 }
                 int count = gameScript.GetComponent<GameScript>().smiteSwords.Count;
-                for (int i=0; i< count;i++)
+                for (int i = 0; i < count; i++)
                 {
                     gameScript.GetComponent<GameScript>().smiteSwords.Pop().GetComponent<smiteSwords>().endPos = pos;
                 }
@@ -535,17 +570,17 @@ public class Collision : MonoBehaviour
                     cunningUsed = false;
                     previousType = type;
                     pRow = row;
-                    pCol = col;                  
+                    pCol = col;
                 }
                 else if (length > 0)
                 {
                     GameObject obj = gameScript.GetComponent<GameScript>().collected.Peek();
-                    if(obj.GetComponent<Tile>().mType == "Collected")
+                    if (obj.GetComponent<Tile>().mType == "Collected")
                     {
                         previousType = savedPreviousType;
                     }
                     else
-                     previousType = obj.GetComponent<Tile>().mType;
+                        previousType = obj.GetComponent<Tile>().mType;
                     pRow = obj.GetComponent<Tile>().mRow;
                     pCol = obj.GetComponent<Tile>().mCol;
                 }
@@ -559,9 +594,9 @@ public class Collision : MonoBehaviour
                         {
                             cunningUsed = true;
                             pCunningCol = pCol;
-                            pCunningRow = pRow;                      
+                            pCunningRow = pRow;
                             gameScript.GetComponent<GameScript>().cunningInCollected = true;
-                            savedPreviousType = previousType;                 
+                            savedPreviousType = previousType;
                             gameScript.GetComponent<GameScript>().collected.Push(gameScript.GetComponent<GameScript>().board[row, col]);
                             gameScript.GetComponent<GameScript>().board[row, col] = gameScript.GetComponent<GameScript>().collected.Peek();
                             if (row - pRow == 0 && col - pCol == 1) //Right
@@ -618,7 +653,7 @@ public class Collision : MonoBehaviour
                             while (gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mRow != row || gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mCol != col)
                             {
                                 GameObject obj = gameScript.GetComponent<GameScript>().collected.Pop();
-                                if(obj.GetComponent<Tile>().mType != "Collected")
+                                if (obj.GetComponent<Tile>().mType != "Collected")
                                 {
                                     Destroy(gameScript.GetComponent<GameScript>().board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol]);
                                     gameScript.GetComponent<GameScript>().board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol] = obj;
@@ -627,7 +662,7 @@ public class Collision : MonoBehaviour
                                     if (obj.transform.GetChild(11))
                                         obj.transform.GetChild(11).gameObject.SetActive(false);
                                     if (obj.GetComponent<Tile>().boss != "")
-                                        gameScript.GetComponent<GameScript>().board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].transform.GetChild(15).gameObject.SetActive(false);                                
+                                        gameScript.GetComponent<GameScript>().board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].transform.GetChild(15).gameObject.SetActive(false);
                                 }
                                 if (gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mRow == pCunningRow &&
                                        gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mCol == pCunningCol)
@@ -636,8 +671,8 @@ public class Collision : MonoBehaviour
                                     cunningUsed = false;
                                     gameScript.GetComponent<GameScript>().cunningInCollected = false;
                                 }
-                            }                                                     
-                        }                       
+                            }
+                        }
                     }
                 }
                 else if (row - pRow >= -1 && row - pRow <= 1 && col - pCol >= -1 && col - pCol <= 1 && other.GetComponent<Tile>().frozen == false)
@@ -1289,48 +1324,37 @@ public class Collision : MonoBehaviour
             yield return null;
         }         
     }
+    public void respawnShopKeeper()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            characterControl.characters[i].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.characters[i].weapon.weaponObj.SetActive(false);
+            characterControl.characters[i].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.characters[i].armor.armorObj.SetActive(false);
+            if(upgrading)
+            {
+                if (i == 0)
+                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y - 2, characterControl.characters[i].armor.transform.position.z);
 
-    private IEnumerator wait(float time)
-    {
-        yield return new WaitForSecondsRealtime(time);
-    }
-    void fadeSkills(int activeCharacter, GameObject skillOne, GameObject skillTwo)
-    {
-        if(characterControl.activeCharacter == activeCharacter)
-        {          
-            if(skillOne.name != "Skills One")
-                skillOne.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            if(skillTwo.name != "Skills Two")
-                skillTwo.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+                else if (i == 1)
+                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y - 2, characterControl.characters[i].armor.transform.position.z);
+
+                else
+                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y - 2, characterControl.characters[i].armor.transform.position.z);               
+            }                      
         }
-        else
-        {
-            if(skillOne.name != "Skills One")
-                skillOne.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
-            if(skillTwo.name != "Skills Two")
-                skillTwo.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);                
-        }
-    }
-  
-    void itemSelected(int index)
-    {
-        if (index == 0)
-        {
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(2).gameObject.SetActive(true);
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(3).gameObject.SetActive(false);
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(4).gameObject.SetActive(false);
-        }
-        else if (index == 1)
-        {
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(2).gameObject.SetActive(false);
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(3).gameObject.SetActive(true);
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(4).gameObject.SetActive(false);
-        }
-        else if (index == 2)
-        {
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(2).gameObject.SetActive(false);
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(3).gameObject.SetActive(false);
-            gameScript.GetComponent<GameScript>().Shop.transform.GetChild(4).gameObject.SetActive(true);
-        }
+        upgrading = false;
+        characterSelected = -1;
+        Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
+        //Destroy(selectedItem.gameObject);
+        selectedItem = null;
+        gameScript.GetComponent<GameScript>().Shop = (GameObject)Instantiate(Resources.Load("Shop/Shopkeeper"), new Vector3(3.1F, -3.4F, -3.06F), Quaternion.identity);
+        gameScript.GetComponent<GameScript>().items[0].transform.gameObject.SetActive(true);
+        gameScript.GetComponent<GameScript>().items[1].transform.gameObject.SetActive(true);
+        gameScript.GetComponent<GameScript>().items[2].transform.gameObject.SetActive(true);
+        gameScript.GetComponent<GameScript>().items[0].transform.position = new Vector3(0.75F, -4.5F, -5.86F);
+        gameScript.GetComponent<GameScript>().items[1].transform.position = new Vector3(2.5F, -3.5F, -5.86F);
+        gameScript.GetComponent<GameScript>().items[2].transform.position = new Vector3(4.2F, -4.5F, -5.86F);
     }
 }
