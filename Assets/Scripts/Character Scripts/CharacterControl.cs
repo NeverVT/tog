@@ -156,11 +156,30 @@ public class CharacterControl : MonoBehaviour
     {
         return characters[activeCharacter].weapon.damage;
     }
+    public double getLowestAttack()
+    {
+        double attack = 0;
+        for(int i = 0; i < characters.Length; i++)
+        {
+            if (attack == 0 || characters[i].weapon.damage < attack)
+                attack = characters[i].weapon.damage;
+        }
+        return attack;
+    }
     public double getArmor()
     {
         return characters[activeCharacter].armor.defense;
     }
-
+    public double getLowestArmor()
+    {
+        double attack = 0;
+        for(int i = 0; i < characters.Length; i++)
+        {
+            if (attack == 0 || characters[i].weapon.damage < attack)
+                attack = characters[i].weapon.damage;
+        }
+        return attack;
+    }
     public double getMaxHealth()
     {
         return totalMaxHealth;

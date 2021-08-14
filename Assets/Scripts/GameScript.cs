@@ -48,9 +48,10 @@ public class GameScript : MonoBehaviour
     public GameObject bossArms;
     public GameObject bossBody;
 
-    public int miniBossSpawner = 2;
+    public int bossSpawner;
+    public int shopSpawner;
 
-    public int baitValue = 0;
+    public int baitValue = 5;
     public int frostValue = 10;
     public int isaacsBindingValue = 70;
     public int prismValue = 2;
@@ -107,25 +108,13 @@ public class GameScript : MonoBehaviour
         //GetComponent<Collision>().gameScript = GameObject.Find("GameScript").gameObject;
         screenUp = false;
         init();  
-        if(characterControl.GetComponent<CharacterControl>().searchTraitAll("Hunter") != -1)
-        {
-            miniBossSpawner = 10;  //Hunter Function
-        }
-        if (characterControl.GetComponent<CharacterControl>().searchTraitAll("Impatient") != -1)
-        {
-            spawnManaCrystals = true;  //Impatient Function
-        }
-        if (characterControl.GetComponent<CharacterControl>().searchTraitAll("Comforting") != -1)
-        {
-            //Comforting Function
-        }
     }
     void Update ()
     {      
         if(switchCharacters)
         {
             switchCharacters = false;
-            GetComponent<CharacterControl>().switchCharacter();
+            characterControl.switchCharacter();
         }       
     }
     public void init()
@@ -184,6 +173,20 @@ public class GameScript : MonoBehaviour
         {
             GetComponent<Artifacts>().bombBag = true;
             GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
+        }
+        bossSpawner = UnityEngine.Random.Range(15, 21);
+        shopSpawner = UnityEngine.Random.Range(9, 15);
+        if(characterControl.searchTraitAll("Hunter") != -1)
+        {
+            bossSpawner -= 5;  //Hunter Function
+        }
+        if (characterControl.searchTraitAll("Impatient") != -1)
+        {
+            spawnManaCrystals = true;  //Impatient Function
+        }
+        if (characterControl.searchTraitAll("Comforting") != -1)
+        {
+            //Comforting Function
         }
         fillBoard();
     }
@@ -250,7 +253,7 @@ public class GameScript : MonoBehaviour
                     }
                     if(GetComponent<Artifacts>().faetouchedAmulet)
                     {
-                        if(i % 3 == 0)
+                        if (i % 3 == 0) 
                             damage += 2;
                     }
                     if(GetComponent<Artifacts>().whetstone)
@@ -279,13 +282,13 @@ public class GameScript : MonoBehaviour
                     }
                     if(GameControl.doubleShot > 0)
                     {
-                        damage *= .75;
+                        damage *= .75;                      
                     }
                     if (i == myArray.Length - 1)
                     { }
                     else
                     {
-                        if (!characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Cunning"))
+                        if (!characterControl.searchActiveCharacterTraits("Cunning"))
                         {
                             if (myGoblins.Count > 0)
                             {
@@ -293,7 +296,7 @@ public class GameScript : MonoBehaviour
                                 int pRow = prevGoblin.GetComponent<Tile>().mRow;
                                 int pCol = prevGoblin.GetComponent<Tile>().mCol;
 
-                                if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Slasher"))
+                                if (characterControl.searchActiveCharacterTraits("Slasher"))
                                 {
                                     if (row - pRow == 1 && col - pCol == 1) //SE
                                     {
@@ -317,7 +320,7 @@ public class GameScript : MonoBehaviour
                                         board[pRow, pCol].transform.GetChild(4).gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                                     }
                                 }
-                                if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Chopper"))
+                                if (characterControl.searchActiveCharacterTraits("Chopper"))
                                 {
                                     if (row - pRow == 1 && col - pCol == 0 || row - pRow == -1 && col - pCol == 0)
                                     {
@@ -332,7 +335,7 @@ public class GameScript : MonoBehaviour
                                         }
                                     }
                                 }
-                                if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Hacker"))
+                                if (characterControl.searchActiveCharacterTraits("Hacker"))
                                 {
                                     if (col - pCol == 1 && row - pRow == 0 || col - pCol == -1 && row - pRow == 0)
                                     {
@@ -402,9 +405,9 @@ public class GameScript : MonoBehaviour
 
     public void castSpell(GameObject temp)
     {
-        if (temp.gameObject.transform.GetChild(12).gameObject.activeSelf)
+        if (temp.gameObject.transform.GetChild(0).gameObject.activeSelf)
         {
-            temp.gameObject.transform.GetChild(12).gameObject.SetActive(false);
+            temp.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
@@ -660,21 +663,23 @@ public class GameScript : MonoBehaviour
                 shiftBoard();
                 shopKeeperUp = false;
                 screenUp = true;
-                Shop = (GameObject)Instantiate(shop, new Vector3(3.296F, -4.355F, -3.06F), Quaternion.identity);
+                Shop = (GameObject)Instantiate(shop, new Vector3(3.29F, -3.36F, -3.06F), Quaternion.identity);
                 shopUp = true;
                 for (int i = 0; i < 3; i++)
                 {
                     Item item = new Item();
                     Vector3 pos;
                     if (i == 0)
-                        pos = new Vector3(1.291F, -4.62F, -5.86F);
+                        pos = new Vector3(0.75F, -4.5F, -5.86F);
                     else if (i == 1)
-                        pos = new Vector3(4.02F, -4.62F, -5.86F);
+                        pos = new Vector3(2.5F, -3.5F, -5.86F);
                     else
-                        pos = new Vector3(2.68F, -6.64F, -5.86F);
+                        pos = new Vector3(4.2F, -4.5F, -5.86F);
 
                     tier = item.RollTier();
                     type = item.RollType();
+                    if (i == 1)
+                        type = "Armor";
                     art = item.RollArt(type, tier);
 
                     items[i] = (GameObject)Instantiate(Resources.Load("Equipment/" + type + "/" + art), pos, Quaternion.identity);
@@ -695,9 +700,9 @@ public class GameScript : MonoBehaviour
                     }
 
                     if (type == "Armor" || type == "Light Armor" || type == "Helmets" || type == "Shields")
-                        items[i].GetComponent<Item>().mArmor = 2 + ((int)(turnCounter) / 15) + (tier);
+                        items[i].GetComponent<Item>().mArmor = (int)characterControl.getLowestArmor() + tier;
                     else
-                        items[i].GetComponent<Item>().mDamage = 2 + ((int)(turnCounter) / 15) + (tier);
+                        items[i].GetComponent<Item>().mDamage = (int)characterControl.getLowestAttack() + tier;
 
                     if (characterControl.searchActiveCharacterTraits("charasmatic")) //Charasmatic Function
                     {
@@ -750,7 +755,7 @@ public class GameScript : MonoBehaviour
                 board[row, col].transform.GetChild(2).GetComponent<Animator>().SetBool("Collected", true);
                 Destroy(board[row, col].gameObject, 2.10F);
                 Vector3 position = new Vector3(X, Y, 0.0F);
-                GetComponent<Artifacts>().createArtifact(col, row, position, GetComponent<Artifacts>().rollArtifact());
+                GetComponent<Artifacts>().createArtifact(col, row, position, GetComponent<Artifacts>().rollArtifactBoss());
             }
             else if (collected.Peek().GetComponent<Tile>().mType == "Artifact")
             {
@@ -803,7 +808,7 @@ public class GameScript : MonoBehaviour
                     yield return new WaitUntil(() => Tile.numCollectedH <= 0);
                     yield return StartCoroutine(takeDamage());
                 }
-                characterControl.GetComponent<CharacterControl>().switchCharacter();
+                characterControl.switchCharacter();
                 unfreeze();
                 turnCounter++;
                 ScoreControl.floorScore++;
@@ -1086,22 +1091,22 @@ public class GameScript : MonoBehaviour
                 }
                 if (count > 5)
                 {
-                    if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Intimidating") && swords > 5) //Intimidating Function
+                    if (characterControl.searchActiveCharacterTraits("Intimidating") && swords > 5) //Intimidating Function
                     {
                         Debug.Log("Intimidating");
                         intimidating = true;
                     }
-                    if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Meek") && (mana + healthGain) > 5) //Meek Function
+                    if (characterControl.searchActiveCharacterTraits("Meek") && (mana + healthGain) > 5) //Meek Function
                     {
                         Debug.Log("Meek");
                         meek = true;
                     }
-                    if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Sleight of Hand") && goldCollected > 5) //Sleight of Hand Function
+                    if (characterControl.searchActiveCharacterTraits("Sleight of Hand") && goldCollected > 5) //Sleight of Hand Function
                     {
                         Debug.Log("Sleight of Hand");
                         sleightOfHand = true;
                     }
-                    if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Survivalist") && rubbleCollected > 5) //Survivalist Function
+                    if (characterControl.searchActiveCharacterTraits("Survivalist") && rubbleCollected > 5) //Survivalist Function
                     {
                         Debug.Log("Survivalist");
                         survivalist = true;                       
@@ -1194,7 +1199,6 @@ public class GameScript : MonoBehaviour
             }   
             //Shift Board
             shiftBoard();
-            unfreeze();           
             yield return new WaitForSeconds(1F);  
             //Reduce Skill CD's
             turnCounter++;  
@@ -1211,13 +1215,13 @@ public class GameScript : MonoBehaviour
                     if(checkFightingGoblinExists())                  
                         yield return new WaitForSeconds(1.25F);               
                     if(checkBossWithSpellExists())
-                    {   //Boss Casts Spell                    
-                        castBossesSpell();
+                    {   //Boss Casts Spell        
+                        StartCoroutine(castBossesSpell());
                         yield return new WaitForSeconds(0.5F);
                         
                     }
                 } //Change Character                              
-                characterControl.GetComponent<CharacterControl>().switchCharacter();
+                characterControl.switchCharacter();
                 if(GameControl.doubleShot == 1)
                 {
                     GameControl.doubleShot--;
@@ -1227,6 +1231,7 @@ public class GameScript : MonoBehaviour
             else
                 GameControl.doubleShot--;
             
+            unfreeze();           
             checkGhosts();    
             if(GetComponent<Artifacts>().chaosStone)
             {
@@ -1248,7 +1253,7 @@ public class GameScript : MonoBehaviour
         yield return null;
     }
 
-    void castBossesSpell()
+    IEnumerator castBossesSpell()
     {
         GameObject temp = gameObject;
         int r = 0;
@@ -1266,13 +1271,17 @@ public class GameScript : MonoBehaviour
                 }                  
             }
         }
-        Debug.Log(r + " " + c);
         if (temp.GetComponent<Tile>().boss == "Slime" && slimeNeedsToEat)
         {                                    
             if (r < 5)
             {
                 if (board[r + 1, c].GetComponent<Tile>().mType != "Shopkeeper" && board[r + 1, c].GetComponent<Tile>().mType != "Chest")
                 {
+                    yield return new WaitForSeconds(1F);
+                    Transform icon = temp.transform.GetChild(8);
+                    icon.parent = null;
+                    icon.GetComponent<Animator>().SetTrigger("EatDown");
+                    yield return new WaitForSeconds(2F);
                     if (board[r + 1, c].GetComponent<Tile>().mType == "Health")
                     {
                         temp.GetComponent<Enemy>().health++;
@@ -1291,8 +1300,11 @@ public class GameScript : MonoBehaviour
                         temp.GetComponent<Enemy>().health += board[r + 1, c].GetComponent<Enemy>().health;
                         temp.GetComponent<Enemy>().damage += board[r + 1, c].GetComponent<Enemy>().damage;
                     }
-                    board[r + 1, c].GetComponent<Tile>().mType = "Collected";
+                    board[r + 1, c].GetComponent<Tile>().mType = "Collected";                  
                     shiftBoard();
+                    yield return new WaitForSeconds(1F);
+                    icon.parent = temp.transform;
+                    icon.SetSiblingIndex(8);
                     slimeNeedsToEat = false;
                 }
             }
@@ -1370,14 +1382,46 @@ public class GameScript : MonoBehaviour
                 {
                     int row = body[k].GetComponent<Tile>().mRow;
                     int col = body[k].GetComponent<Tile>().mCol;
-                    freezeTile(board[row - 1, col - 1]);                   
-                    freezeTile(board[row - 1, col]);
-                    freezeTile(board[row - 1, col + 1]);
-                    freezeTile(board[row, col - 1]);
-                    freezeTile(board[row, col + 1]);
-                    freezeTile(board[row + 1, col - 1]);
-                    freezeTile(board[row + 1, col]);
-                    freezeTile(board[row + 1, col + 1]);                                   
+                    if(board[row - 1, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row - 1, col - 1].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row - 1, col].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row - 1, col].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row - 1, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row - 1, col + 1].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row, col - 1].GetComponent<Tile>().frozen = true;
+                        board[row, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row, col + 1].GetComponent<Tile>().frozen = true;
+                        board[row, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row + 1, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row + 1, col - 1].GetComponent<Tile>().frozen = true;
+                        board[row + 1, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row + 1, col].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row + 1, col].GetComponent<Tile>().frozen = true;
+                        board[row + 1, col].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
+                    if(board[row + 1, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    {
+                        board[row + 1, col + 1].GetComponent<Tile>().frozen = true;
+                        board[row + 1, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }                                       
                 }
             }
             else if (temp.GetComponent<Tile>().lastAbilityUsed != "Spell Lock")
@@ -1394,21 +1438,61 @@ public class GameScript : MonoBehaviour
                 temp.gameObject.transform.GetChild(8).GetComponent<Animator>().SetTrigger("Attacking");
             Debug.Log("Freezing");
             if (r > 0)
-                    freezeTile(board[r - 1, c]);                                             
+                if (board[r - 1, c].GetComponent<Tile>().mType != "Goblin" && board[r - 1, c].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r - 1, c].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r - 1, c].GetComponent<Tile>().frozen = true;
+                        board[r - 1, c].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }                                                
             if (c > 0)
-                    freezeTile(board[r, c - 1]); 
+                if (board[r, c - 1].GetComponent<Tile>().mType != "Goblin" && board[r, c - 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r, c - 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r, c - 1].GetComponent<Tile>().frozen = true;
+                        board[r, c - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r > 0 && c > 0)
-                    freezeTile(board[r - 1, c - 1]);
+                if (board[r - 1, c - 1].GetComponent<Tile>().mType != "Goblin" && board[r - 1, c - 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r - 1, c - 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r - 1, c - 1].GetComponent<Tile>().frozen = true;
+                        board[r - 1, c - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r < 5)
-                    freezeTile(board[r + 1, c]);
+                if (board[r + 1, c].GetComponent<Tile>().mType != "Goblin" && board[r + 1, c].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r + 1, c].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r + 1, c].GetComponent<Tile>().frozen = true;
+                        board[r + 1, c].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (c < 5)
-                    freezeTile(board[r, c + 1]);
+                if (board[r, c + 1].GetComponent<Tile>().mType != "Goblin" && board[r, c + 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r, c + 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r, c + 1].GetComponent<Tile>().frozen = true;
+                        board[r, c + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r < 5 && c < 5)
-                    freezeTile(board[r + 1, c + 1]);
+                if (board[r + 1, c + 1].GetComponent<Tile>().mType != "Goblin" && board[r + 1, c + 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r + 1, c + 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r + 1, c + 1].GetComponent<Tile>().frozen = true;
+                        board[r + 1, c + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (r > 0 && c < 5)
-                    freezeTile(board[r - 1, c + 1]);
+                if (board[r - 1, c + 1].GetComponent<Tile>().mType != "Goblin" && board[r - 1, c + 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r - 1, c + 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r - 1, c + 1].GetComponent<Tile>().frozen = true;
+                        board[r - 1, c + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
             if (c > 0 && r < 5)
-                    freezeTile(board[r + 1, c - 1]);
+                if (board[r + 1, c - 1].GetComponent<Tile>().mType != "Goblin" && board[r + 1, c - 1].GetComponent<Tile>().mType != "Shopkeeper")
+                    if (board[r + 1, c - 1].GetComponent<Tile>().frozenLastTurn == false)
+                    {
+                        board[r + 1, c - 1].GetComponent<Tile>().frozen = true;
+                        board[r + 1, c - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                    }
         }              
         else if (temp.GetComponent<Tile>().boss == "Spider")                         
         {
@@ -1461,16 +1545,6 @@ public class GameScript : MonoBehaviour
             }
             else
                 turn = 1;
-        }
-    }
-
-    void freezeTile(GameObject obj)
-    {
-        string type = obj.GetComponent<Tile>().mType;
-        if (obj.GetComponent<Tile>().frozenLastTurn == false && type != "Goblin" && type != "Shopkeeper" && type != "Chest")
-        {
-            obj.GetComponent<Tile>().frozen = true;
-            obj.gameObject.transform.GetChild(18).gameObject.SetActive(true);
         }
     }
 
@@ -1611,7 +1685,7 @@ public class GameScript : MonoBehaviour
                 damage *= 2;
                 UpdateText.updateText = "Critical Hit!";
             } */
-            if(characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Crit")) //Crit Function
+            if(characterControl.searchActiveCharacterTraits("Crit")) //Crit Function
             {
                 int critChance = UnityEngine.Random.Range(1, 101);
                 if(critChance > 80)
@@ -1697,7 +1771,7 @@ public class GameScript : MonoBehaviour
                     enemy.GetComponent<Enemy>().health -= (int)damage;
                     damageDone += (int)damage;
 
-                    if (GetComponent<Artifacts>().frost || characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Frost")) //Frost Function
+                    if (GetComponent<Artifacts>().frost || characterControl.searchActiveCharacterTraits("Frost")) //Frost Function
                     {
                         if (enemy.GetComponent<Enemy>().poisoned)
                         {
@@ -1707,7 +1781,7 @@ public class GameScript : MonoBehaviour
                         enemy.GetComponent<Enemy>().frozen = true;
                         enemy.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Burn")) //Burn Function
+                    if (characterControl.searchActiveCharacterTraits("Burn")) //Burn Function
                     {
                         if (enemy.GetComponent<Enemy>().frozen)
                         {
@@ -1717,7 +1791,7 @@ public class GameScript : MonoBehaviour
                         enemy.GetComponent<Enemy>().burning = true;
                         enemy.transform.GetChild(19).gameObject.SetActive(true);
                     }
-                    if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Poison")) //Poison Function
+                    if (characterControl.searchActiveCharacterTraits("Poison")) //Poison Function
                     {
                         enemy.GetComponent<Enemy>().poisoned = true;
                         enemy.transform.GetChild(20).gameObject.SetActive(true);
@@ -1740,7 +1814,7 @@ public class GameScript : MonoBehaviour
                     {
                         spawnChest = true;
                         GameControl.miniBossUp = false;
-                        ScoreControl.bossScore++;
+                        ScoreControl.bossScore++;                     
                     }
                     //exp++;
                     ScoreControl.goblinScore++;
@@ -1795,7 +1869,7 @@ public class GameScript : MonoBehaviour
                         damageDone += enemy.GetComponent<Enemy>().health;
                     }                     
                 }
-                if(characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Looter"))
+                if(characterControl.searchActiveCharacterTraits("Looter"))
                 {
                     GameControl.gold++; //Looter Function
                 }
@@ -1803,7 +1877,7 @@ public class GameScript : MonoBehaviour
         }
         if (GetComponent<Artifacts>().vampireFang) //Vampire Fang Funtion
             healthGain += (int)Math.Floor((double)damageDone / vampireFangValue);
-        if(characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Vamp")) //Vamp Function
+        if(characterControl.searchActiveCharacterTraits("Vamp")) //Vamp Function
         {
             if (characterControl.getCurrentHealth() + 1 >= characterControl.getMaxHealth())
                 characterControl.setCurrentHealth(characterControl.getMaxHealth());
@@ -1883,6 +1957,8 @@ public class GameScript : MonoBehaviour
                             if (numGhosts == 0)
                             {
                                 spawnChest = true;
+                                GameControl.miniBossUp = false;
+                                ScoreControl.bossScore++;                              
                             }
                             shiftBoard();
                         }
@@ -2008,6 +2084,12 @@ public class GameScript : MonoBehaviour
                     board[row, col].GetComponent<Enemy>().health -= (int)(characterControl.getAttack() + 2);
                     return;
                 }
+                else
+                {   //Kill Boss
+                    spawnChest = true;
+                    GameControl.miniBossUp = false;                                      
+                    ScoreControl.bossScore++;
+                }
             }
             else if (board[row, col].GetComponent<Tile>().mType == "Collected")
             {
@@ -2015,7 +2097,7 @@ public class GameScript : MonoBehaviour
             }
             else
             {               
-                if(board[row, col].transform.GetChild(8).GetComponent<Animator>() != null)
+                if(board[row, col].transform.GetChild(8) != null)
                     board[row, col].transform.GetChild(8).GetComponent<Animator>().SetTrigger("Explode");
             }           
             board[row, col].GetComponent<Tile>().mType = "Collected";
@@ -2629,9 +2711,9 @@ public class GameScript : MonoBehaviour
                                     Debug.Log("Thorns");
                                     temp.GetComponent<Enemy>().health -= thornsValue; //Thorns Function
                                 }                                   
-                                if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Spiked")) //Spiked Function
+                                if (characterControl.searchActiveCharacterTraits("Spiked")) //Spiked Function
                                     temp.GetComponent<Enemy>().health -= 1;
-                                if (characterControl.GetComponent<CharacterControl>().searchTraitAll("Shrapnel") != -1)
+                                if (characterControl.searchTraitAll("Shrapnel") != -1)
                                 {                                   
                                     if(shrapnelRand >= 80 && temp.GetComponent<Tile>().boss == "")
                                     {
@@ -2647,7 +2729,8 @@ public class GameScript : MonoBehaviour
                                     if (temp.GetComponent<Tile>().boss != "" && temp.GetComponent<Tile>().boss != "RatClone" && temp.GetComponent<Tile>().boss != "BossArms")
                                     {
                                         spawnChest = true;
-                                        GameControl.miniBossUp = false;
+                                        GameControl.miniBossUp = false;                                      
+                                        ScoreControl.bossScore++;                                   
                                     }
                                     //Character.currentExp++;
                                     board[temp.GetComponent<Tile>().mRow, temp.GetComponent<Tile>().mCol].GetComponent<Tile>().mType = "Collected";
@@ -2949,7 +3032,8 @@ public class GameScript : MonoBehaviour
             else if (turnCounter == turnToScale * 7)
                 goblinScalar = 8;
         }
-        for(int i = 0; i < 6; i++)
+        bossSpawner = 1;
+        for (int i = 0; i < 6; i++)
         {
             for(int j = 0; j < 6; j++)
             {
@@ -2965,21 +3049,28 @@ public class GameScript : MonoBehaviour
                     //    board[i, j].GetComponent<Tile>().particle.Play();
                    // }
                         
-                    Destroy(board[i, j].gameObject);                                 
-                    if (turnCounter % 15 == 0 && !shopKeeperUp && !GameControl.bossUp)
+                    Destroy(board[i, j].gameObject);
+                    //shopSpawner = 1;
+                    //GameControl.gold = 100;
+                    
+                    if (turnCounter == shopSpawner)
                     {
+                        shopSpawner += UnityEngine.Random.Range(10, 16);
                         shopKeeperUp = true;
                         board[i, j] = (GameObject)Instantiate(shopkeeper, position, Quaternion.identity);
                         board[i, j].GetComponent<Tile>().mType = "Shopkeeper";
                     }
-                    else if (turnCounter % 10 == 0 && !GameControl.miniBossUp && !GameControl.bossUp) //Bait Function
+                    else if (turnCounter == bossSpawner) 
                     //else if (turnCounter == 2 && !GameControl.miniBossUp)
                     {
-                        //GameControl.bossUp = true;
+                        bossSpawner += UnityEngine.Random.Range(10, 16);
+                            if(GetComponent<Artifacts>().bait)
+                                bossSpawner -= baitValue;
                         temp = UnityEngine.Random.Range(1, 7);
                         if (PlayerPrefs.GetString("Boss Stage") == "")
                             PlayerPrefs.SetString("Boss Stage", "Stage One");
                         Debug.Log(PlayerPrefs.GetString("Boss Stage"));
+                        temp = 1;
                         if (ScoreControl.bossScore == 3)
                         {
                             temp = 7;
@@ -2999,6 +3090,8 @@ public class GameScript : MonoBehaviour
                             board[i, j].GetComponent<Tile>().boss = "Slime";
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
+                            slimeNeedsToEat = false;
+                            bossSpawner += 10;
                         }                         
                         else if (temp == 2)
                         {
@@ -3236,7 +3329,6 @@ public class GameScript : MonoBehaviour
         replaceTile(3, 2, bossBody, "BossBody", 0, 20);
         replaceTile(3, 3, bossBody, "BossBody", 0, 20);
     }
-
     private void replaceTile(int row, int col, GameObject obj)
     {
         GameObject tempObj = board[row, col];
