@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class ScoreText : MonoBehaviour
 {
-    void Update()
+    public static int score;
+    private int currentScore;
+    void FixedUpdate()
     {
-       int total = ScoreControl.goldScore + ScoreControl.floorScore + (ScoreControl.goblinScore * 2) + (ScoreControl.bossScore * 10);
-       this.GetComponent<TextMesh>().text = total.ToString();
+        if (currentScore < score)
+            currentScore++;
+        this.GetComponent<TextMesh>().text = currentScore.ToString();
     }
+   
 }

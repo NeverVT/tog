@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameScript : MonoBehaviour
 {
     //Artifacts artifacts = new Artifacts();
@@ -47,6 +48,7 @@ public class GameScript : MonoBehaviour
     public GameObject skeleton;
     public GameObject bossArms;
     public GameObject bossBody;
+    public GameObject scoreAddition;
 
     public int bossSpawner;
     public int shopSpawner;
@@ -72,6 +74,7 @@ public class GameScript : MonoBehaviour
     private int temp;
     private int turn = 1;
     public int turnCounter = 1;
+    int count = 0;
     public bool shopUp = false;
     public bool shopKeeperUp = false;
     public bool spawnChest = false;
@@ -128,39 +131,39 @@ public class GameScript : MonoBehaviour
         {
             if(characterControl.characters[0].skillOne == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
             {
-                characterControl.cOneSkillOne.GetComponent<SpriteRenderer>().sprite = skills[i];
+                characterControl.cOneSkillOne.GetComponent<Image>().sprite = skills[i];
                 characterControl.cOneSkillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
             }
                 
             if(characterControl.characters[0].skillTwo == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
             {
-                characterControl.cOneSkillTwo.GetComponent<SpriteRenderer>().sprite = skills[i];
+                characterControl.cOneSkillTwo.GetComponent<Image>().sprite = skills[i];
                 characterControl.cOneSkillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
             }
                 
 
             if(characterControl.characters[1].skillOne == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
             {
-                characterControl.cTwoSkillOne.GetComponent<SpriteRenderer>().sprite = skills[i];
+                characterControl.cTwoSkillOne.GetComponent<Image>().sprite = skills[i];
                 characterControl.cTwoSkillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
             }
                 
             if(characterControl.characters[1].skillTwo == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
             {
-                characterControl.cTwoSkillTwo.GetComponent<SpriteRenderer>().sprite = skills[i];
+                characterControl.cTwoSkillTwo.GetComponent<Image>().sprite = skills[i];
                 characterControl.cTwoSkillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
             }
                 
 
             if(characterControl.characters[2].skillOne == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
             {
-                characterControl.cThreeSkillOne.GetComponent<SpriteRenderer>().sprite = skills[i];
+                characterControl.cThreeSkillOne.GetComponent<Image>().sprite = skills[i];
                 characterControl.cThreeSkillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
             }
                 
             if(characterControl.characters[2].skillTwo == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
             {
-                characterControl.cThreeSkillTwo.GetComponent<SpriteRenderer>().sprite = skills[i];
+                characterControl.cThreeSkillTwo.GetComponent<Image>().sprite = skills[i];
                 characterControl.cThreeSkillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
             }
                 
@@ -646,7 +649,7 @@ public class GameScript : MonoBehaviour
         else
             collectAmount = 3;
         double healthGain = 0;
-        int count = collected.Count;     
+        count = collected.Count;
         Tile.numCollectedG = 0;
         Tile.numCollectedH = 0;        
         if (count < collectAmount) //Collected less than 3 tiles
@@ -811,7 +814,6 @@ public class GameScript : MonoBehaviour
                 characterControl.switchCharacter();
                 unfreeze();
                 turnCounter++;
-                ScoreControl.floorScore++;
                 screenUp = false;
             }
             else if(GameControl.dragonShot)
@@ -967,7 +969,6 @@ public class GameScript : MonoBehaviour
             meek = false;
             sleightOfHand = false;
             survivalist = false;           
-            counter = 0;
             predictText.pHealth = 0;
             predictText.pGold = 0;
             predictText.pDamage = 0;           
@@ -981,8 +982,15 @@ public class GameScript : MonoBehaviour
                     board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle.transform.parent = null;
                     Destroy(board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle.gameObject, 3.0f);
                 }
+                if (board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle2 != null)
+                {
+                    board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle2.Play();
+                    board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle2.transform.parent = null;
+                    Destroy(board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle2.gameObject, 3.0f);
+                }
                 if (type == "Health")
-                {                   
+                {
+                    spawnScoreAddition(collected.Count, count, "Health");
                     Tile.numCollectedH++;
                     obj.SetActive(true);
                     obj.GetComponent<Tile>().collected = true;      
@@ -993,6 +1001,7 @@ public class GameScript : MonoBehaviour
                 }
                 else if (type == "Coin")
                 {
+                    spawnScoreAddition(collected.Count, count, "Coin");
                     Tile.numCollectedG++;
                     obj.SetActive(true);
                     obj.GetComponent<Tile>().collected = true;                     
@@ -1019,11 +1028,11 @@ public class GameScript : MonoBehaviour
                     }
                     else
                         goldCollected++;
-                    ScoreControl.goldScore += 1;
                 }
                 else if (type == "Sword")
                 {
-                    if(obj.GetComponent<Tile>().empowered)
+                    spawnScoreAddition(collected.Count, count, "Sword");
+                    if (obj.GetComponent<Tile>().empowered)
                     {
                         swords += 2;
                     }
@@ -1217,8 +1226,7 @@ public class GameScript : MonoBehaviour
                     if(checkBossWithSpellExists())
                     {   //Boss Casts Spell        
                         StartCoroutine(castBossesSpell());
-                        yield return new WaitForSeconds(0.5F);
-                        
+                        yield return new WaitForSeconds(2F);                      
                     }
                 } //Change Character                              
                 characterControl.switchCharacter();
@@ -1239,9 +1247,8 @@ public class GameScript : MonoBehaviour
             }
             //exp = 0;
             swords = 0;
-            rubbleCollected = 0;                          
-            
-            ScoreControl.floorScore++;
+            rubbleCollected = 0;
+            counter = 0;
             cunningInCollected = false;            
             
             screenUp = false;
@@ -1277,7 +1284,7 @@ public class GameScript : MonoBehaviour
             {
                 if (board[r + 1, c].GetComponent<Tile>().mType != "Shopkeeper" && board[r + 1, c].GetComponent<Tile>().mType != "Chest")
                 {
-                    yield return new WaitForSeconds(1F);
+                    //yield return new WaitForSeconds(.5F);
                     Transform icon = temp.transform.GetChild(8);
                     icon.parent = null;
                     icon.GetComponent<Animator>().SetTrigger("EatDown");
@@ -1548,6 +1555,41 @@ public class GameScript : MonoBehaviour
         }
     }
 
+    void spawnScoreAddition(int currentCount, int totalCount, string type)
+    {
+        GameObject score = Instantiate(scoreAddition, new Vector3(4.3f+(.2f*(totalCount - currentCount)), -0.1f-(.2f*(totalCount - currentCount)), -2.5f), Quaternion.identity);
+        if (type == "Health")
+        {
+            score.GetComponent<ScoreAddition>().number = 5 + (totalCount - currentCount);
+            ScoreText.score += (5 + (totalCount - currentCount));
+            ScoreControl.healthScore += (5 + (totalCount - currentCount));
+        }
+        if(type == "Coin")
+        {
+            score.GetComponent<ScoreAddition>().number = 5 + (totalCount - currentCount);
+            ScoreText.score += (5 + (totalCount - currentCount));
+            ScoreControl.goldScore += (5 + (totalCount - currentCount));
+        }
+        if(type == "Sword")
+        {
+            score.GetComponent<ScoreAddition>().number = 5 + (totalCount - currentCount);
+            ScoreText.score += (5 + (totalCount - currentCount));
+            ScoreControl.swordScore += (5 + (totalCount - currentCount));
+        }
+        if(type == "Goblin")
+        {
+            score.GetComponent<ScoreAddition>().number = 10 + (totalCount - currentCount);
+            ScoreText.score += (10 + (totalCount - currentCount));
+            ScoreControl.goblinScore += (5 + (totalCount - currentCount));
+        }
+        if(type == "Boss")
+        {
+            score.GetComponent<ScoreAddition>().number = 50 + (totalCount - currentCount);
+            ScoreText.score += (50 + (totalCount - currentCount));
+            ScoreControl.bossScore += (5 + (totalCount - currentCount));
+        }
+    }
+
     bool checkBossWithSpellExists()
     {
         for(int i = 0; i < 6; i++)
@@ -1814,10 +1856,10 @@ public class GameScript : MonoBehaviour
                     {
                         spawnChest = true;
                         GameControl.miniBossUp = false;
-                        ScoreControl.bossScore++;                     
+                        spawnScoreAddition(0, 0, "Boss");                    
                     }
                     //exp++;
-                    ScoreControl.goblinScore++;
+                    spawnScoreAddition(0, 0, "Goblin");
                     GameControl.bloodlust = false;
                 }
                 else
@@ -1828,8 +1870,8 @@ public class GameScript : MonoBehaviour
                         if(checkBossArms(enemy))
                         {
                             board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].GetComponent<Tile>().boss = "";
-                            Destroy(enemy.gameObject);                         
-                            ScoreControl.goblinScore++;                           
+                            Destroy(enemy.gameObject);
+                            spawnScoreAddition(0, 0, "Goblin");
                             damageDone += enemy.GetComponent<Enemy>().health;
                             checkIfGameWon();
                         }
@@ -1844,34 +1886,33 @@ public class GameScript : MonoBehaviour
                         if(!checkBoardForTile("Goblin", "BossArms"))
                         {
                             Destroy(enemy.gameObject);
-                            //exp++;
-                            ScoreControl.goblinScore++;                           
+                            spawnScoreAddition(0, 0, "Goblin");
                             damageDone += enemy.GetComponent<Enemy>().health;
                         }
                     }
                     else
                     {
                         if (tempType != "" && tempType != "RatClone" && tempType != "BossArms" && tempType != "BossBody" && tempType != "Ghost")
-                            {
-                                spawnChest = true;
-                                GameControl.miniBossUp = false;
-                                ScoreControl.bossScore++;
-                            }
+                        {
+                            spawnChest = true;
+                            GameControl.miniBossUp = false;
+                            spawnScoreAddition(collected.Count, count, "Boss");
+                        }
                         if(checkBoardForTile("Goblin", "BossBody") && tempType != "Ghost")
-                            {
-                                replaceTile(enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol, ghost, "Ghost", 1, 5);
-                            }
+                        {
+                            replaceTile(enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol, ghost, "Ghost", 1, 5);
+                        }
                         else
+                        {                           
                             Destroy(enemy.gameObject);
-
-                        //exp++;
-                        ScoreControl.goblinScore++;                           
+                        }                      
+                        spawnScoreAddition(collected.Count, count, "Goblin");
                         damageDone += enemy.GetComponent<Enemy>().health;
                     }                     
                 }
                 if(characterControl.searchActiveCharacterTraits("Looter"))
                 {
-                    GameControl.gold++; //Looter Function
+                    spawnScoreAddition(0, 0, "Coin"); //Looter Function
                 }
             }
         }
@@ -1958,7 +1999,7 @@ public class GameScript : MonoBehaviour
                             {
                                 spawnChest = true;
                                 GameControl.miniBossUp = false;
-                                ScoreControl.bossScore++;                              
+                                spawnScoreAddition(0, 0, "Boss");
                             }
                             shiftBoard();
                         }
@@ -1992,7 +2033,7 @@ public class GameScript : MonoBehaviour
     {
         lastTurnSpellCast = turnCounter;
         other.transform.GetChild(0).gameObject.SetActive(true);
-        other.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
+        //other.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
         other.GetComponent<Spell>().turnStart = turnCounter;
         other.GetComponent<Spell>().turnEnd = turnCounter + CD;
         spellsOnCD.Add(other.gameObject);
@@ -2087,8 +2128,8 @@ public class GameScript : MonoBehaviour
                 else
                 {   //Kill Boss
                     spawnChest = true;
-                    GameControl.miniBossUp = false;                                      
-                    ScoreControl.bossScore++;
+                    GameControl.miniBossUp = false;
+                    spawnScoreAddition(0, 0, "Boss");
                 }
             }
             else if (board[row, col].GetComponent<Tile>().mType == "Collected")
@@ -2729,8 +2770,8 @@ public class GameScript : MonoBehaviour
                                     if (temp.GetComponent<Tile>().boss != "" && temp.GetComponent<Tile>().boss != "RatClone" && temp.GetComponent<Tile>().boss != "BossArms")
                                     {
                                         spawnChest = true;
-                                        GameControl.miniBossUp = false;                                      
-                                        ScoreControl.bossScore++;                                   
+                                        GameControl.miniBossUp = false;
+                                        spawnScoreAddition(0, 0, "Boss");
                                     }
                                     //Character.currentExp++;
                                     board[temp.GetComponent<Tile>().mRow, temp.GetComponent<Tile>().mCol].GetComponent<Tile>().mType = "Collected";
@@ -3032,7 +3073,7 @@ public class GameScript : MonoBehaviour
             else if (turnCounter == turnToScale * 7)
                 goblinScalar = 8;
         }
-        bossSpawner = 1;
+        //bossSpawner = 1;
         for (int i = 0; i < 6; i++)
         {
             for(int j = 0; j < 6; j++)
@@ -3070,16 +3111,16 @@ public class GameScript : MonoBehaviour
                         if (PlayerPrefs.GetString("Boss Stage") == "")
                             PlayerPrefs.SetString("Boss Stage", "Stage One");
                         Debug.Log(PlayerPrefs.GetString("Boss Stage"));
-                        temp = 1;
-                        if (ScoreControl.bossScore == 3)
+                        //temp = 1;
+                        if (ScoreControl.bossScore == 150)
                         {
                             temp = 7;
                         }
-                        if(ScoreControl.bossScore == 5 && PlayerPrefs.GetString("Boss Stage") != "Stage One")
+                        if(ScoreControl.bossScore == 250 && PlayerPrefs.GetString("Boss Stage") != "Stage One")
                         {
                             temp = 8;
                         }
-                        if(ScoreControl.bossScore == 7 && PlayerPrefs.GetString("Boss Stage") == "Stage Three")
+                        if(ScoreControl.bossScore == 400 && PlayerPrefs.GetString("Boss Stage") == "Stage Three")
                         {
                             temp = 9;
                         }                                          
@@ -3091,7 +3132,6 @@ public class GameScript : MonoBehaviour
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
                             slimeNeedsToEat = false;
-                            bossSpawner += 10;
                         }                         
                         else if (temp == 2)
                         {

@@ -17,7 +17,8 @@ public class CharacterScreen : MonoBehaviour
 
     public static void setStats(string name)
     {
-        name = name.Replace("(Clone)", "").Trim();
+        if(name != "")
+            name = name.Replace("(Clone)", "").Trim();
         characterName = name;
         if (name == "Urp")
         {

@@ -6,9 +6,10 @@ public class ScoreControl : MonoBehaviour
 {
     public static int playerGold = PlayerPrefs.GetInt("PlayerGold");
 
+    public static int healthScore;
+    public static int swordScore;
     public static int goldScore;
     public static int goblinScore;
-    public static int floorScore;
     public static int bossScore;
     public static int totalScore;
     public static string partyOne;
@@ -17,7 +18,7 @@ public class ScoreControl : MonoBehaviour
 
     public static void saveHighScore()
     {
-        totalScore = goldScore + floorScore + (goblinScore * 2) + (bossScore * 10);
+        totalScore = goldScore + healthScore + swordScore + goblinScore + bossScore;
 
         if (totalScore > PlayerPrefs.GetInt("ScoreOneTotalScore"))
         {
@@ -94,7 +95,7 @@ public class ScoreControl : MonoBehaviour
         int tempGoldScore = PlayerPrefs.GetInt(slotOne + "GoldScore");
         int tempGoblinScore = PlayerPrefs.GetInt(slotOne + "GoblinScore");
         int tempBossScore = PlayerPrefs.GetInt(slotOne + "BossScore");
-        int tempFloorScore = PlayerPrefs.GetInt(slotOne + "FloorScore");
+        //int tempFloorScore = PlayerPrefs.GetInt(slotOne + "FloorScore");
         string tempPartyOne = PlayerPrefs.GetString(slotOne + "PartyOne");
         string tempPartyTwo = PlayerPrefs.GetString(slotOne + "PartyTwo");
         string tempPartyThree = PlayerPrefs.GetString(slotOne + "PartyThree");
@@ -103,7 +104,7 @@ public class ScoreControl : MonoBehaviour
         PlayerPrefs.SetInt(slotTwo + "GoldScore", tempGoldScore);
         PlayerPrefs.SetInt(slotTwo + "GoblinScore", tempGoblinScore);
         PlayerPrefs.SetInt(slotTwo + "BossScore", tempBossScore);
-        PlayerPrefs.SetInt(slotTwo + "FloorScore", tempFloorScore);
+        //PlayerPrefs.SetInt(slotTwo + "FloorScore", tempFloorScore);
         PlayerPrefs.SetString(slotTwo + "PartyOne", tempPartyOne);
         PlayerPrefs.SetString(slotTwo + "PartyTwo", tempPartyTwo);
         PlayerPrefs.SetString(slotTwo + "PartyThree", tempPartyThree);
@@ -111,9 +112,8 @@ public class ScoreControl : MonoBehaviour
 
     private static void setScores(string slot)
     {
-        Debug.Log("Setting " + slot + ": Total " + totalScore + "   | PartyOne " + partyOne + "   | PartyTwo " + partyTwo + "   | PartyThree " + partyThree + " | Floors " + floorScore + " | Gold " + goldScore + " | Goblin " + goblinScore + " | Boss " + bossScore);
         PlayerPrefs.SetInt(slot + "TotalScore", totalScore);
-        PlayerPrefs.SetInt(slot + "FloorScore", floorScore);
+       // PlayerPrefs.SetInt(slot + "FloorScore", floorScore);
         PlayerPrefs.SetInt(slot + "GoblinScore", goblinScore);
         PlayerPrefs.SetInt(slot + "BossScore", bossScore);
         PlayerPrefs.SetInt(slot + "GoldScore", goldScore);
@@ -122,5 +122,13 @@ public class ScoreControl : MonoBehaviour
         PlayerPrefs.SetString(slot + "PartyThree", partyThree);
     }
 
-
+    public static void resetScores()
+    {
+        healthScore = 0;
+        swordScore = 0;
+        goldScore = 0;
+        goblinScore = 0;
+        bossScore = 0;
+        totalScore = 0;
+    }
 }

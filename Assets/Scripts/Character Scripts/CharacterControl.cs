@@ -23,9 +23,30 @@ public class CharacterControl : MonoBehaviour
     public void setUpCharacters()
     {
         activeCharacter = 0;
-        characters[0].characterName = Team.characterOne;
-        characters[1].characterName = Team.characterTwo;
-        characters[2].characterName = Team.characterThree;
+        if(Team.characterOne != null)
+            characters[0].characterName = Team.characterOne;
+        else
+        {
+            characters[0].characterName = "Urp";
+            Team.urp = 6;
+        }
+            
+        if (Team.characterTwo != null)
+            characters[1].characterName = Team.characterTwo;
+        else
+        {
+            characters[1].characterName = "Chrisa";
+            Team.chrisa = 3;
+        }
+            
+        if (Team.characterThree != null)
+            characters[2].characterName = Team.characterThree;
+        else
+        {
+            characters[2].characterName = "Kurtzle";
+            Team.kurtzle = 3;
+        }
+            
         for (int i = 0; i< 3; i++)
         {
             CharacterScreen.setStats(characters[i].characterName);

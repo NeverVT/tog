@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour
     public GameObject gameScript;
     public CharacterControl characterControl;
     public ParticleSystem particle;
+    public ParticleSystem particle2;
 
     public static int numCollectedG; //Number of Coins Collected
     public static int numCollectedH; //Number of Health Cystals Collected

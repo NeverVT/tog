@@ -521,7 +521,9 @@ public class Collision : MonoBehaviour
         }
         else if (other.transform.name == "AcceptButton")
         {
-            SceneManager.LoadScene("TitleScreen");
+            SceneManager.LoadScene("GameScreen");
+            ScoreControl.resetScores();
+            ScoreText.score = 0;
         }
         else if (GameControl.smite)
         {

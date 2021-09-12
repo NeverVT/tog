@@ -16,7 +16,7 @@ public class Team : MonoBehaviour
     public static int wolf;
 
     private void Start()
-    {
+    {/*
         characterOne = PlayerPrefs.GetString("0");
         characterTwo = PlayerPrefs.GetString("1");
         characterThree = PlayerPrefs.GetString("2");
@@ -35,7 +35,7 @@ public class Team : MonoBehaviour
             kurtzle = 1;
         dobby = PlayerPrefs.GetInt("Dobby");
         bear = PlayerPrefs.GetInt("Bear");
-        wolf = PlayerPrefs.GetInt("Wolf");
+        wolf = PlayerPrefs.GetInt("Wolf");*/
     }
 
     public void addLevelToCharacter(string character) //Adds a level to the character bought in the Ship Screen
