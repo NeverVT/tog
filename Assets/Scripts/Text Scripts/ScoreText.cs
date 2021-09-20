@@ -10,6 +10,8 @@ public class ScoreText : MonoBehaviour
     {
         if (currentScore < score)
             currentScore++;
+        if (currentScore > score)
+            currentScore = score;
         this.GetComponent<TextMesh>().text = currentScore.ToString();
     }
    

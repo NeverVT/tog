@@ -174,8 +174,8 @@ public class GameScript : MonoBehaviour
             characterControl.cOneSkillTwo.SetActive(true);
         if(characterControl.searchPirates())
         {
-            GetComponent<Artifacts>().bombBag = true;
-            GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
+            //GetComponent<Artifacts>().bombBag = true;
+            //GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
         }
         bossSpawner = UnityEngine.Random.Range(15, 21);
         shopSpawner = UnityEngine.Random.Range(9, 15);
@@ -1198,36 +1198,40 @@ public class GameScript : MonoBehaviour
                     }
                 }
             }
+            Tile.amountCollectedH = healthGain;
             //End of Turn
-            
-            //Collect Tiles                                    
-            if(enemies.Count > 0)
+
+            //Collect Tiles           
+            unfreeze();
+            if (enemies.Count > 0)
             {   //Deal Damage                 
-                healthGain += dealDamage(swords);
+                characterControl.setCurrentHealth(characterControl.getCurrentHealth() + dealDamage(swords));
                 yield return new WaitForSeconds(0.5F);
             }   
             //Shift Board
             shiftBoard();
             yield return new WaitForSeconds(1F);  
             //Reduce Skill CD's
-            turnCounter++;  
-            Tile.amountCollectedH = healthGain;                    
+            turnCounter++;                                        
+            yield return new WaitUntil(() => Tile.numCollectedG <= 0);
+            yield return new WaitUntil(() => Tile.numCollectedH <= 0);          
             healthGain = 0;
             goldCollected = 0;
-            yield return new WaitUntil(() => Tile.numCollectedG <= 0);
-            yield return new WaitUntil(() => Tile.numCollectedH <= 0);
             if (GameControl.doubleShot <= 1)
             {   //Take Damage              
                 if (!intimidating && !meek && !sleightOfHand && !survivalist && checkGoblinExists())
-                {                 
+                {
                     yield return StartCoroutine(takeDamage()); 
-                    if(checkFightingGoblinExists())                  
-                        yield return new WaitForSeconds(1.25F);               
-                    if(checkBossWithSpellExists())
-                    {   //Boss Casts Spell        
-                        StartCoroutine(castBossesSpell());
-                        yield return new WaitForSeconds(2F);                      
-                    }
+                    if(checkFightingGoblinExists())
+                    {
+                        if (checkBossWithSpellExists())
+                        {   //Boss Casts Spell        
+                            StartCoroutine(castBossesSpell());
+                            yield return new WaitForSeconds(2F);
+                        }
+                        else
+                            yield return new WaitForSeconds(1.25F);
+                    }                                                      
                 } //Change Character                              
                 characterControl.switchCharacter();
                 if(GameControl.doubleShot == 1)
@@ -1239,7 +1243,7 @@ public class GameScript : MonoBehaviour
             else
                 GameControl.doubleShot--;
             
-            unfreeze();           
+                       
             checkGhosts();    
             if(GetComponent<Artifacts>().chaosStone)
             {
@@ -1441,8 +1445,8 @@ public class GameScript : MonoBehaviour
         }
         else if (temp.GetComponent<Tile>().boss == "Lich")
         {
-            if (!temp.GetComponent<Enemy>().justSpawned)
-                temp.gameObject.transform.GetChild(8).GetComponent<Animator>().SetTrigger("Attacking");
+            //if (!temp.GetComponent<Enemy>().justSpawned)
+                //temp.gameObject.transform.GetChild(8).GetComponent<Animator>().SetTrigger("Attacking");
             Debug.Log("Freezing");
             if (r > 0)
                 if (board[r - 1, c].GetComponent<Tile>().mType != "Goblin" && board[r - 1, c].GetComponent<Tile>().mType != "Shopkeeper")
@@ -1578,15 +1582,15 @@ public class GameScript : MonoBehaviour
         }
         if(type == "Goblin")
         {
-            score.GetComponent<ScoreAddition>().number = 10 + (totalCount - currentCount);
-            ScoreText.score += (10 + (totalCount - currentCount));
-            ScoreControl.goblinScore += (5 + (totalCount - currentCount));
+            score.GetComponent<ScoreAddition>().number = 10;
+            ScoreText.score += 10;
+            ScoreControl.goblinScore += 10;
         }
         if(type == "Boss")
         {
-            score.GetComponent<ScoreAddition>().number = 50 + (totalCount - currentCount);
-            ScoreText.score += (50 + (totalCount - currentCount));
-            ScoreControl.bossScore += (5 + (totalCount - currentCount));
+            score.GetComponent<ScoreAddition>().number = 50;
+            ScoreText.score += 50;
+            ScoreControl.bossScore += 50;
         }
     }
 
@@ -2397,7 +2401,7 @@ public class GameScript : MonoBehaviour
                 GameObject obj = board[i, j];
                 if (obj.GetComponent<Tile>().mType == "Goblin")
                 {
-                    obj.GetComponent<Enemy>().justFrozen = true;
+                    obj.GetComponent<Enemy>().frozen = true;
                     obj.gameObject.transform.GetChild(18).gameObject.SetActive(true);
                 }
             }
@@ -3091,9 +3095,9 @@ public class GameScript : MonoBehaviour
                    // }
                         
                     Destroy(board[i, j].gameObject);
-                    //shopSpawner = 1;
+                    shopSpawner = -1;
                     //GameControl.gold = 100;
-                    
+                    Debug.Log("Turn Counter: " + turnCounter + "  |  Boss Spawner: " + bossSpawner);
                     if (turnCounter == shopSpawner)
                     {
                         shopSpawner += UnityEngine.Random.Range(10, 16);
@@ -3112,6 +3116,7 @@ public class GameScript : MonoBehaviour
                             PlayerPrefs.SetString("Boss Stage", "Stage One");
                         Debug.Log(PlayerPrefs.GetString("Boss Stage"));
                         //temp = 1;
+                        /*
                         if (ScoreControl.bossScore == 150)
                         {
                             temp = 7;
@@ -3123,8 +3128,8 @@ public class GameScript : MonoBehaviour
                         if(ScoreControl.bossScore == 400 && PlayerPrefs.GetString("Boss Stage") == "Stage Three")
                         {
                             temp = 9;
-                        }                                          
-                        //temp = 1;
+                        }  */                                        
+                        //temp = 5;
                         if(temp == 1)
                         {
                             board[i, j] = (GameObject)Instantiate(slime, position, Quaternion.identity);

@@ -124,13 +124,15 @@ public class Tile : MonoBehaviour
 
             if(currentPos.x - endPos.x <= 0.15 && currentPos.y - endPos.y <= 0.15)
             {
-                
                 if(this.gameObject.GetComponent<Tile>().mType == "Coin")
                 {
                     gameScript.GetComponent<GameScript>().counter++;
                     if (numCollectedG != 0)
-                    {                      
-                        GameControl.gold += (amountCollectedG / numCollectedG);                     
+                    {
+                        if (amountCollectedG / numCollectedG > 1)
+                            GameControl.gold += (amountCollectedG / numCollectedG);
+                        else
+                            GameControl.gold += 1;
                     }                   
                     if (gameScript.GetComponent<GameScript>().counter >= numCollectedG)
                     {
@@ -142,8 +144,11 @@ public class Tile : MonoBehaviour
                 {
                     gameScript.GetComponent<GameScript>().counter++;
                     if (numCollectedH != 0)
-                    {                     
-                        characterControl.setCurrentHealth(characterControl.getCurrentHealth() + (amountCollectedH / numCollectedH));
+                    {
+                        if(amountCollectedH / numCollectedH > 1)
+                            characterControl.setCurrentHealth(characterControl.getCurrentHealth() + (amountCollectedH / numCollectedH));
+                        else
+                            characterControl.setCurrentHealth(characterControl.getCurrentHealth() + 1);
                     }
                     if (gameScript.GetComponent<GameScript>().counter >= numCollectedH)
                     {

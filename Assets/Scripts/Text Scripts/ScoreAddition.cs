@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScoreAddition : MonoBehaviour
 {
     public int number = 0;
-    private int time = 0;
+    public int time = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +16,14 @@ public class ScoreAddition : MonoBehaviour
     void Update()
     {
         if (time < 100)
+        {
             this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + .02f, this.transform.position.z);
+            time++;
+        }
         else
-            Destroy(this);
+        {
+            Destroy(this.gameObject);
+        }
+            
     }
 }

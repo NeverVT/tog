@@ -23,7 +23,7 @@ public class Character : MonoBehaviour
         {
             if (characterName == portraits[i].name)
             {
-                this.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = portraits[i];
+                this.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = portraits[i];
                 weapon.icon.GetComponent<SpriteRenderer>().sprite = weapon.weapons[i];
                 armor.icon.GetComponent<SpriteRenderer>().sprite = armor.armors[i];
             }

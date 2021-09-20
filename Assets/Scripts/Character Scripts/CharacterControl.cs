@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class CharacterControl : MonoBehaviour
 {
+    public GameObject loadingDoors;
     public GameScript game;
     public Character[] characters;
     public GameObject cOneSkillOne;
@@ -28,7 +29,7 @@ public class CharacterControl : MonoBehaviour
         else
         {
             characters[0].characterName = "Urp";
-            Team.urp = 6;
+            Team.urp = 1;
         }
             
         if (Team.characterTwo != null)
@@ -36,7 +37,7 @@ public class CharacterControl : MonoBehaviour
         else
         {
             characters[1].characterName = "Chrisa";
-            Team.chrisa = 3;
+            Team.chrisa = 1;
         }
             
         if (Team.characterThree != null)
@@ -44,7 +45,7 @@ public class CharacterControl : MonoBehaviour
         else
         {
             characters[2].characterName = "Kurtzle";
-            Team.kurtzle = 3;
+            Team.kurtzle = 1;
         }
             
         for (int i = 0; i< 3; i++)
@@ -62,14 +63,22 @@ public class CharacterControl : MonoBehaviour
             characters[i].skillTwo = CharacterScreen.skillTwo;
         }
         totalCurrentHealth = totalMaxHealth;
+        characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+        characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
+        characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
     }
 
     public void switchCharacter()
     {
-        checkGameOver();
+        StartCoroutine(checkGameOver());
         if(activeCharacter == 0) //Change from cOne -> cTwo
         {
             activeCharacter = 1;
+            characters[0].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false);
+            characters[0].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false);
+            characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
+            characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+            characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
             cOneSkillOne.SetActive(false);
             cOneSkillTwo.SetActive(false);
             if(characters[1].skillOne != "")
@@ -80,6 +89,11 @@ public class CharacterControl : MonoBehaviour
         else if (activeCharacter == 1) //Change from cTwo -> cThree
         {
             activeCharacter = 2;
+            characters[1].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false);
+            characters[1].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false);
+            characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
+            characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
+            characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
             cTwoSkillOne.SetActive(false);
             cTwoSkillTwo.SetActive(false);
             if(characters[2].skillOne != "")
@@ -90,6 +104,11 @@ public class CharacterControl : MonoBehaviour
         else if (activeCharacter == 2) //Change from cThree -> cOne
         {
             activeCharacter = 0;
+            characters[2].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false);
+            characters[2].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false);
+            characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+            characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
+            characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
             cThreeSkillOne.SetActive(false);
             cThreeSkillTwo.SetActive(false);
             if(characters[0].skillOne != "")
@@ -100,7 +119,7 @@ public class CharacterControl : MonoBehaviour
         //skills.setSkills();
     }
 
-    private void checkGameOver()
+    private IEnumerator checkGameOver()
     {
         if(totalCurrentHealth <= 0)
         {
@@ -121,7 +140,22 @@ public class CharacterControl : MonoBehaviour
                 cTwoSkillTwo.GetComponent<Spell>().coolDown = 0;
                 cThreeSkillOne.GetComponent<Spell>().coolDown = 0;
                 cThreeSkillTwo.GetComponent<Spell>().coolDown = 0;
-                SceneManager.LoadScene("Scenes/GameOver");
+                //SceneManager.LoadScene("Scenes/GameOver");
+                loadingDoors.GetComponent<Animator>().SetBool("close", true);
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
+                asyncLoad.allowSceneActivation = false;
+                while (!asyncLoad.isDone)
+                {
+                    if (asyncLoad.progress >= 0.9f)
+                    {
+                        if (loadingDoors.GetComponent<loadingDoors>().doneClosing)
+                        {
+                            loadingDoors.GetComponent<Animator>().SetBool("close", false);
+                            asyncLoad.allowSceneActivation = true;
+                        }
+                    }
+                    yield return null;
+                }
             }
                         
         }
