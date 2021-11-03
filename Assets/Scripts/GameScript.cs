@@ -133,8 +133,8 @@ public class GameScript : MonoBehaviour
             characterControl.characters[0].skillTwo.SetActive(true);
         if(characterControl.searchTribe("Pirate"))
         {
-            GetComponent<Artifacts>().bombBag = true;
-            GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
+            //GetComponent<Artifacts>().bombBag = true;
+            //GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
         }
         bossSpawner = UnityEngine.Random.Range(15, 21);
         shopSpawner = UnityEngine.Random.Range(9, 15);
@@ -919,14 +919,6 @@ public class GameScript : MonoBehaviour
             {
                 gameScreenParts[i].GetComponent<SpriteRenderer>().color = Color.gray;
             }
-            for(int i = 0; i < 6; i++)
-            {
-                for(int j = 0; j < 6; j++)
-                {
-                    if (board[i, j].transform.childCount > 9)
-                        board[i, j].transform.GetChild(8).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
-                }
-            }
             slimeNeedsToEat = true;         
             //float exp = 0;
             double goldCollected = 0;           
@@ -1235,14 +1227,6 @@ public class GameScript : MonoBehaviour
             for(int i = 0; i < gameScreenParts.Length; i++)
             {
                 gameScreenParts[i].GetComponent<SpriteRenderer>().color = Color.white;
-            }
-            for(int i = 0; i < 6; i++)
-            {
-                for(int j = 0; j < 6; j++)
-                {
-                    if (board[i, j].transform.childCount > 9)
-                        board[i, j].transform.GetChild(8).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-                }
             }
         }
         yield return null;
