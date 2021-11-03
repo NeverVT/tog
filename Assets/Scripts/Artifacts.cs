@@ -103,8 +103,6 @@ public class Artifacts : MonoBehaviour
         {
             reroll = false;
             int roll = Random.Range(1, 8);
-            while (roll != 3 && roll != 5 && roll != 7)
-                roll = Random.Range(1, 8);
             if (roll == 1 && !bait)
                 artifact = "bait";
             else if (roll == 2 && !coupon)
@@ -132,8 +130,6 @@ public class Artifacts : MonoBehaviour
         {
             reroll = false;
             int roll = UnityEngine.Random.Range(1, 14);
-            while (roll != 2 && roll != 13 && roll != 11 && roll != 8)
-                roll = Random.Range(1, 14);
             if (roll == 1 && !amuletOfPain)
                 artifact = "amuletOfPain";
             else if (roll == 2 && !bombBag)
