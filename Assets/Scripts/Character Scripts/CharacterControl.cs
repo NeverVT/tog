@@ -10,17 +10,21 @@ public class CharacterControl : MonoBehaviour
     public GameObject loadingDoors;
     public GameScript game;
     public Character[] characters;
-    public GameObject cOneSkillOne;
-    public GameObject cOneSkillTwo;
-    public GameObject cTwoSkillOne;
-    public GameObject cTwoSkillTwo;
-    public GameObject cThreeSkillOne;
-    public GameObject cThreeSkillTwo;
     public int activeCharacter;
     public Ship ship;
-    public Skills skills;
     private int totalMaxHealth;
     private int totalCurrentHealth;
+    public string characterName;
+    public string tribe;
+    public int maxHealth;
+    public int currentHealth;
+    public int weaponAttack;
+    public int armorDefense;
+    public string traitOne;
+    public string traitTwo;
+    public string skillOne;
+    public string skillTwo;
+
     public void setUpCharacters()
     {
         activeCharacter = 0;
@@ -50,76 +54,59 @@ public class CharacterControl : MonoBehaviour
             
         for (int i = 0; i< 3; i++)
         {
-            CharacterScreen.setStats(characters[i].characterName);
-            characters[i].maxHealth = CharacterScreen.maxHealth;
-            totalMaxHealth += CharacterScreen.maxHealth;
-            characters[i].tribe = CharacterScreen.tribe;
+            setStats(characters[i].characterName);
+            characters[i].maxHealth = maxHealth;
+            totalMaxHealth += maxHealth;
+            characters[i].tribe = tribe;
             characters[i].currentHealth = characters[i].maxHealth;
-            characters[i].weapon.damage = CharacterScreen.weaponAttack;
-            characters[i].armor.defense = CharacterScreen.armorDefense;
-            characters[i].traitOne = CharacterScreen.traitOne;
-            characters[i].traitTwo = CharacterScreen.traitTwo;
-            characters[i].skillOne = CharacterScreen.skillOne;
-            characters[i].skillTwo = CharacterScreen.skillTwo;
+            characters[i].weapon.damage = weaponAttack;
+            characters[i].armor.defense = armorDefense;
+            characters[i].traitOne.name = traitOne;
+            characters[i].traitTwo.name = traitTwo;
+            characters[i].skillOne.name = skillOne;
+            characters[i].skillTwo.name = skillTwo;
+            characters[i].init();
         }
         totalCurrentHealth = totalMaxHealth;
         characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-        characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
+        characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
+        characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
     }
 
     public void switchCharacter()
     {
         StartCoroutine(checkGameOver());
-        if(activeCharacter == 0) //Change from cOne -> cTwo
-        {
-            activeCharacter = 1;
-            characters[0].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false);
-            characters[0].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false);
-            characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-            characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-            cOneSkillOne.SetActive(false);
-            cOneSkillTwo.SetActive(false);
-            if(characters[1].skillOne != "")
-                cTwoSkillOne.SetActive(true);
-            if(characters[1].skillTwo != "")
-                cTwoSkillTwo.SetActive(true);
-        }
-        else if (activeCharacter == 1) //Change from cTwo -> cThree
-        {
-            activeCharacter = 2;
-            characters[1].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false);
-            characters[1].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false);
-            characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-            characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-            characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            cTwoSkillOne.SetActive(false);
-            cTwoSkillTwo.SetActive(false);
-            if(characters[2].skillOne != "")
-                cThreeSkillOne.SetActive(true);
-            if(characters[2].skillTwo != "")
-                cThreeSkillTwo.SetActive(true);
-        }
-        else if (activeCharacter == 2) //Change from cThree -> cOne
-        {
+        //turn off current characters skills and skill tooltips
+        characters[activeCharacter].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false); //skillOne tooltip
+        characters[activeCharacter].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false); //skillTwo tooltip
+        characters[activeCharacter].skillOne.SetActive(false);
+        characters[activeCharacter].skillTwo.SetActive(false);
+        //change the active character to the next party member
+        if (activeCharacter == 2) 
             activeCharacter = 0;
-            characters[2].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false);
-            characters[2].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false);
-            characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            characters[1].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-            characters[2].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-            cThreeSkillOne.SetActive(false);
-            cThreeSkillTwo.SetActive(false);
-            if(characters[0].skillOne != "")
-                cOneSkillOne.SetActive(true);
-            if(characters[0].skillTwo != "")
-                cOneSkillTwo.SetActive(true);
+        else
+            activeCharacter++;
+        //dim not active characters and brighten the active character
+        for (int i = 0; i < 3; i++) 
+        {
+            if(i == activeCharacter)
+                characters[i].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+            else
+                characters[i].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
         }
-        //skills.setSkills();
+        //check if the new active character has empty skill or traits slots and turn them off
+        if (characters[activeCharacter].skillOne.name != "") 
+            characters[activeCharacter].skillOne.SetActive(true);
+        if (characters[activeCharacter].skillTwo.name != "")
+            characters[activeCharacter].skillTwo.SetActive(true);
+        if (characters[activeCharacter].traitOne.name != "")
+            characters[activeCharacter].traitOne.SetActive(true);
+        if (characters[activeCharacter].traitTwo.name != "")
+            characters[activeCharacter].traitTwo.SetActive(true);
+
     }
 
-    private IEnumerator checkGameOver()
+    private IEnumerator checkGameOver() //Does a check to see if the game is over
     {
         if(totalCurrentHealth <= 0)
         {
@@ -134,12 +121,12 @@ public class CharacterControl : MonoBehaviour
                 ScoreControl.saveHighScore();
                 GameControl.gold = 0;
                 setCurrentHealth(getMaxHealth());
-                cOneSkillOne.GetComponent<Spell>().coolDown = 0;
-                cOneSkillTwo.GetComponent<Spell>().coolDown = 0;
-                cTwoSkillOne.GetComponent<Spell>().coolDown = 0;
-                cTwoSkillTwo.GetComponent<Spell>().coolDown = 0;
-                cThreeSkillOne.GetComponent<Spell>().coolDown = 0;
-                cThreeSkillTwo.GetComponent<Spell>().coolDown = 0;
+                characters[0].skillOne.GetComponent<Spell>().coolDown = 0;
+                characters[0].skillTwo.GetComponent<Spell>().coolDown = 0;
+                characters[1].skillOne.GetComponent<Spell>().coolDown = 0;
+                characters[1].skillTwo.GetComponent<Spell>().coolDown = 0;
+                characters[2].skillOne.GetComponent<Spell>().coolDown = 0;
+                characters[2].skillTwo.GetComponent<Spell>().coolDown = 0;
                 //SceneManager.LoadScene("Scenes/GameOver");
                 loadingDoors.GetComponent<Animator>().SetBool("close", true);
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
@@ -156,17 +143,16 @@ public class CharacterControl : MonoBehaviour
                     }
                     yield return null;
                 }
-            }
-                        
+            }                      
         }
     }
-    public bool searchPirates() //Searches the party for a trait, active or inactive, and return which character has it
+    public bool searchTribe(string tribe) //Checks if all 3 party members belong to the same tribe
     { 
-        if (characters[0].tribe == "Pirate")
+        if (characters[0].tribe == tribe)
         {
-            if (characters[1].tribe == "Pirate")
+            if (characters[1].tribe == tribe)
             {
-                if (characters[2].tribe == "Pirate")
+                if (characters[2].tribe == tribe)
                 {
                     return true;
                 }
@@ -178,7 +164,7 @@ public class CharacterControl : MonoBehaviour
     {
         for(int i = 0; i < characters.Length; i++)
         {
-            if (characters[i].traitOne == trait || characters[i].traitTwo == trait)
+            if (characters[i].traitOne.name == trait || characters[i].traitTwo.name == trait)
                 return activeCharacter;
         }
         return -1;      
@@ -186,7 +172,7 @@ public class CharacterControl : MonoBehaviour
 
     public bool searchActiveCharacterTraits(string trait) //Searches the active character if they have a specific trait
     {
-        if(characters[activeCharacter].traitOne == trait || characters[activeCharacter].traitTwo == trait)
+        if(characters[activeCharacter].traitOne.name == trait || characters[activeCharacter].traitTwo.name == trait)
         {
             return true;
         }
@@ -198,7 +184,7 @@ public class CharacterControl : MonoBehaviour
 
     public bool searchSkillExists(string skill) //Checks if the Skill is on the Active Character
     {
-        if (characters[activeCharacter].skillOne == skill || characters[activeCharacter].skillTwo == skill)
+        if (characters[activeCharacter].skillOne.name == skill || characters[activeCharacter].skillTwo.name == skill)
         {
             return true;
         }
@@ -207,11 +193,11 @@ public class CharacterControl : MonoBehaviour
             return false;
         }
     }
-    public double getAttack()
+    public double getAttack() //Returns the active character's Attack value
     {
         return characters[activeCharacter].weapon.damage;
     }
-    public double getLowestAttack()
+    public double getLowestAttack() //Returns the lowest Attack value on the team
     {
         double attack = 0;
         for(int i = 0; i < characters.Length; i++)
@@ -221,11 +207,11 @@ public class CharacterControl : MonoBehaviour
         }
         return attack;
     }
-    public double getArmor()
+    public double getArmor() //Returns the active character's Armor value
     {
         return characters[activeCharacter].armor.defense;
     }
-    public double getLowestArmor()
+    public double getLowestArmor() //Returns the lowest Armor value on the team
     {
         double attack = 0;
         for(int i = 0; i < characters.Length; i++)
@@ -239,22 +225,18 @@ public class CharacterControl : MonoBehaviour
     {
         return totalMaxHealth;
     }
-
     public double getCurrentHealth()
     {
         return totalCurrentHealth;
     }
-
     public string getTraitOne()
     {
-        return characters[activeCharacter].traitOne;
+        return characters[activeCharacter].traitOne.name;
     }
-
     public string getTraitTwo()
     {
-        return characters[activeCharacter].traitTwo;
+        return characters[activeCharacter].traitTwo.name;
     }
-
     public void setCurrentHealth(double newHealth)
     {
         if (newHealth > totalMaxHealth)
@@ -262,9 +244,405 @@ public class CharacterControl : MonoBehaviour
         else
             totalCurrentHealth = (int)newHealth;
     }
-
     public GameObject getWeaponIcon()
     {
         return characters[activeCharacter].weapon.icon;
+    }
+
+    public void setStats(string name)
+    {
+        if (name != "")
+            name = name.Replace("(Clone)", "").Trim();
+        characterName = name;
+        if (name == "Urp")
+        {
+            tribe = "Pirate";
+            if (Team.urp == 1 || Team.urp == 2) //Level One
+            {
+                maxHealth = 20;
+                currentHealth = 25;
+                weaponAttack = 1;
+                armorDefense = 2;
+                traitOne = "";
+                PlayerPrefs.SetString("UrpTraitOne", traitOne);
+                traitTwo = "";
+                PlayerPrefs.SetString("UrpTraitTwo", traitTwo);
+
+                if (PlayerPrefs.GetString("UrpSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("UrpSkillOne");
+                else
+                {
+                    skillOne = "Flash Bang";
+                    PlayerPrefs.SetString("UrpSkillOne", skillOne);
+                }
+                skillTwo = "";
+                PlayerPrefs.SetString("UrpSkillTwo", skillTwo);
+            }
+            else if (Team.urp >= 3 && Team.urp <= 5) //Level Two
+            {
+                maxHealth = 25;
+                currentHealth = 25;
+                weaponAttack = 2;
+                armorDefense = 2;
+
+                if (PlayerPrefs.GetString("UrpTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("UrpTraitOne");
+                else
+                {
+                    traitOne = "Protector";
+                    PlayerPrefs.SetString("UrpTraitOne", traitOne);
+                }
+
+                traitTwo = "";
+                PlayerPrefs.SetString("UrpTraitTwo", traitTwo);
+
+                if (PlayerPrefs.GetString("UrpSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("UrpSkillOne");
+                else
+                {
+                    skillOne = "Flash Bang";
+                    PlayerPrefs.SetString("UrpSkillOne", skillOne);
+                }
+
+                skillTwo = "";
+                PlayerPrefs.SetString("UrpSkillTwo", skillTwo);
+            }
+            else if (Team.urp >= 6 && Team.urp <= 9) //Level Three
+            {
+                maxHealth = 25;
+                currentHealth = 25;
+                weaponAttack = 2;
+                armorDefense = 2;
+
+                if (PlayerPrefs.GetString("UrpTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("UrpTraitOne");
+                else
+                {
+                    traitOne = "Protector";
+                    PlayerPrefs.SetString("UrpTraitOne", traitOne);
+                }
+
+                traitTwo = "";
+                PlayerPrefs.SetString("UrpTraitTwo", traitTwo);
+
+                if (PlayerPrefs.GetString("UrpSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("UrpSkillOne");
+                else
+                {
+                    skillOne = "Flash Bang";
+                    PlayerPrefs.SetString("UrpSkillOne", skillOne);
+                }
+
+                if (PlayerPrefs.GetString("UrpSkillTwo") != "")
+                    skillTwo = PlayerPrefs.GetString("UrpSkillTwo");
+                else
+                {
+                    skillTwo = "Dragon Shot";
+                    PlayerPrefs.SetString("UrpSkillTwo", skillTwo);
+                }
+            }
+            else if (Team.urp == 10) //Level Four
+            {
+                maxHealth = 30;
+                currentHealth = 30;
+                weaponAttack = 3;
+                armorDefense = 2;
+                if (PlayerPrefs.GetString("UrpTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("UrpTraitOne");
+                else
+                {
+                    traitOne = "Protector";
+                    PlayerPrefs.SetString("UrpTraitOne", traitOne);
+                }
+
+                if (PlayerPrefs.GetString("UrpTraitTwo") != "")
+                    traitTwo = PlayerPrefs.GetString("UrpTraitTwo");
+                else
+                {
+                    traitTwo = "Tough";
+                    PlayerPrefs.SetString("UrpTraitTwo", traitTwo);
+                }
+
+                if (PlayerPrefs.GetString("UrpSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("UrpSkillOne");
+                else
+                {
+                    skillOne = "Flash Bang";
+                    PlayerPrefs.SetString("UrpSkillOne", skillOne);
+                }
+
+                if (PlayerPrefs.GetString("UrpSkillTwo") != "")
+                    skillTwo = PlayerPrefs.GetString("UrpSkillTwo");
+                else
+                {
+                    skillTwo = "Dragon Shot";
+                    PlayerPrefs.SetString("UrpSkillTwo", skillTwo);
+                }
+            }
+        }
+        if (name == "Chrisa")
+        {
+            tribe = "Pirate";
+            if (Team.chrisa == 1 || Team.chrisa == 2) //Level One
+            {
+                maxHealth = 15;
+                currentHealth = 15;
+                weaponAttack = 2;
+                armorDefense = 1;
+                traitOne = "";
+                PlayerPrefs.SetString("ChrisaTraitOne", traitOne);
+                traitTwo = "";
+                PlayerPrefs.SetString("ChrisaTraitTwo", traitTwo);
+                if (PlayerPrefs.GetString("ChrisaSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("ChrisaSkillOne");
+                else
+                {
+                    skillOne = "Powder Keg";
+                    PlayerPrefs.SetString("ChrisaSkillOne", skillOne);
+                }
+                skillTwo = "";
+                PlayerPrefs.SetString("ChrisaSkillTwo", skillTwo);
+            }
+            else if (Team.chrisa >= 3 && Team.chrisa <= 5) //Level Two
+            {
+                maxHealth = 20;
+                currentHealth = 20;
+                weaponAttack = 3;
+                armorDefense = 2;
+                if (PlayerPrefs.GetString("ChrisaTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("ChrisaTraitOne");
+                else
+                {
+                    traitOne = "Cunning";
+                    PlayerPrefs.SetString("ChrisaTraitOne", traitOne);
+                }
+                traitTwo = "";
+                PlayerPrefs.SetString("ChrisaTraitTwo", traitTwo);
+                if (PlayerPrefs.GetString("ChrisaSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("ChrisaSkillOne");
+                else
+                {
+                    skillOne = "Powder Keg";
+                    PlayerPrefs.SetString("ChrisaSkillOne", skillOne);
+                }
+                skillTwo = "";
+                PlayerPrefs.SetString("ChrisaSkillTwo", skillTwo);
+            }
+            else if (Team.chrisa >= 6 && Team.chrisa <= 9) //Level Three
+            {
+                maxHealth = 20;
+                currentHealth = 20;
+                weaponAttack = 3;
+                armorDefense = 2;
+                if (PlayerPrefs.GetString("ChrisaTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("ChrisaTraitOne");
+                else
+                {
+                    traitOne = "Cunning";
+                    PlayerPrefs.SetString("ChrisaTraitOne", traitOne);
+                }
+                traitTwo = "";
+                PlayerPrefs.SetString("ChrisaTraitTwo", traitTwo);
+                if (PlayerPrefs.GetString("ChrisaSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("ChrisaSkillOne");
+                else
+                {
+                    skillOne = "Powder Keg";
+                    PlayerPrefs.SetString("ChrisaSkillOne", skillOne);
+                }
+                skillTwo = "";
+                PlayerPrefs.SetString("ChrisaSkillTwo", skillTwo);
+            }
+            else if (Team.chrisa == 10) //Level Four
+            {
+                maxHealth = 22;
+                currentHealth = 22;
+                weaponAttack = 3;
+                armorDefense = 3;
+                if (PlayerPrefs.GetString("ChrisaTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("ChrisaTraitOne");
+                else
+                {
+                    traitOne = "Cunning";
+                    PlayerPrefs.SetString("ChrisaTraitOne", traitOne);
+                }
+                if (PlayerPrefs.GetString("ChrisaTraitTwo") != "")
+                    traitTwo = PlayerPrefs.GetString("ChrisaTraitTwo");
+                else
+                {
+                    traitTwo = "Sleight of Hand";
+                    PlayerPrefs.SetString("ChrisaTraitTwo", traitTwo);
+                }
+                if (PlayerPrefs.GetString("ChrisaSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("ChrisaSkillOne");
+                else
+                {
+                    skillOne = "Powder Keg";
+                    PlayerPrefs.SetString("ChrisaSkillOne", skillOne);
+                }
+                skillTwo = "";
+                PlayerPrefs.SetString("ChrisaSkillTwo", skillTwo);
+            }
+        }
+        if (name == "Kurtzle")
+        {
+            tribe = "Pirate";
+            if (Team.kurtzle == 1 || Team.kurtzle == 2) //Level One
+            {
+                maxHealth = 16;
+                currentHealth = 16;
+                weaponAttack = 2;
+                armorDefense = 1;
+                traitOne = "";
+                PlayerPrefs.SetString("KurtzleTraitOne", traitOne);
+                traitTwo = "";
+                PlayerPrefs.SetString("KurtzleTraitTwo", traitTwo);
+
+                if (PlayerPrefs.GetString("KurtzleSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("KurtzleSkillOne");
+                else
+                {
+                    skillOne = "Hex Ball";
+                    PlayerPrefs.SetString("KurtzleSkillOne", skillOne);
+                }
+
+                skillTwo = "";
+                PlayerPrefs.SetString("KurtzleSkillTwo", skillTwo);
+            }
+            else if (Team.kurtzle >= 3 && Team.kurtzle <= 5) //Level Two
+            {
+                maxHealth = 20;
+                currentHealth = 20;
+                weaponAttack = 3;
+                armorDefense = 2;
+
+                if (PlayerPrefs.GetString("KurtzleTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("KurtzleTraitOne");
+                else
+                {
+                    traitOne = "Slasher";
+                    PlayerPrefs.SetString("KurtzleTraitOne", traitOne);
+                }
+
+                traitTwo = "";
+                PlayerPrefs.SetString("KurtzleTraitTwo", traitTwo);
+
+                if (PlayerPrefs.GetString("KurtzleSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("KurtzleSkillOne");
+                else
+                {
+                    skillOne = "Hex Ball";
+                    PlayerPrefs.SetString("KurtzleSkillOne", skillOne);
+                }
+
+                skillTwo = "";
+                PlayerPrefs.SetString("KurtzleSkillTwo", skillTwo);
+            }
+            else if (Team.kurtzle >= 6 && Team.kurtzle <= 9) //Level Three
+            {
+                maxHealth = 20;
+                currentHealth = 20;
+                weaponAttack = 3;
+                armorDefense = 2;
+
+                if (PlayerPrefs.GetString("KurtzleTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("KurtzleTraitOne");
+                else
+                {
+                    traitOne = "Slasher";
+                    PlayerPrefs.SetString("KurtzleTraitOne", traitOne);
+                }
+
+                traitTwo = "";
+                PlayerPrefs.SetString("KurtzleTraitTwo", traitTwo);
+
+                if (PlayerPrefs.GetString("KurtzleSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("KurtzleSkillOne");
+                else
+                {
+                    skillOne = "Hex Ball";
+                    PlayerPrefs.SetString("KurtzleSkillOne", skillOne);
+                }
+
+                if (PlayerPrefs.GetString("KurtzleSkillTwo") != "")
+                    skillTwo = PlayerPrefs.GetString("KurtzleSkillTwo");
+                else
+                {
+                    skillTwo = "Double Shot";
+                    PlayerPrefs.SetString("KurtzleSkillTwo", skillTwo);
+                }
+            }
+            else if (Team.kurtzle == 10) //Level Four
+            {
+                maxHealth = 22;
+                currentHealth = 22;
+                weaponAttack = 4;
+                armorDefense = 2;
+                if (PlayerPrefs.GetString("KurtzleTraitOne") != "")
+                    traitOne = PlayerPrefs.GetString("KurtzleTraitOne");
+                else
+                {
+                    traitOne = "Slasher";
+                    PlayerPrefs.SetString("KurtzleTraitOne", traitOne);
+                }
+
+                if (PlayerPrefs.GetString("KurtzleTraitTwo") != "")
+                    traitTwo = PlayerPrefs.GetString("KurtzleTraitTwo");
+                else
+                {
+                    traitTwo = "Hacker";
+                    PlayerPrefs.SetString("KurtzleTraitTwo", traitTwo);
+                }
+
+                if (PlayerPrefs.GetString("KurtzleSkillOne") != "")
+                    skillOne = PlayerPrefs.GetString("KurtzleSkillOne");
+                else
+                {
+                    skillOne = "Hex Ball";
+                    PlayerPrefs.SetString("KurtzleSkillOne", skillOne);
+                }
+
+                if (PlayerPrefs.GetString("KurtzleSkillTwo") != "")
+                    skillTwo = PlayerPrefs.GetString("KurtzleSkillTwo");
+                else
+                {
+                    skillTwo = "Double Shot";
+                    PlayerPrefs.SetString("KurtzleSkillTwo", skillTwo);
+                }
+            }
+        }
+        if (name == "Dobby")
+        {
+            maxHealth = 17;
+            currentHealth = 17;
+            weaponAttack = 2;
+            armorDefense = 1;
+            traitOne = "Looter";
+            traitTwo = "Sleight of Hand";
+            skillOne = "Appraise";
+            skillTwo = "Gold Rush";
+        }
+        if (name == "Bear")
+        {
+            maxHealth = 25;
+            currentHealth = 25;
+            weaponAttack = 2;
+            armorDefense = 1;
+            traitOne = "Tough";
+            traitTwo = "Intimidating";
+            skillOne = "Overpower";
+            skillTwo = "Bloodshot";
+        }
+        if (name == "Wolf")
+        {
+            maxHealth = 20;
+            currentHealth = 20;
+            weaponAttack = 3;
+            armorDefense = 2;
+            traitOne = "Hunter";
+            traitTwo = "Killer";
+            skillOne = "Bloodlust";
+            skillTwo = "Execute";
+        }
     }
 }

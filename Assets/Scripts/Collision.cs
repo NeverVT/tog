@@ -47,58 +47,52 @@ public class Collision : MonoBehaviour
 
     void Update()
     {
-        if (gameScript != null && gameScript.GetComponent<GameScript>().collected.Count > 0)
-        {
-            if (gameScript.GetComponent<GameScript>().collected.Peek().CompareTag("Spell"))
+        if (gameScript != null && gameScript.GetComponent<GameScript>().collected.Count > 0 && !gameScript.GetComponent<GameScript>().attackPhase)
+        {         
+            for (int i = 0; i < 6; i++)
             {
-            }
-            else
-            {
-                for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 6; j++)
                 {
-                    for (int j = 0; j < 6; j++)
+                    type = gameScript.GetComponent<GameScript>().board[i, j].GetComponent<Tile>().mType;
+                    if(gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mType == "Collected")
                     {
-                        type = gameScript.GetComponent<GameScript>().board[i, j].GetComponent<Tile>().mType;
-                        if(gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mType == "Collected")
+                        previousType = savedPreviousType;
+                    }
+                    else 
+                        previousType = gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mType;
+                    if (type != "Collected")
+                    {
+                        if (isCollectable(type, previousType))
                         {
-                            previousType = savedPreviousType;
-                        }
-                        else 
-                            previousType = gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mType;
-                        if (type != "Collected")
-                        {
-                            if (isCollectable(type, previousType))
-                            {
-                                if (gameScript.GetComponent<GameScript>().board[i, j].transform.childCount > 9)
-                                { 
-                                    if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8) != null)
-                                        if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>() != null)
-                                            gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-                                    if (type == "Goblin" && gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9) != null)
-                                    {
-                                        if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>() != null)
-                                            gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-                                    }   
-                                }
-                            }
-                            else
-                            {
-                                if (gameScript.GetComponent<GameScript>().board[i, j].transform.childCount > 9)
+                            if (gameScript.GetComponent<GameScript>().board[i, j].transform.childCount > 9)
+                            { 
+                                if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8) != null)
+                                    if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>() != null)
+                                        gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+                                if (type == "Goblin" && gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9) != null)
                                 {
-                                    if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8) != null)
-                                        if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>() != null)
-                                            gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
-                                    if (type == "Goblin" && gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9) != null)
-                                    {
-                                        if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>() != null)
-                                            gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
-                                    }
+                                    if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>() != null)
+                                        gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+                                }   
+                            }
+                        }
+                        else
+                        {
+                            if (gameScript.GetComponent<GameScript>().board[i, j].transform.childCount > 9)
+                            {
+                                if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8) != null)
+                                    if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>() != null)
+                                        gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(8).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
+                                if (type == "Goblin" && gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9) != null)
+                                {
+                                    if (gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>() != null)
+                                        gameScript.GetComponent<GameScript>().board[i, j].transform.GetChild(9).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
                                 }
                             }
                         }
                     }
                 }
-            }
+            }       
         }      
 
         else if (gameScript != null && gameScript.GetComponent<GameScript>() != null && SceneManager.GetActiveScene().name == "GameScreen")
@@ -1206,7 +1200,7 @@ public class Collision : MonoBehaviour
                     StartCoroutine(BarracksScrollUp(selectedCharacter.gameObject));                   
                 }                   
                 selectedCharacter = other.gameObject;
-                CharacterScreen.setStats(other.transform.name);
+                characterControl.setStats(other.transform.name);
             }
             //Debug.Log("1: " + Team.characterOne + " 2: " + Team.characterTwo + " 3: " + Team.characterThree);
         }
@@ -1226,7 +1220,7 @@ public class Collision : MonoBehaviour
             other.transform.Find("InspectSelected").gameObject.SetActive(false);
             Instantiate(characterScreen, new Vector3(50f, 0f, -30f), Quaternion.identity);
             other.transform.parent.GetComponent<Animator>().SetBool("selected", false);
-            CharacterScreen.setStats(other.transform.parent.transform.parent.name);
+            characterControl.setStats(other.transform.parent.transform.parent.name);
         }
     }
 

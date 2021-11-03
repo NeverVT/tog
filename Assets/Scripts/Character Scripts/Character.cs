@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
-    public Sprite[] portraits;  
+    public Sprite[] portraits;
+    public Sprite[] skills = new Sprite[4];
+    public Sprite[] traits = new Sprite[6];
 
     public string characterName;
     public string tribe;
@@ -12,10 +13,10 @@ public class Character : MonoBehaviour
     public double currentHealth;
     public CharacterWeapon weapon;
     public CharacterArmor armor;
-    public string traitOne;
-    public string traitTwo;
-    public string skillOne;
-    public string skillTwo;
+    public GameObject skillOne;
+    public GameObject skillTwo;
+    public GameObject traitOne;
+    public GameObject traitTwo;
 
     private void Awake()
     {
@@ -28,6 +29,37 @@ public class Character : MonoBehaviour
                 armor.icon.GetComponent<SpriteRenderer>().sprite = armor.armors[i];
             }
         }
+    }
 
+    public void init()
+    {
+        for (int i = 0; i < skills.Length; i++)
+        {
+            if (skillOne.name == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
+            {
+                skillOne.GetComponent<Image>().sprite = skills[i];
+                skillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
+            }
+
+            if (skillTwo.name == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
+            {
+                skillTwo.GetComponent<Image>().sprite = skills[i];
+                skillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
+            }
+        }
+        for (int i = 0; i < skills.Length; i++)
+        {
+            if (traitOne.name == traits[i].name.Replace("(UnityEngine.Sprite)", ""))
+            {
+                traitOne.GetComponent<Image>().sprite = traits[i];
+                traitOne.name = traits[i].name.Replace("(UnityEngine.Sprite)", "");
+            }
+
+            if (traitTwo.name == traits[i].name.Replace("(UnityEngine.Sprite)", ""))
+            {
+                traitTwo.GetComponent<Image>().sprite = traits[i];
+                traitTwo.name = traits[i].name.Replace("(UnityEngine.Sprite)", "");
+            }
+        }
     }
 }

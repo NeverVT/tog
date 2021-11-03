@@ -15,6 +15,7 @@ public class GameScript : MonoBehaviour
     public CharacterControl characterControl;
     public Camera cam;
     public  int gold = 0;
+    public bool attackPhase = false;
 
   
     public int goblinHealthConstant = 9;
@@ -126,56 +127,14 @@ public class GameScript : MonoBehaviour
         ScoreControl.partyOne = Team.characterOne;
         ScoreControl.partyTwo = Team.characterTwo;
         ScoreControl.partyThree = Team.characterThree;
-
-        for(int i = 0; i < skills.Length; i++)
+        if(characterControl.characters[0].skillOne.name != "")
+            characterControl.characters[0].skillOne.SetActive(true);
+        if(characterControl.characters[0].skillTwo.name != "")
+            characterControl.characters[0].skillTwo.SetActive(true);
+        if(characterControl.searchTribe("Pirate"))
         {
-            if(characterControl.characters[0].skillOne == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                characterControl.cOneSkillOne.GetComponent<Image>().sprite = skills[i];
-                characterControl.cOneSkillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-                
-            if(characterControl.characters[0].skillTwo == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                characterControl.cOneSkillTwo.GetComponent<Image>().sprite = skills[i];
-                characterControl.cOneSkillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-                
-
-            if(characterControl.characters[1].skillOne == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                characterControl.cTwoSkillOne.GetComponent<Image>().sprite = skills[i];
-                characterControl.cTwoSkillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-                
-            if(characterControl.characters[1].skillTwo == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                characterControl.cTwoSkillTwo.GetComponent<Image>().sprite = skills[i];
-                characterControl.cTwoSkillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-                
-
-            if(characterControl.characters[2].skillOne == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                characterControl.cThreeSkillOne.GetComponent<Image>().sprite = skills[i];
-                characterControl.cThreeSkillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-                
-            if(characterControl.characters[2].skillTwo == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                characterControl.cThreeSkillTwo.GetComponent<Image>().sprite = skills[i];
-                characterControl.cThreeSkillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-                
-        }
-        if(characterControl.characters[0].skillOne != "")
-            characterControl.cOneSkillOne.SetActive(true);
-        if(characterControl.characters[0].skillTwo != "")
-            characterControl.cOneSkillTwo.SetActive(true);
-        if(characterControl.searchPirates())
-        {
-            //GetComponent<Artifacts>().bombBag = true;
-            //GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
+            GetComponent<Artifacts>().bombBag = true;
+            GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
         }
         bossSpawner = UnityEngine.Random.Range(15, 21);
         shopSpawner = UnityEngine.Random.Range(9, 15);
@@ -1054,12 +1013,12 @@ public class GameScript : MonoBehaviour
                 else if (obj.GetComponent<Tile>().mType == "Rubble")
                 {
                     rubbleCollected++;
-                    temp = UnityEngine.Random.Range(1, 101);
+                    temp = UnityEngine.Random.Range(1, 1001);
                     if(GetComponent<Artifacts>().loadedDie) //Loaded Die Function
-                        temp = UnityEngine.Random.Range(1, 51);
+                        temp = UnityEngine.Random.Range(1, 501);
                     if(GetComponent<Artifacts>().leatherGloves) //Leather Gloves Function
-                        temp = UnityEngine.Random.Range(1, 23); 
-                    if (temp <= 10) //Turn Rubble into Health
+                        temp = UnityEngine.Random.Range(1, 206); 
+                    if (temp <= 100) //Turn Rubble into Health (10% | 20% | 49%)
                     {
                         Tile.numCollectedH++;
                         GameObject tempHealth;
@@ -1070,7 +1029,7 @@ public class GameScript : MonoBehaviour
                         tempHealth.GetComponent<Tile>().collected = true;
                         healthGain++;
                     }
-                    else if (temp <= 20) //Turn Rubble into Gold
+                    else if (temp <= 200) //Turn Rubble into Gold (10% | 20% | 49%)
                     {
                         Tile.numCollectedG++;
                         GameObject tempGold;
@@ -1082,7 +1041,7 @@ public class GameScript : MonoBehaviour
                         goldCollected++;
                         gold++;
                     }
-                    else if (temp <= 22) //Turn Rubble into Artifact
+                    else if (temp <= 205) //Turn Rubble into Artifact (0.5% | 1% | 2%)
                     {
                         int col = obj.GetComponent<Tile>().mCol;
                         int row = obj.GetComponent<Tile>().mRow;
@@ -1221,6 +1180,15 @@ public class GameScript : MonoBehaviour
             {   //Take Damage              
                 if (!intimidating && !meek && !sleightOfHand && !survivalist && checkGoblinExists())
                 {
+                    attackPhase = true;
+                    for(int i = 0; i < 6; i++)
+                    {
+                        for(int j = 0; j < 6; j++)
+                        {
+                            if (board[i, j].transform.childCount > 9 && board[i,j].GetComponent<Tile>().mType != "Goblin")
+                                board[i, j].transform.GetChild(8).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
+                        }
+                    }
                     yield return StartCoroutine(takeDamage()); 
                     if(checkFightingGoblinExists())
                     {
@@ -1253,8 +1221,8 @@ public class GameScript : MonoBehaviour
             swords = 0;
             rubbleCollected = 0;
             counter = 0;
-            cunningInCollected = false;            
-            
+            cunningInCollected = false;
+            attackPhase = false;
             screenUp = false;
             for(int i = 0; i < gameScreenParts.Length; i++)
             {
@@ -1694,12 +1662,12 @@ public class GameScript : MonoBehaviour
     {
         GameControl.gold = 0;
         characterControl.setCurrentHealth(characterControl.getMaxHealth());
-        characterControl.cOneSkillOne.GetComponent<Spell>().coolDown = 0;
-        characterControl.cOneSkillTwo.GetComponent<Spell>().coolDown = 0;
-        characterControl.cTwoSkillOne.GetComponent<Spell>().coolDown = 0;
-        characterControl.cTwoSkillTwo.GetComponent<Spell>().coolDown = 0;
-        characterControl.cThreeSkillOne.GetComponent<Spell>().coolDown = 0;
-        characterControl.cThreeSkillTwo.GetComponent<Spell>().coolDown = 0;
+        characterControl.characters[0].skillOne.GetComponent<Spell>().coolDown = 0;
+        characterControl.characters[0].skillTwo.GetComponent<Spell>().coolDown = 0;
+        characterControl.characters[1].skillOne.GetComponent<Spell>().coolDown = 0;
+        characterControl.characters[1].skillTwo.GetComponent<Spell>().coolDown = 0;
+        characterControl.characters[2].skillOne.GetComponent<Spell>().coolDown = 0;
+        characterControl.characters[2].skillTwo.GetComponent<Spell>().coolDown = 0;
         SceneManager.LoadScene("TitleScreen");
     }
 
@@ -1707,7 +1675,7 @@ public class GameScript : MonoBehaviour
     {
         int healthGain = 0;
         int damageDone = 0;               
-        int count = enemies.Count;
+        int count = enemies.Count;     
         for (int i = 0; i < count; i++)
         {
             double damage = characterControl.getAttack() + swords;
