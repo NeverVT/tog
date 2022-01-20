@@ -17,7 +17,7 @@ public class charactersHealthBarGS : MonoBehaviour
         else if (this.transform.parent.transform.parent.name == "CharacterThree")
             character = 2;
 
-        healthPercent = (float)characterControl.characters[character].currentHealth / (float)characterControl.characters[character].maxHealth;
+        healthPercent = (float)characterControl.selectedCharacter.GetComponent<Character>().currentHealth / (float)characterControl.selectedCharacter.GetComponent<Character>().maxHealth;
         if (float.IsNaN(healthPercent))
             healthPercent = 1;
         else

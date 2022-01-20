@@ -127,21 +127,11 @@ public class GameScript : MonoBehaviour
     public void init()
     {       
         PlayerPrefs.SetString("Boss Stage", "Stage One");
-        ScoreControl.partyOne = Team.characterOne;
-        ScoreControl.partyTwo = Team.characterTwo;
-        ScoreControl.partyThree = Team.characterThree;
-       // if(characterControl.characters[0].skillOne.name != "")
-           // characterControl.characters[0].skillOne.SetActive(true);
-        //if(characterControl.characters[0].skillTwo.name != "")
-           // characterControl.characters[0].skillTwo.SetActive(true);
-        if(characterControl.searchTribe("Pirate"))
-        {
-            //GetComponent<Artifacts>().bombBag = true;
-            //GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
-        }
+        ScoreControl.partyOne = Team.selectedCharacter;      
         bossSpawner = UnityEngine.Random.Range(15, 21);
         shopSpawner = UnityEngine.Random.Range(9, 15);
-        if(characterControl.searchTraitAll("Hunter") != -1)
+        /*
+        if(characterControl.getTraitOne("Hunter") != -1)
         {
             bossSpawner -= 5;  //Hunter Function
         }
@@ -153,6 +143,7 @@ public class GameScript : MonoBehaviour
         {
             //Comforting Function
         }
+        */
         fillBoard();
     }
     public void predict()
@@ -773,7 +764,6 @@ public class GameScript : MonoBehaviour
                     yield return new WaitUntil(() => Tile.numCollectedH <= 0);
                     yield return StartCoroutine(takeDamage());
                 }
-                characterControl.switchCharacter();
                 unfreeze();
                 turnCounter++;
                 screenUp = false;
@@ -1130,17 +1120,7 @@ public class GameScript : MonoBehaviour
                 goldCollected /= 2;
             Tile.amountCollectedG = goldCollected;
                          
-            if(characterControl.searchTraitAll("Tough") != -1) //Tough Function
-            {
-                if(characterControl.characters[characterControl.searchTraitAll("Tough")].currentHealth + 2 > characterControl.characters[characterControl.searchTraitAll("Tough")].maxHealth)
-                {
-                    characterControl.characters[characterControl.searchTraitAll("Tough")].currentHealth = characterControl.characters[characterControl.searchTraitAll("Tough")].maxHealth;
-                }
-                else
-                {
-                    characterControl.characters[characterControl.searchTraitAll("Tough")].currentHealth += 2;
-                }                                   
-            }
+           //tough
 
             if (checkBoardForTile("Bomb"))
             {
@@ -1669,13 +1649,7 @@ public class GameScript : MonoBehaviour
     void endRun()
     {
         GameControl.gold = 0;
-        characterControl.setCurrentHealth(characterControl.getMaxHealth());
-        characterControl.characters[0].skillOne.GetComponent<Spell>().coolDown = 0;
-        characterControl.characters[0].skillTwo.GetComponent<Spell>().coolDown = 0;
-        characterControl.characters[1].skillOne.GetComponent<Spell>().coolDown = 0;
-        characterControl.characters[1].skillTwo.GetComponent<Spell>().coolDown = 0;
-        characterControl.characters[2].skillOne.GetComponent<Spell>().coolDown = 0;
-        characterControl.characters[2].skillTwo.GetComponent<Spell>().coolDown = 0;
+        characterControl.setCurrentHealth(characterControl.getMaxHealth());     
         SceneManager.LoadScene("TitleScreen");
     }
 
@@ -2738,13 +2712,7 @@ public class GameScript : MonoBehaviour
                                 }                                   
                                 if (characterControl.searchActiveCharacterTraits("Spiked")) //Spiked Function
                                     temp.GetComponent<Enemy>().health -= 1;
-                                if (characterControl.searchTraitAll("Shrapnel") != -1)
-                                {                                   
-                                    if(shrapnelRand >= 80 && temp.GetComponent<Tile>().boss == "")
-                                    {
-                                        temp.GetComponent<Enemy>().health -= 1;
-                                    }
-                                }
+                                //Shrapnel
                                 if (temp.GetComponent<Enemy>().burning)
                                     temp.GetComponent<Enemy>().health -= 1;
                                 if (temp.GetComponent<Enemy>().poisoned)
@@ -2798,11 +2766,11 @@ public class GameScript : MonoBehaviour
                        
                     }
                 }
-                if (enemyDamage - characterControl.characters[characterControl.activeCharacter].armor.defense > 0)
+                if (enemyDamage - characterControl.selectedCharacter.GetComponent<Character>().armor.defense > 0)
                 {                  
-                        if(characterControl.getCurrentHealth() - (enemyDamage - characterControl.characters[characterControl.activeCharacter].armor.defense) > 0)
+                        if(characterControl.getCurrentHealth() - (enemyDamage - characterControl.selectedCharacter.GetComponent<Character>().armor.defense) > 0)
                         {
-                            characterControl.setCurrentHealth(characterControl.getCurrentHealth() - (enemyDamage - characterControl.characters[characterControl.activeCharacter].armor.defense));
+                            characterControl.setCurrentHealth(characterControl.getCurrentHealth() - (enemyDamage - characterControl.selectedCharacter.GetComponent<Character>().armor.defense));
                         }
                         else
                         {
@@ -2817,9 +2785,11 @@ public class GameScript : MonoBehaviour
         }
         else
             changeGoblin();
-        bossAbilityUsed = false;       
-    }
+        bossAbilityUsed = false;
 
+        StartCoroutine(characterControl.checkGameOver());
+    }
+   
     bool checkGoblin()
     {
         for(int i = 0; i < 6; i++)

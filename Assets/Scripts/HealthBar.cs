@@ -9,7 +9,6 @@ public class HealthBar : MonoBehaviour
 	
 	void Update ()
     {
-       // Debug.Log(CharacterControl.getMaxHealth() + " : " + CharacterControl.getCurrentHealth());
         healthPercent = (float)characterControl.getCurrentHealth() / (float)characterControl.getMaxHealth();
         if (float.IsNaN(healthPercent))       
             healthPercent = 1;      

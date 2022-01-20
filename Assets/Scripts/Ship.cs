@@ -47,11 +47,11 @@ public class Ship : MonoBehaviour
     public void ChangeRecruit()
     {
         Stack<String> recruits = new Stack<String>();
-        if(Team.urp < 10)
+        if(Team.urpLvl < 10)
             recruits.Push("Urp");
-        if(Team.chrisa < 10)
+        if(Team.chrisaLvl < 10)
             recruits.Push("Chrisa");
-        if(Team.kurtzle < 10)
+        if(Team.kurtzleLvl < 10)
             recruits.Push("Kurtzle");
         
         if(recruits.Count > 0)

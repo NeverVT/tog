@@ -13,19 +13,19 @@ public class armorGS : MonoBehaviour
     public GameObject tooltip;
     void Update()
     {
-        defense.GetComponent<TextMesh>().text = characterControl.characters[characterControl.activeCharacter].armor.defense.ToString(); //Set damage text
-        tooltip.transform.GetChild(1).GetComponent<TextMesh>().text = characterControl.characters[characterControl.activeCharacter].armor.defense.ToString();
-        icon.GetComponent<SpriteRenderer>().sprite = characterControl.characters[characterControl.activeCharacter].armor.icon.GetComponent<SpriteRenderer>().sprite; //Set Sprite   
-        tooltip.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterControl.characters[characterControl.activeCharacter].armor.icon.GetComponent<SpriteRenderer>().sprite;
-        if (characterControl.characters[characterControl.activeCharacter].armor.traitOne != null) //Turn on Attributes if they exists
+        defense.GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().armor.defense.ToString(); //Set damage text
+        tooltip.transform.GetChild(1).GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().armor.defense.ToString();
+        icon.GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite; //Set Sprite   
+        tooltip.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite;
+        if (characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne != null) //Turn on Attributes if they exists
         {
-            attributeOne.transform.Find(characterControl.characters[characterControl.activeCharacter].armor.traitOne).gameObject.SetActive(true);
-            if (characterControl.characters[characterControl.activeCharacter].armor.traitTwo != null)
+            attributeOne.transform.Find(characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne).gameObject.SetActive(true);
+            if (characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo != null)
             {
-                attributeTwo.transform.Find(characterControl.characters[characterControl.activeCharacter].armor.traitTwo).gameObject.SetActive(true);
-                if (characterControl.characters[characterControl.activeCharacter].armor.traitThree != null)
+                attributeTwo.transform.Find(characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo).gameObject.SetActive(true);
+                if (characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree != null)
                 {
-                    attributeThree.transform.Find(characterControl.characters[characterControl.activeCharacter].armor.traitThree).gameObject.SetActive(true);
+                    attributeThree.transform.Find(characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree).gameObject.SetActive(true);
                 }
             }
         }

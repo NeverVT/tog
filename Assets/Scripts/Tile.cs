@@ -78,43 +78,11 @@ public class Tile : MonoBehaviour
 
             if (this.gameObject.GetComponent<Tile>().mType == "Health")
             {
-                if (characterControl.searchTraitAll("Empath") == -1)
-                {
+                if (numCollectedH != 0)
+                {                      
                     transform.position = Vector3.Lerp(currentPos, endPos, .07f);
                     transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(0.8f, 0.8f, 1), .07f);
-                }
-                else
-                {
-                    if (numCollectedH != 0)
-                    {
-                        if ((characterControl.getCurrentHealth() + (amountCollectedH / numCollectedH)) > characterControl.getMaxHealth())
-                        {
-                            if (characterControl.GetComponent<CharacterControl>().searchActiveCharacterTraits("Empath")) // Empath function
-                            {
-                                if (characterControl.getCurrentHealth() == characterControl.getMaxHealth())
-                                {
-                                    if (characterControl.characters[0].currentHealth < characterControl.characters[0].maxHealth && characterControl.characters[0].currentHealth > 0)
-                                    {
-                                        endPos = new Vector3(0.41F, -9.23F, -5F);                                      
-                                        characterControl.characters[0].currentHealth += (amountCollectedH / numCollectedH);
-                                    }
-                                    else if (characterControl.characters[1].currentHealth < characterControl.characters[1].maxHealth && characterControl.characters[1].currentHealth > 0)
-                                    {
-                                        endPos = new Vector3(1.4F, -9.23F, -5F);                                      
-                                        characterControl.characters[1].currentHealth += (amountCollectedH / numCollectedH);
-                                    }
-                                    else if (characterControl.characters[2].currentHealth < characterControl.characters[2].maxHealth && characterControl.characters[2].currentHealth > 0)
-                                    {
-                                        endPos = new Vector3(2.33F, -9.23F, -5F);                                       
-                                        characterControl.characters[2].currentHealth += (amountCollectedH / numCollectedH);
-                                    }
-                                }
-                            }
-                        }
-                        transform.position = Vector3.Lerp(currentPos, endPos, .07f);
-                        transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(0.8f, 0.8f, 1), .07f);
-                    }
-                }
+                }             
             }
             else
             {

@@ -24,8 +24,7 @@ public class recruitChestAnimationController : MonoBehaviour
             case "Kurtzle":
                 kurtzle.gameObject.SetActive(true);
                 break;
-        }
-        
+        }    
     }
 
     void deactivateRecruit()

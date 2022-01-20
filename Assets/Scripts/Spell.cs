@@ -24,17 +24,6 @@ public class Spell : MonoBehaviour
             //gameScript.GetComponent<GameScript>().spellsOnCD.Remove(this.gameObject);
         }          
     }
-
-    public void triggerTooltip()
-    {
-        tooltip.SetActive(true);
-    }
-
-    public void turnOffTooltip()
-    {
-        tooltip.SetActive(false);
-    }
-
     public void triggerSpell()
     {
         tooltip.SetActive(false);

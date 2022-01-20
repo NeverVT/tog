@@ -5,34 +5,25 @@ using UnityEngine;
 public class Team : MonoBehaviour
 {
     public static Team team;
-    public static string characterOne;
-    public static string characterTwo;
-    public static string characterThree;
-    public static int urp;
-    public static int chrisa;
-    public static int kurtzle;
-    public static int dobby;
-    public static int bear;
-    public static int wolf;
+    public static string selectedCharacter;
+    public static int urpLvl;
+    public static int chrisaLvl;
+    public static int kurtzleLvl;
 
     private void Start()
     {
-        characterOne = PlayerPrefs.GetString("0");
-        characterTwo = PlayerPrefs.GetString("1");
-        characterThree = PlayerPrefs.GetString("2");
-        if (characterOne == "") characterOne = "Urp";
-        if (characterTwo == "") characterTwo = "Chrisa";
-        if (characterThree == "") characterThree = "Kurtzle";
+        selectedCharacter = PlayerPrefs.GetString("selectedCharacter");
+        if (selectedCharacter == "") selectedCharacter = "Urp";
 
-        urp = PlayerPrefs.GetInt("Urp");
-        if(urp == 0)
-            urp = 1;
-        chrisa = PlayerPrefs.GetInt("Chrisa");
-        if(chrisa == 0)
-            chrisa = 1;
-        kurtzle = PlayerPrefs.GetInt("Kurtzle");
-        if(kurtzle == 0)
-            kurtzle = 1;    
+        urpLvl = PlayerPrefs.GetInt("UrpLvl");
+        if(urpLvl == 0)
+            urpLvl = 1;
+        chrisaLvl = PlayerPrefs.GetInt("ChrisaLvl");
+        if(chrisaLvl == 0)
+            chrisaLvl = 1;
+        kurtzleLvl = PlayerPrefs.GetInt("KurtzleLvl");
+        if(kurtzleLvl == 0)
+            kurtzleLvl = 1;    
     }
 
     public void addLevelToCharacter(string character) //Adds a level to the character bought in the Ship Screen
@@ -40,19 +31,19 @@ public class Team : MonoBehaviour
         switch(character)
         {
             case "Urp":
-                if(urp < 10)
-                    urp++;
-                PlayerPrefs.SetInt("Urp", urp);
+                if(urpLvl < 10)
+                    urpLvl++;
+                PlayerPrefs.SetInt("UrpLvl", urpLvl);
                 break;
             case "Chrisa":
-                if(chrisa < 10)
-                    chrisa++;
-                PlayerPrefs.SetInt("Chrisa", chrisa);
+                if(chrisaLvl < 10)
+                    chrisaLvl++;
+                PlayerPrefs.SetInt("ChrisaLvl", chrisaLvl);
                 break;
             case "Kurtzle":
-                if(kurtzle < 10)
-                    kurtzle++;
-                PlayerPrefs.SetInt("Kurtzle", kurtzle);
+                if(kurtzleLvl < 10)
+                    kurtzleLvl++;
+                PlayerPrefs.SetInt("KurtzleLvl", kurtzleLvl);
                 break;          
         }
     }   
@@ -61,12 +52,12 @@ public class Team : MonoBehaviour
     {
         switch(character)
         {
-            case "Urp":
-                return urp;
-            case "Chrisa":
-                return chrisa;
-            case "Kurtzle":
-                return kurtzle;
+            case "UrpLvl":
+                return urpLvl;
+            case "ChrisaLvl":
+                return chrisaLvl;
+            case "KurtzleLvl":
+                return kurtzleLvl;
         }
         return 0;
     }

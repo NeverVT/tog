@@ -7,7 +7,7 @@ public class portraitsOffGS : MonoBehaviour
     public CharacterControl characterControl;
     void FixedUpdate()
     {
-        if (characterControl.characters[characterControl.activeCharacter].characterName != this.transform.name)
+        if (characterControl.selectedCharacter.GetComponent<Character>().characterName != this.transform.name)
             this.gameObject.SetActive(false);
     }
 }

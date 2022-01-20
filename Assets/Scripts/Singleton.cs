@@ -4,8 +4,25 @@ using UnityEngine;
 
 public class Singleton : MonoBehaviour
 {
-    void Start()
+    private static Singleton instance = null;
+    private static readonly object padlock = new object();
+
+    Singleton()
     {
-        DontDestroyOnLoad(this.gameObject);          
+    }
+
+    public static Singleton Instance
+    {
+        get
+        {
+            lock (padlock)
+            {
+                if (instance == null)
+                {
+                    instance = new Singleton();
+                }
+                return instance;
+            }
+        }
     }
 }

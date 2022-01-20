@@ -3,10 +3,7 @@ using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
-    public Sprite[] portraits;
-    public Sprite[] skills = new Sprite[4];
-    public Sprite[] traits = new Sprite[6];
-
+    public Sprite portrait;
     public string characterName;
     public string tribe;
     public double maxHealth;
@@ -17,49 +14,48 @@ public class Character : MonoBehaviour
     public GameObject skillTwo;
     public GameObject traitOne;
     public GameObject traitTwo;
+    public GameObject bonusOne;
+    public GameObject bonusTwo;
+    public GameObject relicOne;
+    public GameObject relicTwo; 
+    public GameObject tempSkill;
 
-    private void Awake()
+    public void Awake()
     {
-        for (int i = 0; i < portraits.Length; i++)
+        Debug.Log(skillOne.name + " | " + skillTwo.name + " | " + characterName + " | " + Team.getLevel(characterName));
+        this.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = portrait;
+        weapon.icon.GetComponent<SpriteRenderer>().sprite = weapon.icon.GetComponent<Sprite>();
+        armor.icon.GetComponent<SpriteRenderer>().sprite = armor.icon.GetComponent<Sprite>();
+        switch (Team.getLevel(characterName)) //Check the level of the selected character and set up the selected build for that character
         {
-            if (characterName == portraits[i].name)
-            {
-                this.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = portraits[i];
-                weapon.icon.GetComponent<SpriteRenderer>().sprite = weapon.weapons[i];
-                armor.icon.GetComponent<SpriteRenderer>().sprite = armor.armors[i];
-            }
+            case 0:
+                goto case 1;
+            case 1:
+                setupBuild(skillOne, skillTwo, "Skill");
+                break;
+            case 2:
+                setupBuild(traitOne, traitTwo, "Trait");
+                goto case 1;
+            case 3:
+                setupBuild(bonusOne, bonusTwo, "Bonus");
+                goto case 2;
+            case 4:
+                setupBuild(relicOne, relicTwo, "Relic");
+                goto case 3;
         }
     }
 
-    public void init()
+    private void setupBuild(GameObject objOne, GameObject objTwo, string type) //Determine wether the character should be using the first or second version of their build
     {
-        for (int i = 0; i < skills.Length; i++)
+        if (PlayerPrefs.GetString(characterName + type) == null || PlayerPrefs.GetString(characterName + type) == objOne.name) //use first
         {
-            if (skillOne.name == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                skillOne.GetComponent<Image>().sprite = skills[i];
-                skillOne.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-
-            if (skillTwo.name == skills[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                skillTwo.GetComponent<Image>().sprite = skills[i];
-                skillTwo.name = skills[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
+            objOne.SetActive(true);
+            objTwo.SetActive(false);
         }
-        for (int i = 0; i < skills.Length; i++)
+        else //use second
         {
-            if (traitOne.name == traits[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                traitOne.GetComponent<Image>().sprite = traits[i];
-                traitOne.name = traits[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
-
-            if (traitTwo.name == traits[i].name.Replace("(UnityEngine.Sprite)", ""))
-            {
-                traitTwo.GetComponent<Image>().sprite = traits[i];
-                traitTwo.name = traits[i].name.Replace("(UnityEngine.Sprite)", "");
-            }
+            objOne.SetActive(false);
+            objTwo.SetActive(true);
         }
     }
 }

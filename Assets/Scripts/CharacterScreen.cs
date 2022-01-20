@@ -42,11 +42,11 @@ public class CharacterScreen : MonoBehaviour
         //sets the character lvl text
         int currentLvl = 0;  
         if (characterControl.characterName.Replace("(Clone)", "").Trim() == "Urp")
-            currentLvl = Team.urp;
+            currentLvl = Team.urpLvl;
         else if (characterControl.characterName.Replace("(Clone)", "").Trim() == "Chrisa")
-            currentLvl = Team.chrisa;
+            currentLvl = Team.chrisaLvl;
         else if (characterControl.characterName.Replace("(Clone)", "").Trim() == "Kurtzle")
-            currentLvl = Team.kurtzle;
+            currentLvl = Team.kurtzleLvl;
 
         if (currentLvl == 1)
             level.GetComponent<TextMesh>().text = "1";
@@ -118,12 +118,12 @@ public class CharacterScreen : MonoBehaviour
                 }
             }
             
-            if(Team.urp >= 2)
+            if(Team.urpLvl >= 2)
             {
                 characters[characterIndex].transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(4).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
             }
-            if(Team.urp >= 3)
+            if(Team.urpLvl >= 3)
             {
                 characters[characterIndex].transform.GetChild(5).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(5).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
@@ -140,7 +140,7 @@ public class CharacterScreen : MonoBehaviour
                     characters[characterIndex].transform.GetChild(6).transform.GetChild(0).transform.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
                 }
             }
-            if(Team.urp == 4)
+            if(Team.urpLvl == 4)
             {
                 characters[characterIndex].transform.GetChild(7).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(7).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
@@ -207,17 +207,17 @@ public class CharacterScreen : MonoBehaviour
                 }
             }
 
-            if (Team.chrisa >= 2)
+            if (Team.chrisaLvl >= 2)
             {
                 characters[characterIndex].transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(4).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
             }
-            if (Team.chrisa >= 3)
+            if (Team.chrisaLvl >= 3)
             {
                 characters[characterIndex].transform.GetChild(5).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(5).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
             }
-            if (Team.chrisa == 4)
+            if (Team.chrisaLvl == 4)
             {
                 characters[characterIndex].transform.GetChild(6).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(6).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
@@ -285,12 +285,12 @@ public class CharacterScreen : MonoBehaviour
                 }
             }
 
-            if (Team.kurtzle >= 2)
+            if (Team.kurtzleLvl >= 2)
             {
                 characters[characterIndex].transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(4).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
             }
-            if (Team.kurtzle >= 3)
+            if (Team.kurtzleLvl >= 3)
             {
                 characters[characterIndex].transform.GetChild(5).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(5).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
@@ -307,7 +307,7 @@ public class CharacterScreen : MonoBehaviour
                     characters[characterIndex].transform.GetChild(6).transform.GetChild(0).transform.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
                 }
             }
-            if (Team.kurtzle == 4)
+            if (Team.kurtzleLvl == 4)
             {
                 characters[characterIndex].transform.GetChild(7).transform.GetChild(0).gameObject.SetActive(true);
                 characters[characterIndex].transform.GetChild(7).transform.GetChild(1).transform.GetComponent<TextMesh>().text = "";
@@ -330,7 +330,6 @@ public class CharacterScreen : MonoBehaviour
     public void equipmentSelect()
     {
         currentEquipmentSelected = EventSystem.current.currentSelectedGameObject.gameObject;
-        Debug.Log(currentEquipmentSelected.name);
         EventSystem.current.currentSelectedGameObject.transform.GetChild(3).gameObject.SetActive(true); //Turn on gold selected border for the equipment that was clicked on
         equipmentUpgradePrompt.SetActive(true); //Turn on the prompt to ask if you want to spend crystals to upgrade your equipment
         if (EventSystem.current.currentSelectedGameObject.name == "Weapon")

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinController : MonoBehaviour
+public class TileSpin : MonoBehaviour
 {
     public GameObject gameScript;
     int animationDelay;

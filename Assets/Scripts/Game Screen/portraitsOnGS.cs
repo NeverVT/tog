@@ -7,6 +7,6 @@ public class portraitsOnGS : MonoBehaviour
     public CharacterControl characterControl;
     void Update()
     {
-        this.transform.Find(characterControl.characters[characterControl.activeCharacter].characterName).gameObject.SetActive(true);
+        this.transform.Find(characterControl.selectedCharacter.GetComponent<Character>().characterName).gameObject.SetActive(true);
     }
 }

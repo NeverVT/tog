@@ -377,18 +377,11 @@ public class Collision : MonoBehaviour
 
                 for (int i = 0; i < 3; i++)
                 {
-                    characterControl.characters[i].weapon.gameObject.SetActive(true);
-                    characterControl.characters[i].weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].weapon.damage.ToString();
-                    characterControl.characters[i].armor.gameObject.SetActive(true);
-                    characterControl.characters[i].armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].armor.defense.ToString();
-                    /*
-                        if (i == 0)
-                            characterControl.characters[i].armor.gameObject.transform.position = new Vector3(7.34F, 26.5F, -3.11F);
-                        else if (i == 1)
-                            characterControl.characters[i].armor.gameObject.transform.position = new Vector3(17.11F, 25.96F, -3.11F);
-                        else
-                            characterControl.characters[i].armor.gameObject.transform.position = new Vector3(15.56F, 22.99F, -3.11F); */
-                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y + 1.5f, characterControl.characters[i].armor.transform.position.z);
+                    characterControl.selectedCharacter.GetComponent<Character>().weapon.gameObject.SetActive(true);
+                    characterControl.selectedCharacter.GetComponent<Character>().weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().weapon.damage.ToString();
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.gameObject.SetActive(true);
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().armor.defense.ToString();                
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.gameObject.transform.position = new Vector3(characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.x, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.y + 1.5f, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.z);
                 }
             }
         }
@@ -419,16 +412,16 @@ public class Collision : MonoBehaviour
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            characterControl.characters[i].weapon.gameObject.SetActive(true);
-                            characterControl.characters[i].weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].weapon.damage.ToString();
+                            characterControl.selectedCharacter.GetComponent<Character>().weapon.gameObject.SetActive(true);
+                            characterControl.selectedCharacter.GetComponent<Character>().weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().weapon.damage.ToString();
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            characterControl.characters[i].armor.gameObject.SetActive(true);
-                            characterControl.characters[i].armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].armor.defense.ToString();
+                            characterControl.selectedCharacter.GetComponent<Character>().armor.gameObject.SetActive(true);
+                            characterControl.selectedCharacter.GetComponent<Character>().armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().armor.defense.ToString();
                             /*
                             if (i == 0)
                                 characterControl.characters[i].armor.gameObject.transform.position = new Vector3(7.34F, 26.5F, -3.11F);
@@ -446,48 +439,48 @@ public class Collision : MonoBehaviour
             characterSelected = 0;
             itemType = "Weapon";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.characters[1].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[2].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
         }
         else if (other.transform.name == "WeaponTwo")
         {
             characterSelected = 1;
             itemType = "Weapon";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.characters[0].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[2].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
         }
         else if (other.transform.name == "WeaponThree")
         {
             characterSelected = 2;
             itemType = "Weapon";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.characters[0].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[1].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
         }
         else if (other.transform.name == "ArmorOne")
         {
             characterSelected = 0;
             itemType = "Armor";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.characters[1].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[2].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
         }
         else if (other.transform.name == "ArmorTwo")
         {
             characterSelected = 1;
             itemType = "Armor";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.characters[0].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[2].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
         }
         else if (other.transform.name == "ArmorThree")
         {
             characterSelected = 2;
             itemType = "Armor";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.characters[0].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[1].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
         }
         else if (other.transform.name == "Replace")
         {
@@ -500,15 +493,15 @@ public class Collision : MonoBehaviour
                     if (upgrading)
                     {
                         GameControl.gold -= 15;
-                        characterControl.characters[characterSelected].armor.defense++;
+                        characterControl.selectedCharacter.GetComponent<Character>().armor.defense++;
                     }
                     else
                     {
-                        characterControl.characters[characterSelected].armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                        characterControl.characters[characterSelected].armor.defense = selectedItem.GetComponent<Item>().mArmor;
-                        characterControl.characters[characterSelected].armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                        characterControl.characters[characterSelected].armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                        characterControl.characters[characterSelected].armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                        characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                        characterControl.selectedCharacter.GetComponent<Character>().armor.defense = selectedItem.GetComponent<Item>().mArmor;
+                        characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                        characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                        characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
                         GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
                     }
                 }
@@ -517,69 +510,22 @@ public class Collision : MonoBehaviour
                     if (upgrading)
                     {
                         GameControl.gold -= 15;
-                        characterControl.characters[characterSelected].weapon.damage++;
+                        characterControl.selectedCharacter.GetComponent<Character>().weapon.damage++;
                     }
                     else
                     {
-                        characterControl.characters[characterSelected].weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                        characterControl.characters[characterSelected].weapon.damage = selectedItem.GetComponent<Item>().mDamage;
-                        characterControl.characters[characterSelected].weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                        characterControl.characters[characterSelected].weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                        characterControl.characters[characterSelected].weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                        characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                        characterControl.selectedCharacter.GetComponent<Character>().weapon.damage = selectedItem.GetComponent<Item>().mDamage;
+                        characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                        characterControl.selectedCharacter.GetComponent<Character>().weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                        characterControl.selectedCharacter.GetComponent<Character>().weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
                         GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
                     }
                 }
                 respawnShopKeeper();
             }
         }
-        /*
-        else if (other.transform.name == "CSEquipment")
-        {
-            other.transform.parent.transform.parent.transform.parent.transform.parent.gameObject.transform.GetChild(7).gameObject.SetActive(true);
-            other.transform.GetChild(3).gameObject.SetActive(true);
-            equipmentType = other.transform.parent.name;
-            equipmentCharacter = other.transform.parent.transform.parent.name;
-        }
-        else if (other.transform.name == "EquipmentUpgradeAccept")
-        {
-            if (PlayerPrefs.GetInt("PlayerShard") >= 50)
-            {
-                PlayerPrefs.SetInt("PlayerShard", PlayerPrefs.GetInt("PlayerShard") - 50);
-                if (equipmentType == "Weapon")
-                {
-                    if (equipmentCharacter == "Urp")
-                    {
-                        PlayerPrefs.SetInt("UrpWeaponBonus", (PlayerPrefs.GetInt("UrpWeaponBonus") + 1));
-                    }
-                    if (equipmentCharacter == "Chrisa")
-                    {
-                        PlayerPrefs.SetInt("ChrisaWeaponBonus", (PlayerPrefs.GetInt("ChrisaWeaponBonus") + 1));
-                    }
-                    if (equipmentCharacter == "Kurtzle")
-                    {
-                        PlayerPrefs.SetInt("KurtzleWeaponBonus", (PlayerPrefs.GetInt("KurtzleWeaponBonus") + 1));
-                    }
-                }
-                if (equipmentType == "Armor")
-                {
-                    if (equipmentCharacter == "Urp")
-                    {
-                        PlayerPrefs.SetInt("UrpArmorBonus", (PlayerPrefs.GetInt("UrpArmorBonus") + 1));
-                    }
-                    if (equipmentCharacter == "Chrisa")
-                    {
-                        PlayerPrefs.SetInt("ChrisaArmorBonus", (PlayerPrefs.GetInt("ChrisaArmorBonus") + 1));
-                    }
-                    if (equipmentCharacter == "Kurtzle")
-                    {
-                        PlayerPrefs.SetInt("KurtzleArmorBonus", (PlayerPrefs.GetInt("KurtzleArmorBonus") + 1));
-                    }
-                }
-                other.transform.parent.gameObject.SetActive(false);
-            }
-           
-
-        } */
+       
         else if (other.transform.name == "AcceptButton")
         {
             StartCoroutine(loadScene("TitleScreen"));
@@ -1124,108 +1070,31 @@ public class Collision : MonoBehaviour
                         Barracks.cFiveName = tempName;
                     }
                 }
-                if (other.transform.name == Team.characterOne || other.transform.name == Team.characterTwo || other.transform.name == Team.characterThree)
+                if (other.transform.name == Team.selectedCharacter)// || other.transform.name == Team.characterTwo || other.transform.name == Team.characterThree)
                 {
-                    if (swapCharacter.transform.parent.name == Team.characterOne || swapCharacter.transform.parent.name == Team.characterTwo || swapCharacter.transform.parent.name == Team.characterThree) //Both selected characters are on the team
+                    if (swapCharacter.transform.parent.name == Team.selectedCharacter)// || swapCharacter.transform.parent.name == Team.characterTwo || swapCharacter.transform.parent.name == Team.characterThree) //Both selected characters are on the team
                     {
-                        if (other.transform.name == Team.characterOne)
+                        if (other.transform.name == Team.selectedCharacter)
                         {
-                            if (swapCharacter.transform.parent.name == Team.characterOne) //clicked the same character
-                            {
-                                StartCoroutine(BarracksScrollUp(other.gameObject));
-                                swapActive = false;
-                            }
-                            else if (swapCharacter.transform.parent.name == Team.characterTwo) //Swapping PartyMemberTwo with PartyMemberOne
-                            {                               
-                                Team.characterOne = swapCharacter.transform.parent.name;
-                                Team.characterTwo = other.transform.name;
-                                StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
-                                swapActive = false;
-                            }
-                            else if (swapCharacter.transform.parent.name == Team.characterThree) //Swapping PartyMemberThree with PartyMemberOne 
-                            {
-                                Team.characterOne = swapCharacter.transform.parent.name;
-                                Team.characterThree = other.transform.name;
-                                StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
-                                swapActive = false;
-                            }
-                        }
-                        else if (other.transform.name == Team.characterTwo)
-                        {
-                            if (swapCharacter.transform.parent.name == Team.characterOne) //Swapping PartyMemberOne with PartyMemberTwo
-                            {
-                                Team.characterTwo = swapCharacter.transform.parent.name;
-                                Team.characterOne = other.transform.name;
-                                StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
-                                swapActive = false;
-                            }
-                            else if (swapCharacter.transform.parent.name == Team.characterTwo) //clicked the same character
-                            {
-                                StartCoroutine(BarracksScrollUp(other.gameObject));
-                                swapActive = false;
-                            }
-                            else if (swapCharacter.transform.parent.name == Team.characterThree) //Swapping PartyMemberThree with PartyMemeberTwo
-                            {
-                                Team.characterTwo = swapCharacter.transform.parent.name;
-                                Team.characterThree = other.transform.name;
-                                StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
-                                swapActive = false;
-                            }
-                        }
-                        else if (other.transform.name == Team.characterThree)
-                        {
-                            if (swapCharacter.transform.parent.name == Team.characterOne) //Swapping PartyMemberOne with PartyMemberThree
-                            {
-                                Team.characterThree = swapCharacter.transform.parent.name;
-                                Team.characterOne = other.transform.name;
-                                StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
-                                swapActive = false;
-                            }
-                            else if (swapCharacter.transform.parent.name == Team.characterTwo) //Swapping PartyMemberTwo with PartyMemberThree
-                            {
-                                Team.characterThree = swapCharacter.transform.parent.name;
-                                Team.characterTwo = other.transform.name;
-                                StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
-                                swapActive = false;
-                            }
-                            else if (swapCharacter.transform.parent.name == Team.characterThree) //clicked the same character 
-                            {
-                                StartCoroutine(BarracksScrollUp(other.gameObject));
-                                swapActive = false;
-                            }
+                            StartCoroutine(BarracksScrollUp(other.gameObject));
+                            swapActive = false;                         
                         }
                     }
                     else //Swapping a PartyMember with a Non-PartyMember
                     {
-                        if (other.transform.name == Team.characterOne)
+                        if (other.transform.name == Team.selectedCharacter)
                         {
-                            Team.characterOne = swapCharacter.transform.parent.name;
-                        }
-                        else if (other.transform.name == Team.characterTwo)
-                        {
-                            Team.characterTwo = swapCharacter.transform.parent.name;
-                        }
-                        else if (other.transform.name == Team.characterThree)
-                        {
-                            Team.characterThree = swapCharacter.transform.parent.name;
+                            Team.selectedCharacter = swapCharacter.transform.parent.name;
                         }
                         StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
                         swapActive = false;
                     }
                 }
-                else if (swapCharacter.transform.parent.name == Team.characterOne || swapCharacter.transform.parent.name == Team.characterTwo || swapCharacter.transform.parent.name == Team.characterThree)
+                else if (swapCharacter.transform.parent.name == Team.selectedCharacter)// || swapCharacter.transform.parent.name == Team.characterTwo || swapCharacter.transform.parent.name == Team.characterThree)
                 {
-                    if (swapCharacter.transform.parent.name == Team.characterOne)
+                    if (swapCharacter.transform.parent.name == Team.selectedCharacter)
                     {
-                        Team.characterOne = other.transform.name;
-                    }
-                    else if (swapCharacter.transform.parent.name == Team.characterTwo)
-                    {
-                        Team.characterTwo = other.transform.name;
-                    }
-                    else if (swapCharacter.transform.parent.name == Team.characterThree)
-                    {
-                        Team.characterThree = other.transform.name;
+                        Team.selectedCharacter = other.transform.name;
                     }
                     StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
                     swapActive = false;
@@ -1392,20 +1261,20 @@ public class Collision : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            characterControl.characters[i].weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[i].weapon.weaponObj.SetActive(false);
-            characterControl.characters[i].armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.characters[i].armor.armorObj.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.SetActive(false);
             if(upgrading)
             {
                 if (i == 0)
-                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y - 2, characterControl.characters[i].armor.transform.position.z);
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.gameObject.transform.position = new Vector3(characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.x, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.y - 2, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.z);
 
                 else if (i == 1)
-                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y - 2, characterControl.characters[i].armor.transform.position.z);
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.gameObject.transform.position = new Vector3(characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.x, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.y - 2, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.z);
 
                 else
-                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y - 2, characterControl.characters[i].armor.transform.position.z);               
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.gameObject.transform.position = new Vector3(characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.x, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.y - 2, characterControl.selectedCharacter.GetComponent<Character>().armor.transform.position.z);               
             }                      
         }
         upgrading = false;
