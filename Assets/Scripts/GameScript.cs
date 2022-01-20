@@ -136,8 +136,8 @@ public class GameScript : MonoBehaviour
            // characterControl.characters[0].skillTwo.SetActive(true);
         if(characterControl.searchTribe("Pirate"))
         {
-            GetComponent<Artifacts>().bombBag = true;
-            GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
+            //GetComponent<Artifacts>().bombBag = true;
+            //GetComponent<Artifacts>().artifacts.Push("Bomb Bag");
         }
         bossSpawner = UnityEngine.Random.Range(15, 21);
         shopSpawner = UnityEngine.Random.Range(9, 15);
