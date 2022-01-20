@@ -13,8 +13,6 @@ public class SpellText : MonoBehaviour
         else
         {
             this.GetComponent<TextMeshProUGUI>().text = "";
-            //this.GetComponentInParent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        }
-            
+        }        
     }
 }

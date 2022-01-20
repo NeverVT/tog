@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScoreControl : MonoBehaviour
 {
     public static int playerGold = PlayerPrefs.GetInt("PlayerGold");
+    public static int playerShards = PlayerPrefs.GetInt("PlayerShard");
 
     public static int healthScore;
     public static int swordScore;
@@ -87,6 +88,7 @@ public class ScoreControl : MonoBehaviour
     {
         playerGold += gold;
         PlayerPrefs.SetInt("PlayerGold", playerGold);
+        PlayerPrefs.SetInt("PlayerShard", playerShards);
     }
 
     private static void switchScores(string slotOne, string slotTwo)

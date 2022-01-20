@@ -13,7 +13,7 @@ public class GameOver : MonoBehaviour
         transform.GetChild(3).GetComponent<TextMesh>().text = ScoreControl.goblinScore.ToString();
         transform.GetChild(4).GetComponent<TextMesh>().text = ScoreControl.bossScore.ToString();
         transform.GetChild(5).GetComponent<TextMesh>().text = ScoreControl.totalScore.ToString();
-        ScoreControl.addPayment(ScoreControl.totalScore);
+        ScoreControl.addPayment(ScoreControl.goldScore);
     }
 
   

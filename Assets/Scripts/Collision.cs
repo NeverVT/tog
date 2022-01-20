@@ -39,10 +39,12 @@ public class Collision : MonoBehaviour
     string savedPreviousType;
     private bool upgrading = false;
     private string itemType = "";
+    private string equipmentType = "";
+    private string equipmentCharacter = "";
 
     private void Start()
     {
-        
+        PlayerPrefs.SetInt("PlayerShard", 100);
     }
 
     void Update()
@@ -158,9 +160,9 @@ public class Collision : MonoBehaviour
         }
         else if (other.transform.name == "ToTSfromGS")
         {
-            //GameControl.gold = 0;
-            //StartCoroutine(loadScene("TitleScreen"));
-            other.transform.GetChild(0).gameObject.SetActive(true);
+            GameControl.gold = 0;
+            StartCoroutine(loadScene("TitleScreen"));
+            //other.transform.GetChild(0).gameObject.SetActive(true);
         }
         else if (other.transform.name == "How to play")
         {
@@ -339,7 +341,7 @@ public class Collision : MonoBehaviour
             other.transform.Find("SwapSelected").gameObject.SetActive(true);
         }
 
-                        // ---------- SHOP ---------- //
+        // ---------- SHOP ---------- //
         else if (other.transform.name == "Shopkeeper Exit")
         {
             Destroy(other.transform.parent.gameObject);
@@ -368,17 +370,17 @@ public class Collision : MonoBehaviour
                 upgrading = true;
                 Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
                 for (int i = 0; i < 3; i++)
-                {                   
+                {
                     gameScript.GetComponent<GameScript>().items[i].transform.gameObject.SetActive(false);
                 }
                 gameScript.GetComponent<GameScript>().Shop = (GameObject)Instantiate(Resources.Load("Shop/Shop"), new Vector3(-4.11F, -7.99F, -9.38F), Quaternion.identity);
-                
-                    for (int i = 0; i < 3; i++)
-                    {
-                        characterControl.characters[i].weapon.gameObject.SetActive(true);
-                        characterControl.characters[i].weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].weapon.damage.ToString();
-                        characterControl.characters[i].armor.gameObject.SetActive(true);
-                        characterControl.characters[i].armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].armor.defense.ToString();
+
+                for (int i = 0; i < 3; i++)
+                {
+                    characterControl.characters[i].weapon.gameObject.SetActive(true);
+                    characterControl.characters[i].weapon.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].weapon.damage.ToString();
+                    characterControl.characters[i].armor.gameObject.SetActive(true);
+                    characterControl.characters[i].armor.transform.GetChild(0).GetComponent<TextMesh>().text = characterControl.characters[i].armor.defense.ToString();
                     /*
                         if (i == 0)
                             characterControl.characters[i].armor.gameObject.transform.position = new Vector3(7.34F, 26.5F, -3.11F);
@@ -386,8 +388,8 @@ public class Collision : MonoBehaviour
                             characterControl.characters[i].armor.gameObject.transform.position = new Vector3(17.11F, 25.96F, -3.11F);
                         else
                             characterControl.characters[i].armor.gameObject.transform.position = new Vector3(15.56F, 22.99F, -3.11F); */
-                        characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y + 1.5f, characterControl.characters[i].armor.transform.position.z);
-                    }                                                   
+                    characterControl.characters[i].armor.gameObject.transform.position = new Vector3(characterControl.characters[i].armor.transform.position.x, characterControl.characters[i].armor.transform.position.y + 1.5f, characterControl.characters[i].armor.transform.position.z);
+                }
             }
         }
         else if (other.CompareTag("Item"))
@@ -490,8 +492,8 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "Replace")
         {
             if (characterSelected != -1)
-            {             
-                if(selectedItem != null)
+            {
+                if (selectedItem != null)
                     itemType = selectedItem.gameObject.GetComponent<Item>().mType;
                 if (itemType == "Armor")
                 {
@@ -508,7 +510,7 @@ public class Collision : MonoBehaviour
                         characterControl.characters[characterSelected].armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
                         characterControl.characters[characterSelected].armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
                         GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
-                    }                  
+                    }
                 }
                 else
                 {
@@ -526,13 +528,61 @@ public class Collision : MonoBehaviour
                         characterControl.characters[characterSelected].weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
                         GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
                     }
-                }                              
-                respawnShopKeeper();          
+                }
+                respawnShopKeeper();
             }
         }
+        /*
+        else if (other.transform.name == "CSEquipment")
+        {
+            other.transform.parent.transform.parent.transform.parent.transform.parent.gameObject.transform.GetChild(7).gameObject.SetActive(true);
+            other.transform.GetChild(3).gameObject.SetActive(true);
+            equipmentType = other.transform.parent.name;
+            equipmentCharacter = other.transform.parent.transform.parent.name;
+        }
+        else if (other.transform.name == "EquipmentUpgradeAccept")
+        {
+            if (PlayerPrefs.GetInt("PlayerShard") >= 50)
+            {
+                PlayerPrefs.SetInt("PlayerShard", PlayerPrefs.GetInt("PlayerShard") - 50);
+                if (equipmentType == "Weapon")
+                {
+                    if (equipmentCharacter == "Urp")
+                    {
+                        PlayerPrefs.SetInt("UrpWeaponBonus", (PlayerPrefs.GetInt("UrpWeaponBonus") + 1));
+                    }
+                    if (equipmentCharacter == "Chrisa")
+                    {
+                        PlayerPrefs.SetInt("ChrisaWeaponBonus", (PlayerPrefs.GetInt("ChrisaWeaponBonus") + 1));
+                    }
+                    if (equipmentCharacter == "Kurtzle")
+                    {
+                        PlayerPrefs.SetInt("KurtzleWeaponBonus", (PlayerPrefs.GetInt("KurtzleWeaponBonus") + 1));
+                    }
+                }
+                if (equipmentType == "Armor")
+                {
+                    if (equipmentCharacter == "Urp")
+                    {
+                        PlayerPrefs.SetInt("UrpArmorBonus", (PlayerPrefs.GetInt("UrpArmorBonus") + 1));
+                    }
+                    if (equipmentCharacter == "Chrisa")
+                    {
+                        PlayerPrefs.SetInt("ChrisaArmorBonus", (PlayerPrefs.GetInt("ChrisaArmorBonus") + 1));
+                    }
+                    if (equipmentCharacter == "Kurtzle")
+                    {
+                        PlayerPrefs.SetInt("KurtzleArmorBonus", (PlayerPrefs.GetInt("KurtzleArmorBonus") + 1));
+                    }
+                }
+                other.transform.parent.gameObject.SetActive(false);
+            }
+           
+
+        } */
         else if (other.transform.name == "AcceptButton")
         {
-            StartCoroutine(loadScene("GameScreen"));
+            StartCoroutine(loadScene("TitleScreen"));
             ScoreControl.resetScores();
             ScoreText.score = 0;
         }
@@ -728,6 +778,7 @@ public class Collision : MonoBehaviour
                             gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Enemy>().damage = damage;
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
+                            //gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep"); 
                         }
                         else if (trinket)
                         {

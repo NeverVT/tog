@@ -254,6 +254,7 @@ public class Artifacts : MonoBehaviour
                 break;
         }
         Debug.Log(artifacts.Count);
+        ScoreControl.playerShards++;
     }
     public void displayArtifacts()
     {

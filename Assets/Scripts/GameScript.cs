@@ -113,24 +113,27 @@ public class GameScript : MonoBehaviour
         screenUp = false;
         init();  
     }
+    /*
     void Update ()
     {      
+        
         if(switchCharacters)
         {
             switchCharacters = false;
             characterControl.switchCharacter();
-        }       
+        }     
     }
+    */
     public void init()
     {       
         PlayerPrefs.SetString("Boss Stage", "Stage One");
         ScoreControl.partyOne = Team.characterOne;
         ScoreControl.partyTwo = Team.characterTwo;
         ScoreControl.partyThree = Team.characterThree;
-        if(characterControl.characters[0].skillOne.name != "")
-            characterControl.characters[0].skillOne.SetActive(true);
-        if(characterControl.characters[0].skillTwo.name != "")
-            characterControl.characters[0].skillTwo.SetActive(true);
+       // if(characterControl.characters[0].skillOne.name != "")
+           // characterControl.characters[0].skillOne.SetActive(true);
+        //if(characterControl.characters[0].skillTwo.name != "")
+           // characterControl.characters[0].skillTwo.SetActive(true);
         if(characterControl.searchTribe("Pirate"))
         {
             GetComponent<Artifacts>().bombBag = true;
@@ -367,14 +370,14 @@ public class GameScript : MonoBehaviour
 
     public void castSpell(GameObject temp)
     {
-        if (temp.gameObject.transform.GetChild(0).gameObject.activeSelf)
+        if (temp.gameObject.transform.GetChild(1).gameObject.activeSelf)
         {
-            temp.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            temp.gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
         else
         {
             currentSpell = temp;
-            temp.transform.GetChild(0).gameObject.SetActive(true);
+            temp.transform.GetChild(1).gameObject.SetActive(true);
             int bigCD = 15;
             int medCD = 10;
             int smallCD = 5;
@@ -528,7 +531,7 @@ public class GameScript : MonoBehaviour
             }
             else if (temp.transform.name == ("Dragon Shot") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                temp.transform.GetChild(2).gameObject.SetActive(true);
+                temp.transform.GetChild(3).gameObject.SetActive(true);
                 GameControl.dragonShot = true;
                 CD = medCD;
                 setSpellCD(temp, CD);
@@ -935,6 +938,7 @@ public class GameScript : MonoBehaviour
             {
                 GameObject obj = collected.Pop();             
                 String type = obj.GetComponent<Tile>().mType;
+                characterControl.manageSkillCDs(type);
                 if (board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle != null)
                 {
                     board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle.Play();
@@ -1171,7 +1175,11 @@ public class GameScript : MonoBehaviour
             shiftBoard();
             yield return new WaitForSeconds(1F);  
             //Reduce Skill CD's
-            turnCounter++;                                        
+            turnCounter++;           
+            if(PlayerPrefs.GetInt("FloorsReached") < turnCounter)
+            {
+                PlayerPrefs.SetInt("FloorsReached", turnCounter);
+            }
             yield return new WaitUntil(() => Tile.numCollectedG <= 0);
             yield return new WaitUntil(() => Tile.numCollectedH <= 0);          
             healthGain = 0;
@@ -1201,7 +1209,7 @@ public class GameScript : MonoBehaviour
                             yield return new WaitForSeconds(1.25F);
                     }                                                      
                 } //Change Character                              
-                characterControl.switchCharacter();
+                //characterControl.switchCharacter();
                 if(GameControl.doubleShot == 1)
                 {
                     GameControl.doubleShot--;
@@ -1981,7 +1989,6 @@ public class GameScript : MonoBehaviour
         }
 
     }
-
     public void unfreeze()
     {
         for (int i = 0; i < 6; i++)
@@ -2003,11 +2010,8 @@ public class GameScript : MonoBehaviour
     }
     void setSpellCD(GameObject other, int CD)
     {
-        lastTurnSpellCast = turnCounter;
-        other.transform.GetChild(0).gameObject.SetActive(true);
-        //other.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .5f);
-        other.GetComponent<Spell>().turnStart = turnCounter;
-        other.GetComponent<Spell>().turnEnd = turnCounter + CD;
+        other.transform.GetChild(1).gameObject.SetActive(true);
+        other.GetComponent<Spell>().coolDown = CD;
         spellsOnCD.Add(other.gameObject);
     }
 
@@ -2109,9 +2113,9 @@ public class GameScript : MonoBehaviour
                 
             }
             else
-            {               
-                if(board[row, col].transform.GetChild(8) != null)
-                    board[row, col].transform.GetChild(8).GetComponent<Animator>().SetTrigger("Explode");
+            {
+                if(board[row, col].transform.childCount > 8)
+                    board[row, col].transform.GetChild(8).GetComponent<Animator>().SetTrigger("Explode");                     
             }           
             board[row, col].GetComponent<Tile>().mType = "Collected";
         }
@@ -2540,6 +2544,7 @@ public class GameScript : MonoBehaviour
                     board[i, j].GetComponent<Enemy>().health = goblinHealthConstant + (goblinScalar * 2);
                     board[i, j].GetComponent<Enemy>().damage = goblinDamageConstant + goblinScalar;
                     board[i, j].GetComponent<Enemy>().justSpawned = true;
+                    board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep");
                 }
                 else
                 {
@@ -2565,6 +2570,13 @@ public class GameScript : MonoBehaviour
             Destroy(board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol]);
             board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol] = obj;
             obj.SetActive(true);         
+            if(obj.transform.GetComponent<Tile>().mType == "Goblin" && obj.transform.GetComponent<Tile>().boss == "")
+            {
+                if(obj.transform.GetComponent<Enemy>().shouldntAttack)
+                {
+                    obj.transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep");
+                }
+            }
         }
     }    
     private int numOfTilesInBoard(string type)
@@ -2774,11 +2786,13 @@ public class GameScript : MonoBehaviour
                             else if (temp.GetComponent<Enemy>().justSpawned)
                             {
                                 temp.GetComponent<Enemy>().justSpawned = false;
-                                temp.GetComponent<Enemy>().shouldntAttack = true;
+                                temp.GetComponent<Enemy>().shouldntAttack = true;                           
                             }
                             else if (temp.GetComponent<Enemy>().shouldntAttack)
                             {
                                 temp.GetComponent<Enemy>().shouldntAttack = false;
+                                temp.transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");
+                                temp.transform.GetChild(9).GetComponent<Animator>().SetBool("awake", true);
                             }
                         }
                        
@@ -2864,10 +2878,13 @@ public class GameScript : MonoBehaviour
                     {
                         board[i, j].GetComponent<Enemy>().justSpawned = false;
                         board[i, j].GetComponent<Enemy>().shouldntAttack = true;
+                        
                     }
                     else if (board[i, j].GetComponent<Enemy>().shouldntAttack)
                     {
                         board[i, j].GetComponent<Enemy>().shouldntAttack = false;
+                        if(board[i, j].transform.GetChild(9).GetComponent<Tile>().boss == "")
+                            board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");                      
                     }
                 }
             }
@@ -3063,7 +3080,7 @@ public class GameScript : MonoBehaviour
                    // }
                         
                     Destroy(board[i, j].gameObject);
-                    shopSpawner = -1;
+                    //shopSpawner = -1;
                     //GameControl.gold = 100;
                     Debug.Log("Turn Counter: " + turnCounter + "  |  Boss Spawner: " + bossSpawner);
                     if (turnCounter == shopSpawner)
@@ -3284,6 +3301,7 @@ public class GameScript : MonoBehaviour
                             board[i, j].GetComponent<Enemy>().health = UnityEngine.Random.Range(2, 5) + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = UnityEngine.Random.Range(0, 2) + goblinScalar;
                             board[i, j].GetComponent<Enemy>().justSpawned = true;
+                            board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep");
                         }
                         else if (temp <= 100)
                         {

@@ -5,22 +5,37 @@ using UnityEngine;
 public class weaponGS : MonoBehaviour
 {
     public CharacterControl characterControl;
+    public GameObject damage;
+    public GameObject icon;
+    public GameObject attributeOne;
+    public GameObject attributeTwo;
+    public GameObject attributeThree;
+    public GameObject tooltip;
     void Update()
     {
-        this.transform.Find("Damage").GetComponent<TextMesh>().text = characterControl.characters[characterControl.activeCharacter].weapon.damage.ToString(); //Set damage text
-        this.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = characterControl.characters[characterControl.activeCharacter].weapon.icon.GetComponent<SpriteRenderer>().sprite; //Set Sprite   
+        damage.GetComponent<TextMesh>().text = characterControl.characters[characterControl.activeCharacter].weapon.damage.ToString(); //Set damage text
+        tooltip.transform.GetChild(1).GetComponent<TextMesh>().text = characterControl.characters[characterControl.activeCharacter].weapon.damage.ToString(); //Set damage value in tooltip
+        icon.GetComponent<SpriteRenderer>().sprite = characterControl.characters[characterControl.activeCharacter].weapon.icon.GetComponent<SpriteRenderer>().sprite; //Set Sprite  
+        tooltip.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterControl.characters[characterControl.activeCharacter].weapon.icon.GetComponent<SpriteRenderer>().sprite; //Set the sprite in the tooltip
         if (characterControl.characters[characterControl.activeCharacter].weapon.traitOne != null ) //Turn on Attributes if they exists
         {
-            this.transform.Find("Attribute One").transform.Find(characterControl.characters[characterControl.activeCharacter].weapon.traitOne).gameObject.SetActive(true);
+            attributeOne.transform.Find(characterControl.characters[characterControl.activeCharacter].weapon.traitOne).gameObject.SetActive(true);
             if(characterControl.characters[characterControl.activeCharacter].weapon.traitTwo != null)
             {
-                this.transform.Find("Attribute Two").transform.Find(characterControl.characters[characterControl.activeCharacter].weapon.traitTwo).gameObject.SetActive(true);
+                attributeTwo.transform.Find(characterControl.characters[characterControl.activeCharacter].weapon.traitTwo).gameObject.SetActive(true);
                 if(characterControl.characters[characterControl.activeCharacter].weapon.traitThree != null)
                 {
-                    this.transform.Find("Attribute Three").transform.Find(characterControl.characters[characterControl.activeCharacter].weapon.traitThree).gameObject.SetActive(true);
+                    attributeThree.transform.Find(characterControl.characters[characterControl.activeCharacter].weapon.traitThree).gameObject.SetActive(true);
                 }
             }
-        }
-        
+        }  
+    }
+    public void turnOnTooltip()
+    {
+        tooltip.transform.gameObject.SetActive(true);
+    }
+    public void turnOffTooltip()
+    {
+        tooltip.transform.gameObject.SetActive(false);
     }
 }

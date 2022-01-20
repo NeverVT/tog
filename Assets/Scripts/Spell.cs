@@ -7,20 +7,21 @@ public class Spell : MonoBehaviour
 {
     public GameObject gameScript;
     public GameObject tooltip;
+    public string spellType;
     public int coolDown = 0;
     public int turnStart = 0;
     public int turnEnd = 0;
+    private void Start()
+    {
+        gameScript = GameObject.Find("GameScript");
+    }
     private void Update()
     {
-        if (turnEnd - gameScript.GetComponent<GameScript>().turnCounter < 0)
-            coolDown = 0;
-        else
-            coolDown = turnEnd - gameScript.GetComponent<GameScript>().turnCounter;
-        if (turnEnd == gameScript.GetComponent<GameScript>().turnCounter)
+        if (coolDown == 0)
         {
             this.transform.Find("Text").gameObject.SetActive(false);
-            this.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            gameScript.GetComponent<GameScript>().spellsOnCD.Remove(this.gameObject);
+            //this.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+            //gameScript.GetComponent<GameScript>().spellsOnCD.Remove(this.gameObject);
         }          
     }
 

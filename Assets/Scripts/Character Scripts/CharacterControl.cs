@@ -10,6 +10,7 @@ public class CharacterControl : MonoBehaviour
     public GameObject loadingDoors;
     public GameScript game;
     public Character[] characters;
+    public GameObject[] skills;
     public int activeCharacter;
     public Ship ship;
     private int totalMaxHealth;
@@ -63,9 +64,23 @@ public class CharacterControl : MonoBehaviour
             characters[i].armor.defense = armorDefense;
             characters[i].traitOne.name = traitOne;
             characters[i].traitTwo.name = traitTwo;
-            characters[i].skillOne.name = skillOne;
-            characters[i].skillTwo.name = skillTwo;
+            Debug.Log(skillOne);
+            for (int j = 0; j < skills.Length; j++)
+            {
+                if (skills[j].name == skillOne)
+                {
+                    characters[j].skillOne = Instantiate(skills[j], new Vector3(0, 0, 0), Quaternion.identity);
+                    characters[j].skillOne.name = skillOne;
+                    characters[j].skillOne.transform.parent = characters[j].gameObject.transform;
+                    characters[j].skillOne.transform.localPosition = new Vector3(34.13f, -9.11f, -0.82f);
+
+                }
+                    
+                if (skills[j].name == skillTwo)
+                    characters[j].skillTwo = skills[j];
+            }
             characters[i].init();
+            
         }
         totalCurrentHealth = totalMaxHealth;
         characters[0].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
@@ -77,6 +92,7 @@ public class CharacterControl : MonoBehaviour
     {
         StartCoroutine(checkGameOver());
         //turn off current characters skills and skill tooltips
+        characters[activeCharacter].transform.GetChild(0).GetComponent<Animator>().SetBool("isActive", false); //Turn off active character animation
         characters[activeCharacter].transform.GetChild(3).transform.GetChild(1).gameObject.SetActive(false); //skillOne tooltip
         characters[activeCharacter].transform.GetChild(4).transform.GetChild(1).gameObject.SetActive(false); //skillTwo tooltip
         characters[activeCharacter].skillOne.SetActive(false);
@@ -86,13 +102,19 @@ public class CharacterControl : MonoBehaviour
             activeCharacter = 0;
         else
             activeCharacter++;
-        //dim not active characters and brighten the active character
+        //dim not active characters and brighten the active character and swap animations
         for (int i = 0; i < 3; i++) 
         {
             if(i == activeCharacter)
+            {
                 characters[i].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+                characters[i].transform.GetChild(0).GetComponent<Animator>().SetBool("isActive", true);
+            }          
             else
+            {
                 characters[i].transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
+                characters[i].transform.GetChild(0).GetComponent<Animator>().SetBool("isActive", false);
+            }
         }
         //check if the new active character has empty skill or traits slots and turn them off
         if (characters[activeCharacter].skillOne.name != "") 
@@ -104,6 +126,17 @@ public class CharacterControl : MonoBehaviour
         if (characters[activeCharacter].traitTwo.name != "")
             characters[activeCharacter].traitTwo.SetActive(true);
 
+    }
+
+    public void manageSkillCDs(string collectedTileType)
+    {
+        if (characters[activeCharacter].skillOne.GetComponent<Spell>().coolDown > 0)
+            if (characters[activeCharacter].skillOne.GetComponent<Spell>().spellType == collectedTileType || collectedTileType == "Mana")
+                characters[activeCharacter].skillOne.GetComponent<Spell>().coolDown -= 1;
+
+        if (characters[activeCharacter].skillTwo.GetComponent<Spell>().coolDown > 0)
+            if (characters[activeCharacter].skillTwo.GetComponent<Spell>().spellType == collectedTileType || collectedTileType == "Mana")
+                characters[activeCharacter].skillTwo.GetComponent<Spell>().coolDown -= 1;
     }
 
     private IEnumerator checkGameOver() //Does a check to see if the game is over
@@ -127,7 +160,7 @@ public class CharacterControl : MonoBehaviour
                 characters[1].skillTwo.GetComponent<Spell>().coolDown = 0;
                 characters[2].skillOne.GetComponent<Spell>().coolDown = 0;
                 characters[2].skillTwo.GetComponent<Spell>().coolDown = 0;
-                //SceneManager.LoadScene("Scenes/GameOver");
+                SceneManager.LoadScene("Scenes/GameOver");
                 loadingDoors.GetComponent<Animator>().SetBool("close", true);
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
                 asyncLoad.allowSceneActivation = false;
@@ -261,8 +294,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 20;
                 currentHealth = 25;
-                weaponAttack = 1;
-                armorDefense = 2;
+                weaponAttack = 1 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
                 traitOne = "";
                 PlayerPrefs.SetString("UrpTraitOne", traitOne);
                 traitTwo = "";
@@ -272,7 +305,7 @@ public class CharacterControl : MonoBehaviour
                     skillOne = PlayerPrefs.GetString("UrpSkillOne");
                 else
                 {
-                    skillOne = "Flash Bang";
+                    skillOne = "Dragon Shot";
                     PlayerPrefs.SetString("UrpSkillOne", skillOne);
                 }
                 skillTwo = "";
@@ -282,8 +315,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 25;
                 currentHealth = 25;
-                weaponAttack = 2;
-                armorDefense = 2;
+                weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
 
                 if (PlayerPrefs.GetString("UrpTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("UrpTraitOne");
@@ -311,8 +344,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 25;
                 currentHealth = 25;
-                weaponAttack = 2;
-                armorDefense = 2;
+                weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
 
                 if (PlayerPrefs.GetString("UrpTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("UrpTraitOne");
@@ -345,8 +378,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 30;
                 currentHealth = 30;
-                weaponAttack = 3;
-                armorDefense = 2;
+                weaponAttack = 3 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
                 if (PlayerPrefs.GetString("UrpTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("UrpTraitOne");
                 else
@@ -387,8 +420,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 15;
                 currentHealth = 15;
-                weaponAttack = 2;
-                armorDefense = 1;
+                weaponAttack = 2 + PlayerPrefs.GetInt("ChrisaWeaponBonus");
+                armorDefense = 1 + PlayerPrefs.GetInt("ChrisaArmorBonus");
                 traitOne = "";
                 PlayerPrefs.SetString("ChrisaTraitOne", traitOne);
                 traitTwo = "";
@@ -407,8 +440,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 20;
                 currentHealth = 20;
-                weaponAttack = 3;
-                armorDefense = 2;
+                weaponAttack = 3 + PlayerPrefs.GetInt("ChrisaWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("ChrisaArmorBonus");
                 if (PlayerPrefs.GetString("ChrisaTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("ChrisaTraitOne");
                 else
@@ -432,8 +465,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 20;
                 currentHealth = 20;
-                weaponAttack = 3;
-                armorDefense = 2;
+                weaponAttack = 3 + PlayerPrefs.GetInt("ChrisaWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("ChrisaArmorBonus");
                 if (PlayerPrefs.GetString("ChrisaTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("ChrisaTraitOne");
                 else
@@ -457,8 +490,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 22;
                 currentHealth = 22;
-                weaponAttack = 3;
-                armorDefense = 3;
+                weaponAttack = 3 + PlayerPrefs.GetInt("ChrisaWeaponBonus");
+                armorDefense = 3 + PlayerPrefs.GetInt("ChrisaArmorBonus");
                 if (PlayerPrefs.GetString("ChrisaTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("ChrisaTraitOne");
                 else
@@ -491,8 +524,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 16;
                 currentHealth = 16;
-                weaponAttack = 2;
-                armorDefense = 1;
+                weaponAttack = 2 + PlayerPrefs.GetInt("KurtzleWeaponBonus");
+                armorDefense = 1 + PlayerPrefs.GetInt("KurtzleArmorBonus");
                 traitOne = "";
                 PlayerPrefs.SetString("KurtzleTraitOne", traitOne);
                 traitTwo = "";
@@ -513,8 +546,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 20;
                 currentHealth = 20;
-                weaponAttack = 3;
-                armorDefense = 2;
+                weaponAttack = 3 + PlayerPrefs.GetInt("KurtzleWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("KurtzleArmorBonus");
 
                 if (PlayerPrefs.GetString("KurtzleTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("KurtzleTraitOne");
@@ -542,8 +575,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 20;
                 currentHealth = 20;
-                weaponAttack = 3;
-                armorDefense = 2;
+                weaponAttack = 3 + PlayerPrefs.GetInt("KurtzleWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("KurtzleArmorBonus");
 
                 if (PlayerPrefs.GetString("KurtzleTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("KurtzleTraitOne");
@@ -576,8 +609,8 @@ public class CharacterControl : MonoBehaviour
             {
                 maxHealth = 22;
                 currentHealth = 22;
-                weaponAttack = 4;
-                armorDefense = 2;
+                weaponAttack = 4 + PlayerPrefs.GetInt("KurtzleWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("KurtzleArmorBonus");
                 if (PlayerPrefs.GetString("KurtzleTraitOne") != "")
                     traitOne = PlayerPrefs.GetString("KurtzleTraitOne");
                 else

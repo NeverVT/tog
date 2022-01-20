@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 public class CharacterScreen : MonoBehaviour
 {
     public CharacterControl characterControl;
@@ -12,8 +12,10 @@ public class CharacterScreen : MonoBehaviour
     public GameObject traits;
     public Sprite[] traitSprites;
     public GameObject level;
+    public GameObject equipmentUpgradePrompt;
 
     private int characterIndex;
+    private GameObject currentEquipmentSelected;
 
     private void Start()
     {
@@ -322,6 +324,60 @@ public class CharacterScreen : MonoBehaviour
                     characters[characterIndex].transform.GetChild(8).transform.GetChild(0).transform.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
                 }
             }
+        }
+    }
+
+    public void equipmentSelect()
+    {
+        currentEquipmentSelected = EventSystem.current.currentSelectedGameObject.gameObject;
+        Debug.Log(currentEquipmentSelected.name);
+        EventSystem.current.currentSelectedGameObject.transform.GetChild(3).gameObject.SetActive(true); //Turn on gold selected border for the equipment that was clicked on
+        equipmentUpgradePrompt.SetActive(true); //Turn on the prompt to ask if you want to spend crystals to upgrade your equipment
+        if (EventSystem.current.currentSelectedGameObject.name == "Weapon")
+            characters[characterIndex].transform.GetChild(1).transform.GetChild(3).gameObject.SetActive(false); //Turns off other equipment selected border
+        if (EventSystem.current.currentSelectedGameObject.name == "Armor")
+            characters[characterIndex].transform.GetChild(0).transform.GetChild(3).gameObject.SetActive(false); //Turns off other equipment selected border
+    }
+
+    public void upgradeEquipment()
+    {
+        if (PlayerPrefs.GetInt("PlayerShard") >= 50)
+        {
+            PlayerPrefs.SetInt("PlayerShard", PlayerPrefs.GetInt("PlayerShard") - 50);
+            if (currentEquipmentSelected.name == "Weapon")
+            {
+                characterControl.weaponAttack += 1;
+                if (characterControl.characterName == "Urp")
+                {
+                    PlayerPrefs.SetInt("UrpWeaponBonus", (PlayerPrefs.GetInt("UrpWeaponBonus") + 1));
+                }
+                if (characterControl.characterName == "Chrisa")
+                {
+                    PlayerPrefs.SetInt("ChrisaWeaponBonus", (PlayerPrefs.GetInt("ChrisaWeaponBonus") + 1));
+                }
+                if (characterControl.characterName == "Kurtzle")
+                {
+                    PlayerPrefs.SetInt("KurtzleWeaponBonus", (PlayerPrefs.GetInt("KurtzleWeaponBonus") + 1));
+                }
+            }
+            if (currentEquipmentSelected.name == "Armor")
+            {
+                characterControl.armorDefense += 1;
+                if (characterControl.characterName == "Urp")
+                {
+                    PlayerPrefs.SetInt("UrpArmorBonus", (PlayerPrefs.GetInt("UrpArmorBonus") + 1));
+                }
+                if (characterControl.characterName == "Chrisa")
+                {
+                    PlayerPrefs.SetInt("ChrisaArmorBonus", (PlayerPrefs.GetInt("ChrisaArmorBonus") + 1));
+                }
+                if (characterControl.characterName == "Kurtzle")
+                {
+                    PlayerPrefs.SetInt("KurtzleArmorBonus", (PlayerPrefs.GetInt("KurtzleArmorBonus") + 1));
+                }
+            }
+            currentEquipmentSelected.transform.GetChild(3).gameObject.SetActive(false);
+            EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.SetActive(false);
         }
     }
 }
