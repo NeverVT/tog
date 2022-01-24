@@ -34,7 +34,7 @@ public class Artifacts : MonoBehaviour
 
     public void createArtifact(int col, int row, Vector3 pos, string artifact)
     {
-        GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Artifacts/" + artifact), pos, Quaternion.identity);
+        GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load("Artifacts/" + artifact), pos, Quaternion.identity);
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mType = "Artifact";
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mName = artifact;
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().isTrinket = true;
@@ -165,7 +165,7 @@ public class Artifacts : MonoBehaviour
         return artifact;
     }
 
-    public void collectArtifact(GameObject artifact)
+    public void collectArtifact(Tile artifact)
     {
         string artifactName = artifact.name;
         Debug.Log(artifactName);

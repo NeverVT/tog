@@ -10,6 +10,11 @@ public class PlayerPrefsReference : MonoBehaviour
      * 
      * string - "selectedCharacter" -> player selected character to use on runs
      * 
+     * string - "0"                 -> Character Name in Barracks position 0
+     * string - "1"                 -> Character Name in Barracks position 1
+     * string - "2"                 -> Character Name in Barracks position 2
+     * ...etc
+     * 
      * int    - "UrpLvl"            -> The saved level of the character Urp
      * int    - "ChrisaLvl"         -> The saved level of the character Chrisa
      * int    - "KurtzleLvl"        -> The saved level of the character Kurtzle

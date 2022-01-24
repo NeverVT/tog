@@ -583,7 +583,7 @@ public class Collision : MonoBehaviour
                 }
                 else if (length > 0)
                 {
-                    GameObject obj = gameScript.GetComponent<GameScript>().collected.Peek();
+                    Tile obj = gameScript.GetComponent<GameScript>().collected.Peek();
                     if (obj.GetComponent<Tile>().mType == "Collected")
                     {
                         previousType = savedPreviousType;
@@ -661,13 +661,13 @@ public class Collision : MonoBehaviour
                         {
                             while (gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mRow != row || gameScript.GetComponent<GameScript>().collected.Peek().GetComponent<Tile>().mCol != col)
                             {
-                                GameObject obj = gameScript.GetComponent<GameScript>().collected.Pop();
+                                Tile obj = gameScript.GetComponent<GameScript>().collected.Pop();
                                 if (obj.GetComponent<Tile>().mType != "Collected")
                                 {
-                                    Destroy(gameScript.GetComponent<GameScript>().board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol]);
+                                    Destroy(gameScript.GetComponent<GameScript>().board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].gameObject);
                                     gameScript.GetComponent<GameScript>().board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol] = obj;
                                     gameScript.GetComponent<GameScript>().predict();
-                                    obj.SetActive(true);
+                                    obj.transform.gameObject.SetActive(true);
                                     if (obj.transform.GetChild(11))
                                         obj.transform.GetChild(11).gameObject.SetActive(false);
                                     if (obj.GetComponent<Tile>().boss != "")
@@ -691,13 +691,13 @@ public class Collision : MonoBehaviour
                         trinket = gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Tile>().isTrinket;
                         if (type == "Goblin")
                         {
-                            gameScript.GetComponent<GameScript>().board[row, col].SetActive(false);
+                            gameScript.GetComponent<GameScript>().board[row, col].transform.gameObject.SetActive(false);
                             health = gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Enemy>().health;
                             damage = gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Enemy>().damage;
                             boss = gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Tile>().boss;
                         }
                         else
-                            gameScript.GetComponent<GameScript>().board[row, col].SetActive(false);
+                            gameScript.GetComponent<GameScript>().board[row, col].transform.gameObject.SetActive(false);
 
                         gameScript.GetComponent<GameScript>().collected.Push(gameScript.GetComponent<GameScript>().board[row, col]);
 
@@ -705,19 +705,19 @@ public class Collision : MonoBehaviour
                         {
                             if (boss != "")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Mini-Bosses/" + boss), pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load("Mini-Bosses/" + boss), pos, Quaternion.identity);
                                 gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(15).gameObject.SetActive(true);
                             }
                             else
                             {
                                 if (other.gameObject.name == "Goblin 1(Clone)")
-                                    gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Tiles/Goblin Collected"), pos, Quaternion.identity);
+                                    gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().collectedGoblins[0], pos, Quaternion.identity);
                                 else if (other.gameObject.name == "Goblin 2(Clone)")
-                                    gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Tiles/Goblin Collected 2"), pos, Quaternion.identity);
+                                    gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().collectedGoblins[1], pos, Quaternion.identity);
                                 else if (other.gameObject.name == "Goblin 3(Clone)")
-                                    gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Tiles/Goblin Collected 3"), pos, Quaternion.identity);
+                                    gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().collectedGoblins[2], pos, Quaternion.identity);
                                 else if (other.gameObject.name == "Goblin 4(Clone)")
-                                    gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Tiles/Goblin Collected 4"), pos, Quaternion.identity);
+                                    gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().collectedGoblins[3], pos, Quaternion.identity);
                             }
 
                             gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Enemy>().health = health;
@@ -728,13 +728,13 @@ public class Collision : MonoBehaviour
                         }
                         else if (trinket)
                         {
-                            gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Artifacts/" + gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mName), pos, Quaternion.identity);
+                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load("Artifacts/" + gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mName), pos, Quaternion.identity);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(0).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(1).gameObject.SetActive(true);
                         }
                         else if (type == "Shopkeeper" || type == "Chest")
                         {
-                            gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load(type), pos, Quaternion.identity);
+                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load(type), pos, Quaternion.identity);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(0).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(1).gameObject.SetActive(true);
                         }
@@ -742,15 +742,15 @@ public class Collision : MonoBehaviour
                         {
                             if (gameScript.GetComponent<GameScript>().board[row, col].name == "Health One(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().healthCrystals[0], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().healthCrystals[0], pos, Quaternion.identity);
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Health Two(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().healthCrystals[1], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().healthCrystals[1], pos, Quaternion.identity);
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Health Three(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().healthCrystals[2], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().healthCrystals[2], pos, Quaternion.identity);
                             }
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
@@ -759,15 +759,15 @@ public class Collision : MonoBehaviour
                         {
                             if (gameScript.GetComponent<GameScript>().board[row, col].name == "Coin One(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().coins[0], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().coins[0], pos, Quaternion.identity);
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Coin Two(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().coins[1], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().coins[1], pos, Quaternion.identity);
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Coin Three(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().coins[2], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().coins[2], pos, Quaternion.identity);
                             }
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
@@ -776,17 +776,23 @@ public class Collision : MonoBehaviour
                         {
                             if (gameScript.GetComponent<GameScript>().board[row, col].name == "Sword One(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().swords[0], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().swords[0], pos, Quaternion.identity);
                                 gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(8).GetComponent<SpriteRenderer>().sprite = characterControl.getWeaponIcon().GetComponent<SpriteRenderer>().sprite;
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Sword Two(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().swords[1], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().swords[1], pos, Quaternion.identity);
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Sword Three(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().swords[2], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().swords[2], pos, Quaternion.identity);
                             }
+                            gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
+                            gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
+                        }
+                        else if (type == "Rubble")
+                        {                         
+                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().rubble, pos, Quaternion.identity);                                                                                                           
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
                         }
@@ -794,22 +800,22 @@ public class Collision : MonoBehaviour
                         {
                             if (gameScript.GetComponent<GameScript>().board[row, col].name == "Mana One(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().manaCrystals[0], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().manaCrystals[0], pos, Quaternion.identity);
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Mana Two(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().manaCrystals[1], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().manaCrystals[1], pos, Quaternion.identity);
                             }
                             else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Mana Three(Clone)")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(gameScript.GetComponent<GameScript>().manaCrystals[2], pos, Quaternion.identity);
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().manaCrystals[2], pos, Quaternion.identity);
                             }
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
                         }
                         else
                         {
-                            gameScript.GetComponent<GameScript>().board[row, col] = (GameObject)Instantiate(Resources.Load("Tiles/" + type), pos, Quaternion.identity);
+                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load("Tiles/" + type), pos, Quaternion.identity);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
                         }
@@ -820,7 +826,7 @@ public class Collision : MonoBehaviour
                         gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Tile>().boss = boss;
                         boss = "";
 
-                        GameObject obj = gameScript.GetComponent<GameScript>().collected.Peek();
+                        Tile obj = gameScript.GetComponent<GameScript>().collected.Peek();
 
                         if (row - pRow == 0 && col - pCol == 1) //Right
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(1).gameObject.SetActive(true);
@@ -1070,32 +1076,27 @@ public class Collision : MonoBehaviour
                         Barracks.cFiveName = tempName;
                     }
                 }
-                if (other.transform.name == Team.selectedCharacter)// || other.transform.name == Team.characterTwo || other.transform.name == Team.characterThree)
+                if (other.transform.name == Team.selectedCharacter)
                 {
-                    if (swapCharacter.transform.parent.name == Team.selectedCharacter)// || swapCharacter.transform.parent.name == Team.characterTwo || swapCharacter.transform.parent.name == Team.characterThree) //Both selected characters are on the team
-                    {
-                        if (other.transform.name == Team.selectedCharacter)
-                        {
-                            StartCoroutine(BarracksScrollUp(other.gameObject));
-                            swapActive = false;                         
-                        }
+                    if (swapCharacter.transform.parent.name == Team.selectedCharacter)
+                    {                     
+                        StartCoroutine(BarracksScrollUp(other.gameObject));
+                        swapActive = false;                                               
                     }
                     else //Swapping a PartyMember with a Non-PartyMember
                     {
-                        if (other.transform.name == Team.selectedCharacter)
-                        {
-                            Team.selectedCharacter = swapCharacter.transform.parent.name;
-                        }
+                        Team.selectedCharacter = swapCharacter.transform.parent.name;
+                        PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);
+                        Debug.Log("Selected Character: " + Team.selectedCharacter);
                         StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
                         swapActive = false;
                     }
                 }
-                else if (swapCharacter.transform.parent.name == Team.selectedCharacter)// || swapCharacter.transform.parent.name == Team.characterTwo || swapCharacter.transform.parent.name == Team.characterThree)
-                {
-                    if (swapCharacter.transform.parent.name == Team.selectedCharacter)
-                    {
-                        Team.selectedCharacter = other.transform.name;
-                    }
+                else if (swapCharacter.transform.parent.name == Team.selectedCharacter)
+                {                   
+                    Team.selectedCharacter = other.transform.name;
+                    PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);
+                    Debug.Log("Selected Character: " + Team.selectedCharacter);
                     StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
                     swapActive = false;
                 }
@@ -1122,7 +1123,6 @@ public class Collision : MonoBehaviour
                 selectedCharacter = other.gameObject;
                 characterControl.setStats(other.transform.name);
             }
-            //Debug.Log("1: " + Team.characterOne + " 2: " + Team.characterTwo + " 3: " + Team.characterThree);
         }
         else if (other.transform.name == "Swap")
         {

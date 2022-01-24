@@ -24,8 +24,6 @@ public class Character : MonoBehaviour
     {
         Debug.Log(skillOne.name + " | " + skillTwo.name + " | " + characterName + " | " + Team.getLevel(characterName));
         this.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = portrait;
-        weapon.icon.GetComponent<SpriteRenderer>().sprite = weapon.icon.GetComponent<Sprite>();
-        armor.icon.GetComponent<SpriteRenderer>().sprite = armor.icon.GetComponent<Sprite>();
         switch (Team.getLevel(characterName)) //Check the level of the selected character and set up the selected build for that character
         {
             case 0:

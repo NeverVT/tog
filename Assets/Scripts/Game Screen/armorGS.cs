@@ -15,7 +15,7 @@ public class armorGS : MonoBehaviour
     {
         defense.GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().armor.defense.ToString(); //Set damage text
         tooltip.transform.GetChild(1).GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().armor.defense.ToString();
-        icon.GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite; //Set Sprite   
+        icon.GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().armor.GetComponent<CharacterArmor>().icon.GetComponent<SpriteRenderer>().sprite; //Set Sprite   
         tooltip.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite;
         if (characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne != null) //Turn on Attributes if they exists
         {

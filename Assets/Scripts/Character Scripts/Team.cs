@@ -12,6 +12,7 @@ public class Team : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(PlayerPrefs.GetString("selectedCharacter"));
         selectedCharacter = PlayerPrefs.GetString("selectedCharacter");
         if (selectedCharacter == "") selectedCharacter = "Urp";
 

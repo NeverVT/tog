@@ -186,31 +186,31 @@ public class CharacterControl : MonoBehaviour
         {
             if (Team.urpLvl == 1 || Team.urpLvl == 2) //Level One
             {
-                maxHealth = 20;
-                currentHealth = 25;
-                weaponAttack = 1 + PlayerPrefs.GetInt("UrpWeaponBonus");
-                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
+                maxHealth = 30;
+                currentHealth = 30;
+                weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 3 + PlayerPrefs.GetInt("UrpArmorBonus");
             }
             else if (Team.urpLvl >= 3 && Team.urpLvl <= 5) //Level Two
             {
-                maxHealth = 25;
-                currentHealth = 25;
-                weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
-                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
+                maxHealth = 35;
+                currentHealth = 35;
+                weaponAttack = 3 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 3 + PlayerPrefs.GetInt("UrpArmorBonus");
             }
             else if (Team.urpLvl >= 6 && Team.urpLvl <= 9) //Level Three
             {
-                maxHealth = 25;
-                currentHealth = 25;
-                weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
-                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
+                maxHealth = 35;
+                currentHealth = 35;
+                weaponAttack = 3 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 3 + PlayerPrefs.GetInt("UrpArmorBonus");
             }
             else if (Team.urpLvl == 10) //Level Four
             {
-                maxHealth = 30;
-                currentHealth = 30;
-                weaponAttack = 3 + PlayerPrefs.GetInt("UrpWeaponBonus");
-                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
+                maxHealth = 40;
+                currentHealth = 40;
+                weaponAttack = 4 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 3 + PlayerPrefs.GetInt("UrpArmorBonus");
             }
         }
         if (name == "Chrisa")

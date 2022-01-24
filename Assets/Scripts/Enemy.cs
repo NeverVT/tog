@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(!shouldntAttack && !justSpawned && this.transform.GetChild(9) != null && this.GetComponent<Tile>().boss == "")
+        if(!shouldntAttack && !justSpawned && this.transform.GetChild(9) != null)// && this.GetComponent<Tile>().boss == "")
         {
             this.transform.GetChild(8).gameObject.SetActive(false);
             this.transform.GetChild(9).gameObject.SetActive(true);

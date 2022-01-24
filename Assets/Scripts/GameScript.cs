@@ -27,28 +27,29 @@ public class GameScript : MonoBehaviour
 
     public Sprite[] skills = new Sprite[10];
     public GameObject[] gameScreenParts = new GameObject[5];
-    public GameObject[] healthCrystals = new GameObject[3];
-    public GameObject[] coins = new GameObject[3];
-    public GameObject[] swords = new GameObject[3];
-    public GameObject[] manaCrystals = new GameObject[3];
-    public GameObject[] goblins = new GameObject[4];
-    public GameObject rubble;
-    public GameObject helix;
-    public GameObject bomb;
-    public GameObject barrel;
-    public GameObject chest;
-    public GameObject shopkeeper;
+    public Tile[] healthCrystals = new Tile[3];
+    public Tile[] coins = new Tile[3];
+    public Tile[] swords = new Tile[3];
+    public Tile[] manaCrystals = new Tile[3];
+    public Tile[] goblins = new Tile[4];
+    public Tile[] collectedGoblins = new Tile[4];
+    public Tile rubble;
+    public Tile helix;
+    public Tile bomb;
+    public Tile barrel;
+    public Tile chest;
+    public Tile shopkeeper;
     public GameObject shop;
-    public GameObject ghost;
-    public GameObject ratLarge;
-    public GameObject ratSmall;
-    public GameObject slime;
-    public GameObject blueGenie;
-    public GameObject greenGenie;
-    public GameObject lich;
-    public GameObject skeleton;
-    public GameObject bossArms;
-    public GameObject bossBody;
+    public Tile ghost;
+    public Tile ratLarge;
+    public Tile ratSmall;
+    public Tile slime;
+    public Tile blueGenie;
+    public Tile greenGenie;
+    public Tile lich;
+    public Tile skeleton;
+    public Tile bossArms;
+    public Tile bossBody;
     public GameObject scoreAddition;
 
     public int bossSpawner;
@@ -62,11 +63,11 @@ public class GameScript : MonoBehaviour
     public int vampireFangValue = 10;
     public int whetstoneValue = 2;
 
-    public GameObject[,] board = new GameObject[6, 6];
-    GameObject[,] tempBoard = new GameObject[6, 6];
+    public Tile[,] board = new Tile[6, 6];
+    Tile[,] tempBoard = new Tile[6, 6];
     public GameObject[] items = new GameObject[4];
-    public Stack<GameObject> collected = new Stack<GameObject>();
-    public Stack<GameObject> enemies = new Stack<GameObject>();
+    public Stack<Tile> collected = new Stack<Tile>();
+    public Stack<Tile> enemies = new Stack<Tile>();
     public List<GameObject> spellsOnCD = new List<GameObject>();
     //public static List<GameObject> artifacts = new List<GameObject>();
     public bool screenUp = false;
@@ -152,8 +153,8 @@ public class GameScript : MonoBehaviour
         int pHealth = 0;
         double damage = characterControl.getAttack();
         int swords = 0;
-        GameObject[] myArray = collected.ToArray();
-        Stack<GameObject> myGoblins = new Stack<GameObject>();
+        Tile[] myArray = collected.ToArray();
+        Stack<Tile> myGoblins = new Stack<Tile>();
         if (myArray.Length >= 3)
         {
             swords = 0;
@@ -198,7 +199,7 @@ public class GameScript : MonoBehaviour
                 int count = myGoblins.Count;
                 for (int i = 0; i <count; i++)
                 {
-                    GameObject tempGoblin = myGoblins.Pop();
+                    Tile tempGoblin = myGoblins.Pop();
                     int row = tempGoblin.GetComponent<Tile>().mRow;
                     int col = tempGoblin.GetComponent<Tile>().mCol;
                     board[row, col].GetComponent<Enemy>().predictedDamage = 0;
@@ -248,7 +249,7 @@ public class GameScript : MonoBehaviour
                         {
                             if (myGoblins.Count > 0)
                             {
-                                GameObject prevGoblin = myGoblins.Peek();
+                                Tile prevGoblin = myGoblins.Peek();
                                 int pRow = prevGoblin.GetComponent<Tile>().mRow;
                                 int pCol = prevGoblin.GetComponent<Tile>().mCol;
 
@@ -379,19 +380,19 @@ public class GameScript : MonoBehaviour
             //{
             if (temp.transform.name == ("Alchemy") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                alchemy();
+                swapAllOfTwoTileTypes("Health", "Mana");
                 CD = medCD;
                 setSpellCD(temp, CD);
             }
             else if (temp.transform.name == ("Ambush") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                ambush();
+                changeTileTypes("Rubble", "Goblin");
                 CD = bigCD;
                 setSpellCD(temp, CD);
             }
             else if (temp.transform.name == ("Appraise") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                appraise();
+                changeTileTypes("Rubble", "Gold");
                 CD = bigCD;
                 setSpellCD(temp, CD);
             }
@@ -409,19 +410,19 @@ public class GameScript : MonoBehaviour
             }
             else if (temp.transform.name == ("Bloodshot") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                bloodshot();
+                changeTileTypes("Health", "Sword");
                 CD = bigCD;
                 setSpellCD(temp, CD);
             }
             else if (temp.transform.name == ("Crystalmancy") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                crystalmancy();
+                changeTileTypes("Rubble", "Mana");
                 CD = bigCD;
                 setSpellCD(temp, CD);
             }
             else if (temp.transform.name == ("Discipline") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                discipline();
+                changeTileTypes("Rubble", "Sword");
                 CD = medCD;
                 setSpellCD(temp, CD);
             }
@@ -434,7 +435,7 @@ public class GameScript : MonoBehaviour
             }
             else if (temp.transform.name == ("Elbow Grease") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                elbowGrease();
+                collectAllOfCertainTile("Rubble");
                 CD = medCD;
                 setSpellCD(temp, CD);
             }
@@ -446,13 +447,13 @@ public class GameScript : MonoBehaviour
             }
             else if (temp.transform.name == ("Gather") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                gather();
+                changeTileTypes("Rubble", "Health");
                 CD = bigCD;
                 setSpellCD(temp, CD);
             }
             else if (temp.transform.name == ("Gold Rush") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                goldRush();
+                collectAllOfCertainTile("Gold");
                 CD = bigCD;
                 setSpellCD(temp, CD);
             }
@@ -465,7 +466,7 @@ public class GameScript : MonoBehaviour
             }
             else if (temp.transform.name == ("Mend") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                mend();
+                collectAllOfCertainTile("Health");
                 CD = bigCD;
                 setSpellCD(temp, CD);
             }
@@ -510,7 +511,7 @@ public class GameScript : MonoBehaviour
             }
             else if (temp.transform.name == ("Search") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                search();
+                //search();
                 CD = 0;
                 setSpellCD(temp, CD);
             }
@@ -560,7 +561,7 @@ public class GameScript : MonoBehaviour
                         if (r < chance && missles > 0)
                         {
                             board[i, j].GetComponent<Tile>().mType = "Collected";
-                            Destroy(board[i, j]);
+                            Destroy(board[i, j].gameObject);
                             missles--;
                         }
                     }
@@ -702,12 +703,12 @@ public class GameScript : MonoBehaviour
             }          
             else if (collected.Peek().GetComponent<Tile>().mType == "Chest")
             {
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
                 float X = temp.transform.localPosition.x;
                 float Y = temp.transform.localPosition.y;
-                Destroy(temp);   
+                Destroy(temp.gameObject);   
                 board[row, col].transform.GetChild(2).GetComponent<Animator>().SetBool("Collected", true);
                 Destroy(board[row, col].gameObject, 2.10F);
                 Vector3 position = new Vector3(X, Y, 0.0F);
@@ -715,33 +716,33 @@ public class GameScript : MonoBehaviour
             }
             else if (collected.Peek().GetComponent<Tile>().mType == "Artifact")
             {
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
                 GetComponent<Artifacts>().collectArtifact(temp);
 
-                Destroy(temp);
-                Destroy(board[row, col]);
+                Destroy(temp.gameObject);
+                Destroy(board[row, col].gameObject);
                 shiftBoard();
             }
             else if (collected.Peek().GetComponent<Tile>().mType == "Goblin" && GameControl.execute)
             {
                 GameControl.execute = false;
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
-                Destroy(temp);
-                Destroy(board[row, col]);
+                Destroy(temp.gameObject);
+                Destroy(board[row, col].gameObject);
                 shiftBoard();
             }
             else if (collected.Peek().GetComponent<Tile>().mType == "Bomb" || GameControl.bomb)
             {
                 GameControl.bomb = false;
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
-                Destroy(temp);
-                Destroy(board[row, col]);
+                Destroy(temp.gameObject);
+                Destroy(board[row, col].gameObject);
                 for (int i = 0; i < 6; i++)
                 {
                     for (int j = 0; j < 6; j++)
@@ -751,7 +752,7 @@ public class GameScript : MonoBehaviour
                             if(j >= (col - 1) && j <= (col + 1))
                             {
                                 board[i, j].GetComponent<Tile>().mType = "Collected";
-                                Destroy(board[i, j]);
+                                Destroy(board[i, j].gameObject);
                             }                          
                         }
                     }
@@ -772,10 +773,10 @@ public class GameScript : MonoBehaviour
             {
                 GameControl.dragonShot = false;
                 currentSpell.transform.GetChild(2).gameObject.SetActive(false);
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
-                Destroy(temp);
+                Destroy(temp.gameObject);
                 explode(row, col, "Dragon Shot");
                 yield return new WaitForSeconds(1F);
                 shiftBoard();
@@ -784,10 +785,10 @@ public class GameScript : MonoBehaviour
             {
                 GameControl.bomberShot = false;
                 currentSpell.transform.GetChild(2).gameObject.SetActive(false);
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
-                Destroy(temp);               
+                Destroy(temp.gameObject);               
                 explode(row, col, "Bomber Shot");
                 yield return new WaitForSeconds(1F);
                 shiftBoard();
@@ -795,10 +796,10 @@ public class GameScript : MonoBehaviour
             else if (GameControl.blink)
             {
                 GameControl.blink = false;
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
-                Destroy(temp);
+                Destroy(temp.gameObject);
                 Destroy(board[row, col]);
                 for (int i = 0; i < 6; i++)
                 {
@@ -807,7 +808,7 @@ public class GameScript : MonoBehaviour
                         if (i == row || j == col)
                         {
                             board[i, j].GetComponent<Tile>().mType = "Collected";
-                            Destroy(board[i, j]);
+                            Destroy(board[i, j].gameObject);
                         }                           
                     }
                 }
@@ -817,12 +818,12 @@ public class GameScript : MonoBehaviour
             {
                 GameControl.hexBall = false;
                 currentSpell.transform.GetChild(2).gameObject.SetActive(false);
-                GameObject temp = collected.Pop();
+                Tile temp = collected.Pop();
                 int col = temp.GetComponent<Tile>().mCol;
                 int row = temp.GetComponent<Tile>().mRow;
                 if(temp.GetComponent<Tile>().mType != "Goblin")
                 {
-                    Destroy(board[row, col]);
+                    Destroy(board[row, col].gameObject);
                     board[row, col] = temp;
                 }                   
                 for (int i = 0; i < 6; i++)
@@ -881,7 +882,7 @@ public class GameScript : MonoBehaviour
                          
                 if (collected.Peek().GetComponent<Tile>().mType != "Goblin")
                 {
-                    GameObject temp = collected.Pop();
+                    Tile temp = collected.Pop();
                     int row = temp.GetComponent<Tile>().mRow;
                     int col = temp.GetComponent<Tile>().mCol;
                     GameControl.powderKeg = false;  
@@ -889,7 +890,7 @@ public class GameScript : MonoBehaviour
                     Destroy(temp.gameObject);
                     Destroy(board[row, col].gameObject);
                     Vector3 pos = temp.transform.position;
-                    board[row, col] = (GameObject)Instantiate(barrel, pos, Quaternion.identity);
+                    board[row, col] = (Tile)Instantiate(barrel, pos, Quaternion.identity);
                     board[row, col].GetComponent<Tile>().mType = "Barrel";
                     board[row, col].GetComponent<Tile>().mCol = col;
                     board[row, col].GetComponent<Tile>().mRow = row;
@@ -910,7 +911,8 @@ public class GameScript : MonoBehaviour
             screenUp = true;
             for(int i = 0; i < gameScreenParts.Length; i++)
             {
-                gameScreenParts[i].GetComponent<SpriteRenderer>().color = Color.gray;
+                if(gameScreenParts[i].TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+                    gameScreenParts[i].GetComponent<SpriteRenderer>().color = Color.gray;
             }
             slimeNeedsToEat = true;         
             //float exp = 0;
@@ -926,7 +928,7 @@ public class GameScript : MonoBehaviour
             predictText.pDamage = 0;           
             for (int i = 0; i < count; i++)
             {
-                GameObject obj = collected.Pop();             
+                Tile obj = collected.Pop();             
                 String type = obj.GetComponent<Tile>().mType;
                 characterControl.manageSkillCDs(type);
                 if (board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].GetComponent<Tile>().particle != null)
@@ -945,7 +947,7 @@ public class GameScript : MonoBehaviour
                 {
                     spawnScoreAddition(collected.Count, count, "Health");
                     Tile.numCollectedH++;
-                    obj.SetActive(true);
+                    obj.transform.gameObject.SetActive(true);
                     obj.GetComponent<Tile>().collected = true;      
                     if(obj.GetComponent<Tile>().empowered)
                         healthGain += 2;
@@ -956,7 +958,7 @@ public class GameScript : MonoBehaviour
                 {
                     spawnScoreAddition(collected.Count, count, "Coin");
                     Tile.numCollectedG++;
-                    obj.SetActive(true);
+                    obj.transform.gameObject.SetActive(true);
                     obj.GetComponent<Tile>().collected = true;                     
                     if (GetComponent<Artifacts>().dragonSickness) //Dragon Sickness Function 
                     {
@@ -1015,22 +1017,22 @@ public class GameScript : MonoBehaviour
                     if (temp <= 100) //Turn Rubble into Health (10% | 20% | 49%)
                     {
                         Tile.numCollectedH++;
-                        GameObject tempHealth;
+                        Tile tempHealth;
                         Vector3 pos = obj.transform.position;
-                        tempHealth = (GameObject)Instantiate(healthCrystals[0], pos, Quaternion.identity);
+                        tempHealth = (Tile)Instantiate(healthCrystals[0], pos, Quaternion.identity);
                         tempHealth.GetComponent<Tile>().mType = "Health";
-                        tempHealth.SetActive(true);
+                        tempHealth.transform.gameObject.SetActive(true);
                         tempHealth.GetComponent<Tile>().collected = true;
                         healthGain++;
                     }
                     else if (temp <= 200) //Turn Rubble into Gold (10% | 20% | 49%)
                     {
                         Tile.numCollectedG++;
-                        GameObject tempGold;
+                        Tile tempGold;
                         Vector3 pos = obj.transform.position;
-                        tempGold = (GameObject)Instantiate(coins[0], pos, Quaternion.identity);
+                        tempGold = (Tile)Instantiate(coins[0], pos, Quaternion.identity);
                         tempGold.GetComponent<Tile>().mType = "Coin";
-                        tempGold.SetActive(true);
+                        tempGold.transform.gameObject.SetActive(true);
                         tempGold.GetComponent<Tile>().collected = true;
                         goldCollected++;
                         gold++;
@@ -1047,7 +1049,7 @@ public class GameScript : MonoBehaviour
                 }
                 else if (obj.GetComponent<Tile>().mType == "Mana")
                 {                   
-                    obj.SetActive(true);
+                    obj.transform.gameObject.SetActive(true);
                     obj.GetComponent<Tile>().collected = true;
                     mana++;
                 }
@@ -1214,7 +1216,8 @@ public class GameScript : MonoBehaviour
             screenUp = false;
             for(int i = 0; i < gameScreenParts.Length; i++)
             {
-                gameScreenParts[i].GetComponent<SpriteRenderer>().color = Color.white;
+                if (gameScreenParts[i].TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+                    gameScreenParts[i].GetComponent<SpriteRenderer>().color = Color.white;
             }
         }
         yield return null;
@@ -1310,7 +1313,7 @@ public class GameScript : MonoBehaviour
                 Debug.Log("Healing");
                 temp.GetComponent<Tile>().lastAbilityUsed = "Steal Health";
                 bossAbilityUsed = true;
-                GameObject[] body = groupUpBossBody();
+                Tile[] body = groupUpBossBody();
                 int bodyIndex = 0;
                 int lowestHealth = 20;
                 for(int k = 0; k < 6; k++)
@@ -1344,7 +1347,7 @@ public class GameScript : MonoBehaviour
                 Debug.Log("Freezing");
                 temp.GetComponent<Tile>().lastAbilityUsed = "Freeze";
                 bossAbilityUsed = true;
-                GameObject[] body = groupUpBossBody();
+                Tile[] body = groupUpBossBody();
                 for(int k = 0; k < body.Length; k++)
                 {
                     int row = body[k].GetComponent<Tile>().mRow;
@@ -1475,17 +1478,17 @@ public class GameScript : MonoBehaviour
             if (turn <= 3)
             {
                 if (r > turn - 1 && c > turn - 1)
-                    if (board[r - 1, c - 1].GetComponent<Tile>().mType != "Goblin")
-                        transformIntoGoblin(r - turn, c - turn);
+                    if (board[r - 1, c - 1].mType != "Goblin")
+                        spawnTile("Goblin", r - turn, c - turn, board[r - 1, c - 1].transform.position);
                 if (r > turn - 1 && c < 6 - turn)
-                    if (board[r - 1, c + 1].GetComponent<Tile>().mType != "Goblin")
-                        transformIntoGoblin(r - turn, c + turn);
+                    if (board[r - 1, c + 1].mType != "Goblin")
+                        spawnTile("Goblin", r - turn, c + turn, board[r - 1, c + 1].transform.position);
                 if (r < 6 - turn && c > turn - 1)
-                    if (board[r + 1, c - 1].GetComponent<Tile>().mType != "Goblin")
-                        transformIntoGoblin(r + turn, c - turn);
+                    if (board[r + 1, c - 1].mType != "Goblin")
+                        spawnTile("Goblin", r + turn, c - turn, board[r + 1, c - 1].transform.position);
                 if (r < 6 - turn && c < 6 - turn)
-                    if (board[r + 1, c + 1].GetComponent<Tile>().mType != "Goblin")
-                        transformIntoGoblin(r + turn, c + turn);
+                    if (board[r + 1, c + 1].mType != "Goblin")
+                        spawnTile("Goblin", r + turn, c + turn, board[r + 1, c + 1].transform.position);
                 turn++;
             }
             else
@@ -1498,16 +1501,16 @@ public class GameScript : MonoBehaviour
             {
                 if (r > turn - 1 && c > turn - 1)
                     if (board[r - turn, c - turn].GetComponent<Tile>().mType != "Coin")
-                        transformIntoCoin(r - turn, c - turn);
+                        spawnTile("Coin", r - turn, c - turn, board[r - 1, c - 1].transform.position);
                 if (r > turn - 1 && c < 6 - turn)
                     if (board[r - turn, c + turn].GetComponent<Tile>().mType != "Coin")
-                        transformIntoCoin(r - turn, c + turn);
+                        spawnTile("Coin", r - turn, c + turn, board[r - 1, c + 1].transform.position);
                 if (r < 6 - turn && c > turn - 1)
                     if (board[r + turn, c - turn].GetComponent<Tile>().mType != "Coin")
-                        transformIntoCoin(r + turn, c - turn);
+                        spawnTile("Coin", r + turn, c - turn, board[r + 1, c - 1].transform.position);
                 if (r < 6 - turn && c < 6 - turn)
                     if (board[r + turn, c + turn].GetComponent<Tile>().mType != "Coin")
-                        transformIntoCoin(r + turn, c + turn);
+                        spawnTile("Coin", r + turn, c + turn, board[r + 1, c + 1].transform.position);
                 turn++;
             }
             else
@@ -1573,19 +1576,19 @@ public class GameScript : MonoBehaviour
         return false;
     }
 
-    bool checkBossArms(GameObject arm)
+    bool checkBossArms(Tile arm)
     {
-        if(arm.GetComponent<Tile>().mRow - 1 < 6) //Check Tile Above
-            if(board[arm.GetComponent<Tile>().mRow - 1, arm.GetComponent<Tile>().mCol].GetComponent<Tile>().boss == "BossArms")
+        if(arm.mRow - 1 < 6) //Check Tile Above
+            if(board[arm.mRow - 1, arm.mCol].boss == "BossArms")
                 return true;
-        if(arm.GetComponent<Tile>().mRow + 1 < 6) //Check Tile Below
-            if(board[arm.GetComponent<Tile>().mRow + 1, arm.GetComponent<Tile>().mCol].GetComponent<Tile>().boss == "BossArms")
+        if(arm.mRow + 1 < 6) //Check Tile Below
+            if(board[arm.mRow + 1, arm.mCol].boss == "BossArms")
                 return true;
 
         int numArms = 0;
         for(int i = 0; i < 6; i++) //Check if there is only one arm in the column
         {
-            if(board[i, arm.GetComponent<Tile>().mCol].GetComponent<Tile>().boss == "BossArms")
+            if(board[i, arm.mCol].boss == "BossArms")
                 numArms++;
         }
         if(numArms == 1)
@@ -1661,7 +1664,7 @@ public class GameScript : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             double damage = characterControl.getAttack() + swords;
-            GameObject enemy = enemies.Pop();
+            Tile enemy = enemies.Pop();
             if (board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].GetComponent<Enemy>().pDamage == 1) //Weapon Bonuses
                 damage += 1;
             if (GetComponent<Artifacts>().amuletOfPain) //Amulet of Pain Function
@@ -1741,9 +1744,9 @@ public class GameScript : MonoBehaviour
                         enemy.GetComponent<Tile>().frozen = true;
                         enemy.transform.GetChild(18).gameObject.SetActive(true);
                     }                  
-                    Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol]);
+                    Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].gameObject);
                     board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol] = enemy;
-                    enemy.SetActive(true);
+                    enemy.transform.gameObject.SetActive(true);
                 }
                 else if (enemy.GetComponent<Tile>().boss == "BossBody")
                 {
@@ -1751,15 +1754,15 @@ public class GameScript : MonoBehaviour
                     {
                         enemy.GetComponent<Enemy>().health -= (int)damage;
                         damageDone += (int)damage;
-                        Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol]);
+                        Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].gameObject);
                         board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol] = enemy;
-                        enemy.SetActive(true);
+                        enemy.transform.gameObject.SetActive(true);
                     }
                     else
                     {
-                        Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol]);
+                        Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].gameObject);
                         board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol] = enemy;
-                        enemy.SetActive(true);
+                        enemy.transform.gameObject.SetActive(true);
                     }
                 }
                 else
@@ -1792,9 +1795,9 @@ public class GameScript : MonoBehaviour
                         enemy.GetComponent<Enemy>().poisoned = true;
                         enemy.transform.GetChild(20).gameObject.SetActive(true);
                     }
-                    Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol]);
+                    Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].gameObject);
                     board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol] = enemy;
-                    enemy.SetActive(true);
+                    enemy.transform.gameObject.SetActive(true);
                 }                    
             }
             else
@@ -1802,8 +1805,8 @@ public class GameScript : MonoBehaviour
                 if (GameControl.bloodlust)//bloodlust function
                 {
                     Vector3 pos = enemy.transform.position;
-                    enemy = (GameObject)Instantiate(healthCrystals[0], pos, Quaternion.identity);
-                    enemy.SetActive(true);
+                    enemy = (Tile)Instantiate(healthCrystals[0], pos, Quaternion.identity);
+                    enemy.transform.gameObject.SetActive(true);
                     enemy.GetComponent<Tile>().collected = true;
                     healthGain++;
                     if (enemy.GetComponent<Tile>().boss != "")
@@ -1818,7 +1821,7 @@ public class GameScript : MonoBehaviour
                 }
                 else
                 {
-                    string tempType = enemy.GetComponent<Tile>().boss;                        
+                    string tempType = enemy.boss;                        
                     if(tempType == "BossArms")
                     {
                         if(checkBossArms(enemy))
@@ -1946,8 +1949,8 @@ public class GameScript : MonoBehaviour
                         {
                             board[i, j].GetComponent<Tile>().mType = "Collected";
                             board[i + 1, j].GetComponent<Tile>().mType = "Collected";
-                            Destroy(board[i, j]);
-                            Destroy(board[i + 1, j]);
+                            Destroy(board[i, j].gameObject);
+                            Destroy(board[i + 1, j].gameObject);
                             numGhosts -=2 ;
                             if (numGhosts == 0)
                             {
@@ -2121,7 +2124,7 @@ public class GameScript : MonoBehaviour
             }
         }
     }
-    public void HexBall(GameObject temp)
+    public void HexBall(Tile temp)
     {
         int col = temp.GetComponent<Tile>().mCol;
         int row = temp.GetComponent<Tile>().mRow;
@@ -2177,74 +2180,117 @@ public class GameScript : MonoBehaviour
             }
         }
     }
-    public void discipline() //Turn Rubble into Swords
-    {
-        for(int i = 0; i < 6; i++)
-        {
-            for(int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Rubble")
-                {
-                    Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i,j] = (GameObject)Instantiate(swords[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Sword";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-            }
-        }
-    }
-    public void appraise() //Turn rubble into gold
+
+    public void changeTileTypes(string originalType, string newType)
     {
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 6; j++)
             {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Rubble")
-                {
+                Tile obj = board[i, j];
+                if (obj.mType == originalType)
+                {                  
                     Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(coins[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Coin";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
+                    spawnTile(newType, i, j, obj.transform.position);                                               
                 }
             }
         }
     }
-    public void crystalmancy() //Turn Rubble into mana
+
+    public void swapAllOfTwoTileTypes(string typeOne, string typeTwo)
     {
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 6; j++)
             {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Rubble")
+                Tile obj = board[i, j];
+                if (obj.mType == typeOne)
                 {
                     Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(manaCrystals[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Mana";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
+                    board[i, j] = spawnTile(typeTwo, i, j, obj.transform.position);
+                }
+                if (obj.mType == typeTwo)
+                {
+                    Destroy(obj.gameObject);                   
+                    board[i, j] = spawnTile(typeOne, i, j, obj.transform.position);
                 }
             }
         }
     }
+    public Tile spawnTile(string type, int row, int col, Vector3 pos)
+    {
+        Tile temp = Instantiate(getTile(type), pos, Quaternion.identity);
+        temp.mType = type;
+        temp.mRow = row;
+        temp.mCol = col;
+        if(type == "Goblin")
+        {
+            temp.GetComponent<Enemy>().health = UnityEngine.Random.Range(2, 5) + (goblinScalar * 2);
+            temp.GetComponent<Enemy>().damage = UnityEngine.Random.Range(0, 2) + goblinScalar;
+            temp.GetComponent<Enemy>().justSpawned = true;
+            temp.transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep");
+        }
+        return temp;
+    }
+
+    public Tile getTile(string type)
+    {
+        int ran = UnityEngine.Random.Range(0, 3);
+        switch (type)
+        {
+            case "Health":
+                return healthCrystals[ran];
+            case "Coin":
+                return coins[ran];
+            case "Sword":
+                return swords[ran];
+            case "Goblin":
+                return goblins[0];
+            case "Rubble":
+                return rubble;
+            case "Chest":
+                return chest;
+            case "Shopkeeper":
+                return shopkeeper;
+            case "Bomb":
+                return bomb;
+            case "Helix":
+                return helix;
+        }
+        return null;
+    }
+
+    public void collectAllOfCertainTile(string tileType)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                Tile obj = board[i, j];
+                if (obj.GetComponent<Tile>().mType == tileType)
+                {
+                    Destroy(obj.gameObject);
+                    collected.Push(board[i, j]);
+                    board[i, j].mType = "Collected";
+                    board[i, j].mCol = j;
+                    board[i, j].mRow = i;
+                }
+            }
+        }
+        StartCoroutine(collect());
+    }
+
     public bool checkIfPickPocket()
     {
         if (characterControl.searchActiveCharacterTraits("Pickpocket"))
         {
             bool hasCoin = false;
             bool hasSword = false;
-            GameObject[] tempArray = new GameObject[collected.Count];
+            Tile[] tempArray = new Tile[collected.Count];
             collected.CopyTo(tempArray, 0);
             for (int i = 0; i < collected.Count; i++)
             {
-                string tempType = tempArray[i].GetComponent<Tile>().mType;
+                string tempType = tempArray[i].mType;
                 if (tempType == "Coin")
                     hasCoin = true;
                 if (tempType == "Sword" || tempType == "Goblin" || tempType == "Barrel")
@@ -2260,204 +2306,24 @@ public class GameScript : MonoBehaviour
         else
             return false;
     }
-    public void ambush() //Turn Rubble into Goblins
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Rubble")
-                {
-                    Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(goblins[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Goblin";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                    board[i, j].GetComponent<Enemy>().health = goblinHealthConstant + (goblinScalar * 2);
-                    board[i, j].GetComponent<Enemy>().damage = goblinDamageConstant + goblinScalar;
-                }
-            }
-        }
-    }
-    public void bloodshot() //Turn Health and Mana into Swords
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Health" || obj.GetComponent<Tile>().mType == "Mana")
-                {
-                    Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(swords[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Sword";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }              
-            }
-        }
-    }
-    public void gather() //Turn Rubble into Health
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Rubble")
-                {
-                    Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(healthCrystals[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Health";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-            }
-        }
-    }
-    public void Balance() //Turn swords into Health
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Sword")
-                {
-                    Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(healthCrystals[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Health";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-            }
-        }
-    }
+    
     public void freeze() 
     {
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 6; j++)
             {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Goblin")
+                Tile obj = board[i, j];
+                if (obj.mType == "Goblin")
                 {
+
                     obj.GetComponent<Enemy>().frozen = true;
                     obj.gameObject.transform.GetChild(18).gameObject.SetActive(true);
                 }
             }
         }
     }
-    public void elbowGrease() //collect all rubble
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Rubble")
-                {
-                    Destroy(obj.gameObject);
-                    collected.Push(board[i, j]);
-                    board[i, j].GetComponent<Tile>().mType = "Collected";                 
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-            }
-        }
-        StartCoroutine(collect());
-    }
-    public void mend() //collect all health
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Health")
-                {
-                    Destroy(obj.gameObject);
-                    collected.Push(board[i, j]);
-                    board[i, j].GetComponent<Tile>().mType = "Collected";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-            }
-        }
-        StartCoroutine(collect());
-    }
-    public void goldRush() //Collect all gold
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Coin")
-                {
-                    Destroy(obj.gameObject);
-                    collected.Push(board[i, j]);
-                    board[i, j].GetComponent<Tile>().mType = "Collected";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-            }
-        }
-        StartCoroutine(collect());
-    }
-    public void alchemy() //Swap health and mana crystals
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Health")
-                {
-                    Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(manaCrystals[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Mana";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-                if (obj.GetComponent<Tile>().mType == "Mana")
-                {
-                    Destroy(obj.gameObject);
-                    Vector3 pos = obj.transform.position;
-                    board[i, j] = (GameObject)Instantiate(healthCrystals[0], pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Health";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                }
-            }
-        }
-    }
-    void search()
-    {
-        for(int i = 0; i < 6; i++)
-        {
-            for(int j = 0; j < 6; j++)
-            {
-                string type = board[i, j].GetComponent<Tile>().mType;
-                if (type != "Shopkeeper" && type != "Chest" && type != "Artifact" && type != "Goblin")
-                {
-                    Vector3 pos = board[i, j].gameObject.transform.position;
-                    Destroy(board[i, j].gameObject);
-                    board[i, j] = (GameObject)Instantiate(chest, pos, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Chest";
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i;
-                    return;
-                }
-            }
-        }      
-    }
+ 
     void fillBoard()
     {
         temp = 0;
@@ -2466,73 +2332,26 @@ public class GameScript : MonoBehaviour
             for (int j = 0; j < 6; j++)
             {
                 float X = 0.515F + j + (j * 0.1F);
-                float Y = 0.5F - i;// - (i * spacing);
+                float Y = 2 - i - (i * spacing);
                 Vector3 position = new Vector3(X, Y, 0.0F);
-
                 temp = UnityEngine.Random.Range(1, 100);
-                //temp = 20;
                 if (temp <= 30)
                 {                     
-                    temp = UnityEngine.Random.Range(1, 4);
-                    //temp = 2;
-                    if (temp == 1)
-                        board[i, j] = (GameObject)Instantiate(healthCrystals[0], position, Quaternion.identity);
-                    else if (temp == 2)
-                        board[i, j] = (GameObject)Instantiate(healthCrystals[1], position, Quaternion.identity);
-                    else if (temp == 3)
-                        board[i, j] = (GameObject)Instantiate(healthCrystals[2], position, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Health";                                   
+                    board[i,j] = spawnTile("Health", i, j, position);                                   
                 }
                 else if (temp <= 60)
                 {
-                    temp = UnityEngine.Random.Range(1, 4);
-                    if (temp == 1)
-                        board[i, j] = (GameObject)Instantiate(coins[0], position, Quaternion.identity);
-                    else if (temp == 2)
-                        board[i, j] = (GameObject)Instantiate(coins[1], position, Quaternion.identity);
-                    else if (temp == 3)
-                        board[i, j] = (GameObject)Instantiate(coins[2], position, Quaternion.identity);                    
-                    board[i, j].GetComponent<Tile>().mType = "Coin";                   
+                    board[i, j] = spawnTile("Coin", i, j, position);
                 }
                 else if (temp <= 75)
                 {
-                    temp = UnityEngine.Random.Range(1, 4);
-                    if (temp == 1)
-                        board[i, j] = (GameObject)Instantiate(swords[0], position, Quaternion.identity);
-                    else if (temp == 2)
-                        board[i, j] = (GameObject)Instantiate(swords[1], position, Quaternion.identity);
-                    else if (temp == 3)
-                        board[i, j] = (GameObject)Instantiate(swords[2], position, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Sword";
+                    board[i, j] = spawnTile("Sword", i, j, position);
                     board[i, j].transform.GetChild(8).GetComponent<SpriteRenderer>().sprite = characterControl.getWeaponIcon().GetComponent<SpriteRenderer>().sprite;
                 }                             
                 else if (temp <= 99)
-                {                  
-                    board[i, j] = (GameObject)Instantiate(rubble, position, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Rubble";                  
-                }
-                else if(temp == 101)
                 {
-                    board[i, j] = (GameObject)Instantiate(goblins[3], position, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Goblin";
-                    board[i, j].GetComponent<Enemy>().health = goblinHealthConstant + (goblinScalar * 2);
-                    board[i, j].GetComponent<Enemy>().damage = goblinDamageConstant + goblinScalar;
-                    board[i, j].GetComponent<Enemy>().justSpawned = true;
-                    board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep");
-                }
-                else
-                {
-                    temp = UnityEngine.Random.Range(1, 4);
-                    if (temp == 1)
-                        board[i, j] = (GameObject)Instantiate(manaCrystals[0], position, Quaternion.identity);
-                    else if (temp == 2)
-                        board[i, j] = (GameObject)Instantiate(manaCrystals[1], position, Quaternion.identity);
-                    else if (temp == 3)
-                        board[i, j] = (GameObject)Instantiate(manaCrystals[2], position, Quaternion.identity);
-                    board[i, j].GetComponent<Tile>().mType = "Mana";
-                }
-                board[i, j].GetComponent<Tile>().mCol = j;
-                board[i, j].GetComponent<Tile>().mRow = i;
+                    board[i, j] = spawnTile("Rubble", i, j, position);
+                }                          
             }
         }
     }
@@ -2540,10 +2359,10 @@ public class GameScript : MonoBehaviour
     {
         for(int i  = 0; i < collected.Count; i++)
         {
-            GameObject obj = collected.Pop();
-            Destroy(board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol]);
+            Tile obj = collected.Pop();
+            Destroy(board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol].gameObject);
             board[obj.GetComponent<Tile>().mRow, obj.GetComponent<Tile>().mCol] = obj;
-            obj.SetActive(true);         
+            obj.transform.gameObject.SetActive(true);         
             if(obj.transform.GetComponent<Tile>().mType == "Goblin" && obj.transform.GetComponent<Tile>().boss == "")
             {
                 if(obj.transform.GetComponent<Enemy>().shouldntAttack)
@@ -2579,9 +2398,9 @@ public class GameScript : MonoBehaviour
         }
         return numOfTiles;
     }
-    private GameObject[] groupUpBossBody()
+    private Tile[] groupUpBossBody()
     {     
-        GameObject[] numTiles = new GameObject[numOfTilesInBoard("Goblin", "BossBody")];
+        Tile[] numTiles = new Tile[numOfTilesInBoard("Goblin", "BossBody")];
         int bodyIndex = 0;
         for(int i = 0; i < 6; i++)
         {
@@ -2602,7 +2421,6 @@ public class GameScript : MonoBehaviour
         if (checkGoblin())
         {
             int enemyDamage = 0;
-            int shrapnelRand = UnityEngine.Random.Range(1, 101);
             int armor = (int)characterControl.getArmor();
             
             if (GameControl.vanish) //Vanish Function 
@@ -2613,14 +2431,14 @@ public class GameScript : MonoBehaviour
                 {
                     for (int j = 0; j < 6; j++)
                     {
-                        GameObject temp = board[i, j];
-                        if (temp.GetComponent<Tile>().mType == "Goblin" || temp.GetComponent<Tile>().mType == "Ghost")
+                        Tile temp = board[i, j];
+                        if (temp.mType == "Goblin" || temp.mType == "Ghost")
                         {                           
                             if(!temp.GetComponent<Enemy>().frozen && !temp.GetComponent<Enemy>().shouldntAttack && !temp.GetComponent<Enemy>().justFrozen && !temp.GetComponent<Enemy>().justSpawned)
                             {
                                 temp.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
                                 enemyDamage += temp.GetComponent<Enemy>().damage;
-                                if (temp.GetComponent<Tile>().boss != "" && !temp.GetComponent<Enemy>().justSpawned && temp.GetComponent<Tile>().boss != "BossArms")
+                                if (temp.boss != "" && !temp.GetComponent<Enemy>().justSpawned && temp.boss != "BossArms")
                                 {
                                     //if(temp.GetComponent<Enemy>().damage <= armor)
                                     //{   //Blocked
@@ -2637,7 +2455,7 @@ public class GameScript : MonoBehaviour
                                         temp.transform.GetChild(8).GetComponent<Animator>().SetTrigger("Attacking");
                                     //}
                                 }                                                                          
-                                else if(temp.GetComponent<Tile>().boss == "")
+                                else if(temp.boss == "")
                                 {              
                                     if(temp.GetComponent<Enemy>().damage <= armor)
                                     {   //Blocked
@@ -2719,21 +2537,19 @@ public class GameScript : MonoBehaviour
                                     temp.GetComponent<Enemy>().health -= 1;
                                 if (temp.GetComponent<Enemy>().health <= 0)
                                 {
-                                    if (temp.GetComponent<Tile>().boss != "" && temp.GetComponent<Tile>().boss != "RatClone" && temp.GetComponent<Tile>().boss != "BossArms")
+                                    if (temp.boss != "" && temp.boss != "RatClone" && temp.boss != "BossArms")
                                     {
                                         spawnChest = true;
                                         GameControl.miniBossUp = false;
                                         spawnScoreAddition(0, 0, "Boss");
-                                    }
-                                    //Character.currentExp++;
-                                    board[temp.GetComponent<Tile>().mRow, temp.GetComponent<Tile>().mCol].GetComponent<Tile>().mType = "Collected";
+                                    }              
+                                    board[temp.mRow, temp.mCol].mType = "Collected";
                                     Destroy(temp.gameObject);
                                     shiftBoard();
                                 }
                                 else if (GetComponent<Artifacts>().isaacsBinding) //Isaac's Binding Function
                                 {
-                                    int effectChance = UnityEngine.Random.Range(1, 100);
-                                    if (effectChance < frostValue)
+                                    if (UnityEngine.Random.Range(1, 101) < frostValue)
                                     {
                                         temp.GetComponent<Enemy>().frozen = true;
                                         temp.transform.GetChild(18).gameObject.SetActive(true);
@@ -2796,9 +2612,9 @@ public class GameScript : MonoBehaviour
         {
             for(int j = 0; j < 6; j++)
             {
-                if(board[i, j].GetComponent<Tile>().mType == "Ghost")
+                if(board[i, j].mType == "Ghost")
                     return true;
-                else if (board[i, j].GetComponent<Tile>().mType == "Goblin")
+                else if (board[i, j].mType == "Goblin")
                 {
                     if (!board[i, j].GetComponent<Enemy>().justSpawned && !board[i, j].GetComponent<Enemy>().shouldntAttack)
                         return true;
@@ -2842,7 +2658,7 @@ public class GameScript : MonoBehaviour
         {
             for (int j = 0; j < 6; j++)
             {
-                if (board[i, j].GetComponent<Tile>().mType == "Goblin")
+                if (board[i, j].mType == "Goblin")
                 {                  
                     if (board[i, j].GetComponent<Enemy>().justSpawned)
                     {
@@ -2859,29 +2675,6 @@ public class GameScript : MonoBehaviour
                 }
             }
         }
-    }
-    void transformIntoGoblin( int i, int j)
-    {
-        GameObject obj = board[i, j];
-        Destroy(obj.gameObject);
-        Vector3 pos = obj.transform.position;
-        board[i, j] = (GameObject)Instantiate(goblins[0], pos, Quaternion.identity);
-        board[i, j].GetComponent<Tile>().mType = "Goblin";
-        board[i, j].GetComponent<Tile>().mCol = j;
-        board[i, j].GetComponent<Tile>().mRow = i;
-        board[i, j].GetComponent<Enemy>().health = goblinHealthConstant + (goblinScalar * 2);
-        board[i, j].GetComponent<Enemy>().damage = goblinDamageConstant + goblinScalar;
-    }
-    void transformIntoCoin(int i, int j)
-    {
-        GameObject obj = board[i, j];
-        Destroy(obj.gameObject);
-        Vector3 pos = obj.transform.position;
-        board[i, j] = (GameObject)Instantiate(coins[0], pos, Quaternion.identity);
-        board[i, j].GetComponent<Tile>().mType = "Coin";
-        board[i, j].GetComponent<Tile>().mCol = j;
-        board[i, j].GetComponent<Tile>().mRow = i;      
-        
     }
 
     void vortex()
@@ -2995,16 +2788,16 @@ public class GameScript : MonoBehaviour
         {
             for(int j = 0; j < 6; j++)
             {
-                GameObject obj = board[i, j];
-                if (obj.GetComponent<Tile>().mType == "Collected")
+                Tile obj = board[i, j];
+                if (obj.mType == "Collected")
                 {
                     for(int k = i-1; k >= 0; k--)
                     {
-                        GameObject nextObj = board[k, j];
-                        if(nextObj.GetComponent<Tile>().mType != "Collected" && nextObj.GetComponent<Tile>().boss != "BossBody")
+                        Tile nextObj = board[k, j];
+                        if(nextObj.mType != "Collected" && nextObj.boss != "BossBody")
                         {
-                            obj.GetComponent<Tile>().mRow = k;
-                            nextObj.GetComponent<Tile>().mRow = i;
+                            obj.mRow = k;
+                            nextObj.mRow = i;
                             board[i, j] = nextObj;
                             board[k, j] = obj;
                             break;
@@ -3037,31 +2830,21 @@ public class GameScript : MonoBehaviour
         {
             for(int j = 0; j < 6; j++)
             {
-                GameObject obj = board[i, j];
-                if(obj.GetComponent<Tile>().mType == "Collected")
+                Tile obj = board[i, j];
+                if(obj.mType == "Collected")
                 {
                     float X = 0.515F + j + (j * 0.1F);
                     float Y = 2 - i - (i * spacing);
-                    Vector3 position = new Vector3(X, Y, 0.0F);
-                   // if(board[i, j].GetComponent<Tile>().particle != null)
-                   // {
-                    //    Debug.Log("Explode");
-                    //    board[i, j].GetComponent<Tile>().particle.Play();
-                   // }
-                        
+                    Vector3 position = new Vector3(X, Y, 0.0F);                 
                     Destroy(board[i, j].gameObject);
-                    //shopSpawner = -1;
-                    //GameControl.gold = 100;
-                    Debug.Log("Turn Counter: " + turnCounter + "  |  Boss Spawner: " + bossSpawner);
+                    Debug.Log("Turn Counter: " + turnCounter + "  |  Boss Spawner: " + bossSpawner + " | Shop Spawner: " + shopSpawner);
                     if (turnCounter == shopSpawner)
                     {
                         shopSpawner += UnityEngine.Random.Range(10, 16);
                         shopKeeperUp = true;
-                        board[i, j] = (GameObject)Instantiate(shopkeeper, position, Quaternion.identity);
-                        board[i, j].GetComponent<Tile>().mType = "Shopkeeper";
+                        board[i, j] = spawnTile("Shopkeeper", i, j, position);
                     }
                     else if (turnCounter == bossSpawner) 
-                    //else if (turnCounter == 2 && !GameControl.miniBossUp)
                     {
                         bossSpawner += UnityEngine.Random.Range(10, 16);
                             if(GetComponent<Artifacts>().bait)
@@ -3087,7 +2870,7 @@ public class GameScript : MonoBehaviour
                         //temp = 5;
                         if(temp == 1)
                         {
-                            board[i, j] = (GameObject)Instantiate(slime, position, Quaternion.identity);
+                            board[i, j] = Instantiate(slime, position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().boss = "Slime";
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
@@ -3095,21 +2878,21 @@ public class GameScript : MonoBehaviour
                         }                         
                         else if (temp == 2)
                         {
-                            board[i, j] = (GameObject)Instantiate(blueGenie, position, Quaternion.identity);
+                            board[i, j] = Instantiate(blueGenie, position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().boss = "BlueGenie";
                             board[i, j].GetComponent<Enemy>().health = 3 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 5 + goblinScalar;
                         }
                         else if (temp == 3)
                         {
-                            board[i, j] = (GameObject)Instantiate(greenGenie, position, Quaternion.identity);
+                            board[i, j] = Instantiate(greenGenie, position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().boss = "GreenGenie";
                             board[i, j].GetComponent<Enemy>().health = 9 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 1 + goblinScalar;
                         }
                         else if (temp == 4)
                         {
-                            board[i, j] = (GameObject)Instantiate(ratLarge, position, Quaternion.identity);
+                            board[i, j] = Instantiate(ratLarge, position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().boss = "Rat";
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
@@ -3117,14 +2900,14 @@ public class GameScript : MonoBehaviour
                         }                           
                         else if (temp == 5)
                         {
-                            board[i, j] = (GameObject)Instantiate(lich, position, Quaternion.identity);
+                            board[i, j] = Instantiate(lich, position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().boss = "Lich";
                             board[i, j].GetComponent<Enemy>().health = 5 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
                         }                          
                         else if (temp == 6)
                         {
-                            board[i, j] = (GameObject)Instantiate(skeleton, position, Quaternion.identity);
+                            board[i, j] = Instantiate(skeleton, position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().boss = "Skull";
                             board[i, j].GetComponent<Enemy>().isSkull = true;
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
@@ -3133,21 +2916,21 @@ public class GameScript : MonoBehaviour
                         else if (temp == 7)
                         {
                             GameControl.bossUp = true;
-                            board[i, j] = (GameObject)Instantiate(healthCrystals[0], position, Quaternion.identity);
+                            board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().mType = "Health";
                             spawnBossArms();
                         }
                         else if (temp == 8)
                         {
                             GameControl.bossUp = true;
-                            board[i, j] = (GameObject)Instantiate(healthCrystals[0], position, Quaternion.identity);
+                            board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().mType = "Health";
                             spawnBossBody();
                         }
                         else if (temp == 9)
                         {
                             GameControl.bossUp = true;
-                            board[i, j] = (GameObject)Instantiate(healthCrystals[0], position, Quaternion.identity);
+                            board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().mType = "Health";
                             spawnBossArms();
                             spawnBossBody();
@@ -3163,14 +2946,14 @@ public class GameScript : MonoBehaviour
                     else if (spawnChest)
                     {
                         spawnChest = false;
-                        board[i, j] = (GameObject)Instantiate(chest, position, Quaternion.identity);
+                        board[i, j] = Instantiate(chest, position, Quaternion.identity);
                         board[i, j].GetComponent<Tile>().mType = "Chest";
                     }
                     else if (ratSpawning > 0 && ratSpawning < 3)
                     {
                         if (ratSpawning < 3)
                         {
-                            board[i, j] = (GameObject)Instantiate(ratSmall, position, Quaternion.identity);
+                            board[i, j] = Instantiate(ratSmall, position, Quaternion.identity);
                             board[i, j].GetComponent<Tile>().boss = "RatClone";
                             ratSpawning++;
                             board[i, j].GetComponent<Tile>().mType = "Goblin";
@@ -3185,129 +2968,64 @@ public class GameScript : MonoBehaviour
                         if(GetComponent<Artifacts>().stoneShell || GetComponent<Artifacts>().bombBag) //Stone Shell Function
                         {
                             if(GetComponent<Artifacts>().loadedDie)
-                                temp = UnityEngine.Random.Range(1, 120);
+                                temp = UnityEngine.Random.Range(1, 121);
                             else
-                                temp = UnityEngine.Random.Range(1, 105);
+                                temp = UnityEngine.Random.Range(1, 106);
                         }
                         else
-                            temp = UnityEngine.Random.Range(1, 100);
+                            temp = UnityEngine.Random.Range(1, 101);
                         if (temp <= 25)
                         {                           
-                            temp = UnityEngine.Random.Range(1, 25);
-                            
-                            if (temp <= 5)
+                            temp = UnityEngine.Random.Range(1, 25);                           
+                            if (temp <= 5 && spawnManaCrystals)
                             {
-                                board[i, j] = (GameObject)Instantiate(healthCrystals[0], position, Quaternion.identity);
-                                board[i, j].GetComponent<Tile>().mType = "Health";
-                            }                              
-                            else if (temp <= 10)
-                            {
-                                board[i, j] = (GameObject)Instantiate(healthCrystals[1], position, Quaternion.identity);
-                                board[i, j].GetComponent<Tile>().mType = "Health";
-                            }                               
-                            else if (temp <= 15)
-                            {
-                                board[i, j] = (GameObject)Instantiate(healthCrystals[2], position, Quaternion.identity);
-                                board[i, j].GetComponent<Tile>().mType = "Health";
-                            }                                                              
-                            else if (temp <= 25)
-                            {
-                                if(spawnManaCrystals)
-                                {
-                                    temp = UnityEngine.Random.Range(1, 4);
-                                    if (temp == 1)
-                                        board[i, j] = (GameObject)Instantiate(manaCrystals[0], position, Quaternion.identity);
-                                    else if (temp == 2)
-                                        board[i, j] = (GameObject)Instantiate(manaCrystals[1], position, Quaternion.identity);
-                                    else if (temp == 3)
-                                        board[i, j] = (GameObject)Instantiate(manaCrystals[2], position, Quaternion.identity);
-                                    board[i, j].GetComponent<Tile>().mType = "Mana";
-                                }                                   
-                                else
-                                {
-                                    board[i, j] = (GameObject)Instantiate(healthCrystals[1], position, Quaternion.identity);
-                                    board[i, j].GetComponent<Tile>().mType = "Health";
-                                }                                   
-                            }
-                            
+                                board[i, j] = spawnTile("Mana", i, j, position);
+                            }                                                                                                                
+                            else
+                            {                             
+                                board[i, j] = spawnTile("Health", i, j, position);                                                               
+                            }                         
                         }
                         else if (temp <= 50)
                         {
-                            temp = UnityEngine.Random.Range(1, 4);
-                            if (temp == 1)
-                                board[i, j] = (GameObject)Instantiate(coins[0], position, Quaternion.identity);
-                            else if (temp == 2)
-                                board[i, j] = (GameObject)Instantiate(coins[1], position, Quaternion.identity);
-                            else if (temp == 3)
-                                board[i, j] = (GameObject)Instantiate(coins[2], position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().mType = "Coin";                                                    
+                            board[i, j] = spawnTile("Coin", i, j, position);
                         }
                         else if (temp <= 65)
                         {
-                            temp = UnityEngine.Random.Range(1, 4);
-                            if (temp == 1)
-                                board[i, j] = (GameObject)Instantiate(swords[0], position, Quaternion.identity);
-                            else if (temp == 2)
-                                board[i, j] = (GameObject)Instantiate(swords[1], position, Quaternion.identity);
-                            else if (temp == 3)
-                                board[i, j] = (GameObject)Instantiate(swords[2], position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().mType = "Sword";
+                            board[i, j] = spawnTile("Sword", i, j, position);
                             board[i, j].transform.GetChild(8).GetComponent<SpriteRenderer>().sprite = characterControl.getWeaponIcon().GetComponent<SpriteRenderer>().sprite;
                         }
                         else if (temp <= 90)
-                        {                         
-                            temp = UnityEngine.Random.Range(1, 5);
-                            temp = 1;
-                            if (temp == 1)
-                                board[i, j] = (GameObject)Instantiate(goblins[0], position, Quaternion.identity);
-                            else if (temp == 2)
-                                board[i, j] = (GameObject)Instantiate(goblins[1], position, Quaternion.identity);
-                            else if (temp == 3)
-                                board[i, j] = (GameObject)Instantiate(goblins[2], position, Quaternion.identity);
-                            else if (temp == 4)
-                                board[i, j] = (GameObject)Instantiate(goblins[3], position, Quaternion.identity);                            
-                                
-                            board[i, j].GetComponent<Tile>().mType = "Goblin";
-                            board[i, j].GetComponent<Enemy>().health = UnityEngine.Random.Range(2, 5) + (goblinScalar * 2);
-                            board[i, j].GetComponent<Enemy>().damage = UnityEngine.Random.Range(0, 2) + goblinScalar;
-                            board[i, j].GetComponent<Enemy>().justSpawned = true;
-                            board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep");
+                        {
+                            board[i, j] = spawnTile("Goblin", i, j, position);                          
                         }
                         else if (temp <= 100)
                         {
-                            board[i, j] = (GameObject)Instantiate(rubble, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().mType = "Rubble";
+                            board[i, j] = spawnTile("Rubble", i, j, position);
                         }
                         else // Stone Shell Function
                         {
                             if(GetComponent<Artifacts>().stoneShell && GetComponent<Artifacts>().bombBag)
                             {
-                                int flip = UnityEngine.Random.Range(1, 3);
-                                if(flip == 1)
+                                if(UnityEngine.Random.Range(1, 3) == 1)
                                 {
-                                    board[i, j] = (GameObject)Instantiate(helix, position, Quaternion.identity);
-                                    board[i, j].GetComponent<Tile>().mType = "Helix";
+                                    board[i, j] = spawnTile("Helix", i, j, position);
                                 }
                                 else
                                 {
-                                    board[i, j] = (GameObject)Instantiate(bomb, position, Quaternion.identity);
-                                    board[i, j].GetComponent<Tile>().mType = "Bomb";
+                                    board[i, j] = spawnTile("Bomb", i, j, position);
                                 }
                             }
                             else if(GetComponent<Artifacts>().stoneShell)
                             {
-                                board[i, j] = (GameObject)Instantiate(helix, position, Quaternion.identity);
-                                board[i, j].GetComponent<Tile>().mType = "Helix";
+                                board[i, j] = spawnTile("Helix", i, j, position);
                             }
                             else if (GetComponent<Artifacts>().bombBag)
                             {
-                                board[i, j] = (GameObject)Instantiate(bomb, position, Quaternion.identity);
-                                board[i, j].GetComponent<Tile>().mType = "Bomb";
+                                board[i, j] = spawnTile("Bomb", i, j, position);
                             }
                         }
                     }
-                    board[i, j].GetComponent<Tile>().mCol = j;
-                    board[i, j].GetComponent<Tile>().mRow = i; 
                 }
             }
         }      
@@ -3330,26 +3048,26 @@ public class GameScript : MonoBehaviour
         replaceTile(3, 2, bossBody, "BossBody", 0, 20);
         replaceTile(3, 3, bossBody, "BossBody", 0, 20);
     }
-    private void replaceTile(int row, int col, GameObject obj)
+    private void replaceTile(int row, int col, Tile obj)
     {
-        GameObject tempObj = board[row, col];
+        Tile tempObj = board[row, col];
         Vector3 pos = tempObj.transform.position;
         Destroy(tempObj.gameObject);
-        board[row, col] = (GameObject)Instantiate(obj, pos, Quaternion.identity);            
-        board[row, col].GetComponent<Tile>().mRow = row;
-        board[row, col].GetComponent<Tile>().mCol = col;
+        board[row, col] = Instantiate(obj, pos, Quaternion.identity);            
+        board[row, col].mRow = row;
+        board[row, col].mCol = col;
     }
 
-    private void replaceTile(int row, int col, GameObject obj, string boss, int damage, int health)
+    private void replaceTile(int row, int col, Tile obj, string boss, int damage, int health)
     {
-        GameObject tempObj = board[row, col];
+        Tile tempObj = board[row, col];
         Vector3 pos = tempObj.transform.position;
         Destroy(tempObj.gameObject);
-        board[row, col] = (GameObject)Instantiate(obj, pos, Quaternion.identity);            
-        board[row, col].GetComponent<Tile>().mRow = row;
-        board[row, col].GetComponent<Tile>().mCol = col;
-        board[row, col].GetComponent<Tile>().mType = "Goblin";
-        board[row, col].GetComponent<Tile>().boss = boss;
+        board[row, col] = Instantiate(obj, pos, Quaternion.identity);            
+        board[row, col].mRow = row;
+        board[row, col].mCol = col;
+        board[row, col].mType = "Goblin";
+        board[row, col].boss = boss;
         board[row, col].GetComponent<Enemy>().damage = damage;
         board[row, col].GetComponent<Enemy>().health = health;
         board[row, col].GetComponent<Enemy>().shouldntAttack = true;
