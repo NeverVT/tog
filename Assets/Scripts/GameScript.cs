@@ -2669,8 +2669,9 @@ public class GameScript : MonoBehaviour
                     else if (board[i, j].GetComponent<Enemy>().shouldntAttack)
                     {
                         board[i, j].GetComponent<Enemy>().shouldntAttack = false;
-                        if(board[i, j].transform.GetChild(9).GetComponent<Tile>().boss == "")
-                            board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");                      
+                        if (board[i, j].transform.GetChild(9).TryGetComponent<Tile>(out var Tile))
+                            if(board[i, j].transform.GetChild(9).GetComponent<Tile>().boss == "")
+                                board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");                      
                     }
                 }
             }
@@ -2871,7 +2872,7 @@ public class GameScript : MonoBehaviour
                         if(temp == 1)
                         {
                             board[i, j] = Instantiate(slime, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().boss = "Slime";
+                            board[i, j].boss = "Slime";
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
                             slimeNeedsToEat = false;
@@ -2879,21 +2880,21 @@ public class GameScript : MonoBehaviour
                         else if (temp == 2)
                         {
                             board[i, j] = Instantiate(blueGenie, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().boss = "BlueGenie";
+                            board[i, j].boss = "BlueGenie";
                             board[i, j].GetComponent<Enemy>().health = 3 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 5 + goblinScalar;
                         }
                         else if (temp == 3)
                         {
                             board[i, j] = Instantiate(greenGenie, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().boss = "GreenGenie";
+                            board[i, j].boss = "GreenGenie";
                             board[i, j].GetComponent<Enemy>().health = 9 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 1 + goblinScalar;
                         }
                         else if (temp == 4)
                         {
                             board[i, j] = Instantiate(ratLarge, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().boss = "Rat";
+                            board[i, j].boss = "Rat";
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
                             ratSpawning++;
@@ -2901,14 +2902,14 @@ public class GameScript : MonoBehaviour
                         else if (temp == 5)
                         {
                             board[i, j] = Instantiate(lich, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().boss = "Lich";
+                            board[i, j].boss = "Lich";
                             board[i, j].GetComponent<Enemy>().health = 5 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
                         }                          
                         else if (temp == 6)
                         {
                             board[i, j] = Instantiate(skeleton, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().boss = "Skull";
+                            board[i, j].boss = "Skull";
                             board[i, j].GetComponent<Enemy>().isSkull = true;
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
@@ -2917,48 +2918,54 @@ public class GameScript : MonoBehaviour
                         {
                             GameControl.bossUp = true;
                             board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().mType = "Health";
+                            board[i, j].mType = "Health";
                             spawnBossArms();
                         }
                         else if (temp == 8)
                         {
                             GameControl.bossUp = true;
                             board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().mType = "Health";
+                            board[i, j].mType = "Health";
                             spawnBossBody();
                         }
                         else if (temp == 9)
                         {
                             GameControl.bossUp = true;
                             board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().mType = "Health";
+                            board[i, j].mType = "Health";
                             spawnBossArms();
                             spawnBossBody();
                         }
                         
                         if(temp != 7 && temp != 8 && temp != 9)
                         {
-                            board[i, j].GetComponent<Tile>().mType = "Goblin";
+                            board[i, j].mType = "Goblin";
                             board[i, j].GetComponent<Enemy>().justSpawned = true;
                             GameControl.miniBossUp = true;
-                        }                      
+                        }
+                        board[i, j].mRow = i;
+                        board[i, j].mCol = j;    
                     }                   
                     else if (spawnChest)
                     {
                         spawnChest = false;
                         board[i, j] = Instantiate(chest, position, Quaternion.identity);
-                        board[i, j].GetComponent<Tile>().mType = "Chest";
+                        board[i, j].mType = "Chest";
+                        board[i, j].mRow = i;
+                        board[i, j].mCol = j;
                     }
                     else if (ratSpawning > 0 && ratSpawning < 3)
                     {
                         if (ratSpawning < 3)
                         {
                             board[i, j] = Instantiate(ratSmall, position, Quaternion.identity);
-                            board[i, j].GetComponent<Tile>().boss = "RatClone";
+                            board[i, j].boss = "RatClone";
                             ratSpawning++;
-                            board[i, j].GetComponent<Tile>().mType = "Goblin";
+                            board[i, j].mType = "Goblin";
                             board[i, j].GetComponent<Enemy>().health = 4 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 1 + goblinScalar;
+                            board[i, j].mRow = i;
+                            board[i, j].mCol = j;
                         }
                         else
                             ratSpawning = 0;                      

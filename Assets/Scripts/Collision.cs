@@ -438,49 +438,37 @@ public class Collision : MonoBehaviour
         {
             characterSelected = 0;
             itemType = "Weapon";
-            other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            other.transform.Find("BorderGold").gameObject.SetActive(true);       
         }
         else if (other.transform.name == "WeaponTwo")
         {
             characterSelected = 1;
             itemType = "Weapon";
-            other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            other.transform.Find("BorderGold").gameObject.SetActive(true);          
         }
         else if (other.transform.name == "WeaponThree")
         {
             characterSelected = 2;
             itemType = "Weapon";
-            other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.selectedCharacter.GetComponent<Character>().weapon.weaponObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            other.transform.Find("BorderGold").gameObject.SetActive(true);           
         }
         else if (other.transform.name == "ArmorOne")
         {
             characterSelected = 0;
             itemType = "Armor";
-            other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            other.transform.Find("BorderGold").gameObject.SetActive(true);           
         }
         else if (other.transform.name == "ArmorTwo")
         {
             characterSelected = 1;
             itemType = "Armor";
-            other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
+            other.transform.Find("BorderGold").gameObject.SetActive(true);           
         }
         else if (other.transform.name == "ArmorThree")
         {
             characterSelected = 2;
             itemType = "Armor";
             other.transform.Find("BorderGold").gameObject.SetActive(true);
-            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
-            characterControl.selectedCharacter.GetComponent<Character>().armor.armorObj.transform.Find("BorderGold").gameObject.SetActive(false);
         }
         else if (other.transform.name == "Replace")
         {
@@ -705,7 +693,30 @@ public class Collision : MonoBehaviour
                         {
                             if (boss != "")
                             {
-                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load("Mini-Bosses/" + boss), pos, Quaternion.identity);
+                                switch (boss)
+                                {
+                                    case "Rat":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().ratLarge, pos, Quaternion.identity);
+                                        break;
+                                    case "RatClone":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().ratSmall, pos, Quaternion.identity);
+                                        break;
+                                    case "Slime":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().slime, pos, Quaternion.identity);
+                                        break;
+                                    case "BlueGenie":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().blueGenie, pos, Quaternion.identity);
+                                        break;
+                                    case "GreenGenie":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().greenGenie, pos, Quaternion.identity);
+                                        break;
+                                    case "Lich":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().lich, pos, Quaternion.identity);
+                                        break;
+                                    case "Skull":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().skeleton, pos, Quaternion.identity);
+                                        break;
+                                }
                                 gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(15).gameObject.SetActive(true);
                             }
                             else
@@ -732,9 +743,15 @@ public class Collision : MonoBehaviour
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(0).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(1).gameObject.SetActive(true);
                         }
-                        else if (type == "Shopkeeper" || type == "Chest")
+                        else if (type == "Shopkeeper")
                         {
-                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load(type), pos, Quaternion.identity);
+                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().shopkeeper, pos, Quaternion.identity);
+                            gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(0).gameObject.SetActive(false);
+                            gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(1).gameObject.SetActive(true);
+                        }
+                        else if (type == "Chest")
+                        {
+                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().chest, pos, Quaternion.identity);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(0).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(1).gameObject.SetActive(true);
                         }
@@ -868,7 +885,7 @@ public class Collision : MonoBehaviour
         }
         else if (other.transform.name == "ToBarracks")
         {
-            cameraObj.transform.position = new Vector3(50, cameraObj.transform.position.y, cameraObj.transform.position.z);
+            cameraObj.transform.position = new Vector3(-100, cameraObj.transform.position.y, cameraObj.transform.position.z);
             if( other.GetComponent<Animator>() != null)
                 other.GetComponent<Animator>().SetTrigger("UnPressed");
 
