@@ -34,12 +34,22 @@ public class Artifacts : MonoBehaviour
 
     public void createArtifact(int col, int row, Vector3 pos, string artifact)
     {
-        GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load("Artifacts/" + artifact), pos, Quaternion.identity);
+        GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(GetComponent<GameScript>().artifacts[getIndex(artifact)], pos, Quaternion.identity);
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mType = "Artifact";
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mName = artifact;
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().isTrinket = true;
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mCol = col;
         GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mRow = row;
+    }
+
+    public int getIndex(string name)
+    {
+        for(int i = 0; i < GetComponent<GameScript>().artifacts.Length; i++)
+        {
+            if(GetComponent<GameScript>().artifacts[i].name == name)
+                return i;
+        }
+        return -1;
     }
 
     public string rollArtifact()

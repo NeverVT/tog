@@ -54,9 +54,9 @@ public class Barracks : MonoBehaviour
 
     private void loadPositions()
     {
-        positions[0] = new Vector3(41F, 12F, -9.59F);
-        positions[1] = new Vector3(49F, 12F, -9.59F);
-        positions[2] = new Vector3(57F, 12F, -9.59F);
+        positions[0] = new Vector3(-110F, 12F, -9.59F);
+        positions[1] = new Vector3(-101F, 12F, -9.59F);
+        positions[2] = new Vector3(-92F, 12F, -9.59F);
     }
 
     private IEnumerator loadPrefabs()

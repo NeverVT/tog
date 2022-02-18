@@ -33,6 +33,7 @@ public class GameScript : MonoBehaviour
     public Tile[] manaCrystals = new Tile[3];
     public Tile[] goblins = new Tile[4];
     public Tile[] collectedGoblins = new Tile[4];
+    public Tile[] artifacts = new Tile[24];
     public Tile rubble;
     public Tile helix;
     public Tile bomb;
@@ -627,11 +628,11 @@ public class GameScript : MonoBehaviour
                     Item item = new Item();
                     Vector3 pos;
                     if (i == 0)
-                        pos = new Vector3(0.75F, -4.5F, -5.86F);
+                        pos = new Vector3(0.8F, -3.64F, -5.86F);
                     else if (i == 1)
-                        pos = new Vector3(2.5F, -3.5F, -5.86F);
+                        pos = new Vector3(2.93F, -3.64F, -5.86F);
                     else
-                        pos = new Vector3(4.2F, -4.5F, -5.86F);
+                        pos = new Vector3(5.03F, -3.64F, -5.86F);
 
                     tier = item.RollTier();
                     type = item.RollType();
@@ -698,8 +699,17 @@ public class GameScript : MonoBehaviour
                     title = item.createTitle(type);
                     string bonus = item.createBonus();
                     items[i].GetComponent<Item>().mTitle = title + " " + bonus;
-                    items[i].GetComponent<Item>().mBonus = bonus;
+                    items[i].GetComponent<Item>().mBonus = bonus;                   
                 }
+                Tile artifactOne = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(0.8F, -5.6F, -5.86F), Quaternion.identity);
+                Tile artifactTwo = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(2.93F, -5.6F, -5.86F), Quaternion.identity);
+                Tile artifactThree = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(5.03F, -5.6F, -5.86F), Quaternion.identity);
+                artifactOne.GetComponent<Tile>().enabled = false;
+                artifactTwo.GetComponent<Tile>().enabled = false;
+                artifactThree.GetComponent<Tile>().enabled = false;
+                artifactOne.transform.parent = Shop.transform;
+                artifactTwo.transform.parent = Shop.transform;
+                artifactThree.transform.parent = Shop.transform;
             }          
             else if (collected.Peek().GetComponent<Tile>().mType == "Chest")
             {
@@ -1013,7 +1023,8 @@ public class GameScript : MonoBehaviour
                     if(GetComponent<Artifacts>().loadedDie) //Loaded Die Function
                         temp = UnityEngine.Random.Range(1, 501);
                     if(GetComponent<Artifacts>().leatherGloves) //Leather Gloves Function
-                        temp = UnityEngine.Random.Range(1, 206); 
+                        temp = UnityEngine.Random.Range(1, 206);
+                    //temp = 204;
                     if (temp <= 100) //Turn Rubble into Health (10% | 20% | 49%)
                     {
                         Tile.numCollectedH++;

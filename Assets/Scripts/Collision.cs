@@ -400,14 +400,16 @@ public class Collision : MonoBehaviour
                     selectedItem.GetComponent<Item>().mCost = other.GetComponent<Item>().mCost;
                     selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite = other.gameObject.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite;
                     string type = selectedItem.GetComponent<Item>().mTitle;
-                    selectedItem.transform.position = new Vector3(3.24F, -4.03F, -5.86F);
-                    Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
+                    /*
+                    //selectedItem.transform.position = new Vector3(3.24F, -4.03F, -5.86F);
+                    //Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
                     for (int i = 0; i < 3; i++)
                     {
                         if (i != other.GetComponent<Item>().index)
                             gameScript.GetComponent<GameScript>().items[i].transform.gameObject.SetActive(false);
                     }
-                    gameScript.GetComponent<GameScript>().Shop = (GameObject)Instantiate(Resources.Load("Shop/Shop"), new Vector3(-4.11F, -7.99F, -9.38F), Quaternion.identity);
+                    //gameScript.GetComponent<GameScript>().Shop = (GameObject)Instantiate(Resources.Load("Shop/Shop"), new Vector3(-4.11F, -7.99F, -9.38F), Quaternion.identity);
+                    
                     if (other.GetComponent<Item>().mDamage > 0)
                     {
                         for (int i = 0; i < 3; i++)
@@ -428,9 +430,10 @@ public class Collision : MonoBehaviour
                             else if (i == 1)
                                 characterControl.characters[i].armor.gameObject.transform.position = new Vector3(17.11F, 25.96F, -3.11F);
                             else
-                                characterControl.characters[i].armor.gameObject.transform.position = new Vector3(15.56F, 22.99F, -3.11F); */
+                                characterControl.characters[i].armor.gameObject.transform.position = new Vector3(15.56F, 22.99F, -3.11F); 
                         }
                     }
+                    */
                 }
             }
         }
@@ -472,46 +475,33 @@ public class Collision : MonoBehaviour
         }
         else if (other.transform.name == "Replace")
         {
-            if (characterSelected != -1)
-            {
+            Debug.Log("Here");
+           
                 if (selectedItem != null)
                     itemType = selectedItem.gameObject.GetComponent<Item>().mType;
                 if (itemType == "Armor")
                 {
-                    if (upgrading)
-                    {
-                        GameControl.gold -= 15;
-                        characterControl.selectedCharacter.GetComponent<Character>().armor.defense++;
-                    }
-                    else
-                    {
-                        characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                        characterControl.selectedCharacter.GetComponent<Character>().armor.defense = selectedItem.GetComponent<Item>().mArmor;
-                        characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                        characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                        characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
-                        GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
-                    }
+                    Debug.Log("Here Armor");
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.defense = selectedItem.GetComponent<Item>().mArmor;
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                    characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                    GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
+                    
                 }
                 else
                 {
-                    if (upgrading)
-                    {
-                        GameControl.gold -= 15;
-                        characterControl.selectedCharacter.GetComponent<Character>().weapon.damage++;
-                    }
-                    else
-                    {
-                        characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                        characterControl.selectedCharacter.GetComponent<Character>().weapon.damage = selectedItem.GetComponent<Item>().mDamage;
-                        characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                        characterControl.selectedCharacter.GetComponent<Character>().weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                        characterControl.selectedCharacter.GetComponent<Character>().weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
-                        GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
-                    }
+                    Debug.Log("Here Weapon");
+                    characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                    characterControl.selectedCharacter.GetComponent<Character>().weapon.damage = selectedItem.GetComponent<Item>().mDamage;
+                    characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                    characterControl.selectedCharacter.GetComponent<Character>().weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                    characterControl.selectedCharacter.GetComponent<Character>().weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                    GameControl.gold -= selectedItem.GetComponent<Item>().mCost;                   
                 }
-                respawnShopKeeper();
-            }
+                //respawnShopKeeper();
+            
         }
        
         else if (other.transform.name == "AcceptButton")
@@ -739,7 +729,7 @@ public class Collision : MonoBehaviour
                         }
                         else if (trinket)
                         {
-                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(Resources.Load("Artifacts/" + gameScript.GetComponent<GameScript>().board[row, col].GetComponent<Tile>().mName), pos, Quaternion.identity);
+                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().artifacts[gameScript.GetComponent<Artifacts>().getIndex(gameScript.GetComponent<GameScript>().board[row, col].mName)], pos, Quaternion.identity);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(0).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(1).gameObject.SetActive(true);
                         }
@@ -1155,7 +1145,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "Inspect")
         {
             other.transform.Find("InspectSelected").gameObject.SetActive(false);
-            Instantiate(characterScreen, new Vector3(50f, 0f, -30f), Quaternion.identity);
+            Instantiate(characterScreen, new Vector3(-100f, 0f, -30f), Quaternion.identity);
             other.transform.parent.GetComponent<Animator>().SetBool("selected", false);
             characterControl.setStats(other.transform.parent.transform.parent.name);
         }
