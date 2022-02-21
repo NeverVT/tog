@@ -33,6 +33,8 @@ public class GameControl : MonoBehaviour
     public static bool targeted = false;
     public static bool calculated = false;
 
+    public static GameObject shopArtifact;
+
     void Awake ()
     {
 	    if(control == null)
@@ -44,10 +46,5 @@ public class GameControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
-	}
-	
-	void Update ()
-    {
-		
 	}
 }

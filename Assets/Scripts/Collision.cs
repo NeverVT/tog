@@ -475,33 +475,34 @@ public class Collision : MonoBehaviour
         }
         else if (other.transform.name == "Replace")
         {
-            Debug.Log("Here");
-           
-                if (selectedItem != null)
-                    itemType = selectedItem.gameObject.GetComponent<Item>().mType;
-                if (itemType == "Armor")
-                {
-                    Debug.Log("Here Armor");
-                    characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                    characterControl.selectedCharacter.GetComponent<Character>().armor.defense = selectedItem.GetComponent<Item>().mArmor;
-                    characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                    characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                    characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
-                    GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
+            Debug.Log("Here");    
+            if(GameControl.shopArtifact != null)
+            {
+                gameScript.GetComponent<Artifacts>().collectArtifact(GameControl.shopArtifact);
+                Destroy(GameControl.shopArtifact.gameObject);
+                GameControl.gold -= 20;
+            }              
+            else if (itemType == "Armor")
+            {
+                Debug.Log("Here Armor");
+                characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                characterControl.selectedCharacter.GetComponent<Character>().armor.defense = selectedItem.GetComponent<Item>().mArmor;
+                characterControl.selectedCharacter.GetComponent<Character>().armor.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
                     
-                }
-                else
-                {
-                    Debug.Log("Here Weapon");
-                    characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
-                    characterControl.selectedCharacter.GetComponent<Character>().weapon.damage = selectedItem.GetComponent<Item>().mDamage;
-                    characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
-                    characterControl.selectedCharacter.GetComponent<Character>().weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
-                    characterControl.selectedCharacter.GetComponent<Character>().weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
-                    GameControl.gold -= selectedItem.GetComponent<Item>().mCost;                   
-                }
-                //respawnShopKeeper();
-            
+            }
+            else if (itemType == "Weapon")
+            {
+                Debug.Log("Here Weapon");
+                characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
+                characterControl.selectedCharacter.GetComponent<Character>().weapon.damage = selectedItem.GetComponent<Item>().mDamage;
+                characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
+                characterControl.selectedCharacter.GetComponent<Character>().weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
+                characterControl.selectedCharacter.GetComponent<Character>().weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
+                GameControl.gold -= selectedItem.GetComponent<Item>().mCost;                   
+            }          
         }
        
         else if (other.transform.name == "AcceptButton")

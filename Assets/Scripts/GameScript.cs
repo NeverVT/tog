@@ -16,7 +16,7 @@ public class GameScript : MonoBehaviour
     public Camera cam;
     public  int gold = 0;
     public bool attackPhase = false;
-
+    public GameObject canvas;
   
     public int goblinHealthConstant = 9;
     public int goblinDamageConstant = 0;
@@ -132,6 +132,8 @@ public class GameScript : MonoBehaviour
         ScoreControl.partyOne = Team.selectedCharacter;      
         bossSpawner = UnityEngine.Random.Range(15, 21);
         shopSpawner = UnityEngine.Random.Range(9, 15);
+        shopSpawner = 1;
+        GameControl.gold = 100;
         /*
         if(characterControl.getTraitOne("Hunter") != -1)
         {
@@ -621,7 +623,8 @@ public class GameScript : MonoBehaviour
                 shiftBoard();
                 shopKeeperUp = false;
                 screenUp = true;
-                Shop = (GameObject)Instantiate(shop, new Vector3(3.29F, -3.36F, -3.06F), Quaternion.identity);
+                Shop = (GameObject)Instantiate(shop, new Vector3(3.64F, -3.25F, -3.06F), Quaternion.identity);
+                Shop.transform.parent = canvas.transform;
                 shopUp = true;
                 for (int i = 0; i < 3; i++)
                 {
@@ -707,6 +710,9 @@ public class GameScript : MonoBehaviour
                 artifactOne.GetComponent<Tile>().enabled = false;
                 artifactTwo.GetComponent<Tile>().enabled = false;
                 artifactThree.GetComponent<Tile>().enabled = false;
+                artifactOne.GetComponent<Button>().enabled = true;
+                artifactTwo.GetComponent<Button>().enabled = true;
+                artifactThree.GetComponent<Button>().enabled = true;
                 artifactOne.transform.parent = Shop.transform;
                 artifactTwo.transform.parent = Shop.transform;
                 artifactThree.transform.parent = Shop.transform;
