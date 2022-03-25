@@ -89,6 +89,7 @@ public class CharacterControl : MonoBehaviour
     }
     public void manageSkillCDs(string collectedTileType)
     {
+        /*
         if (selectedCharacter.GetComponent<Character>().skillOne.GetComponent<Spell>().coolDown > 0)
             if (selectedCharacter.GetComponent<Character>().skillOne.GetComponent<Spell>().spellType == collectedTileType || collectedTileType == "Mana")
                 selectedCharacter.GetComponent<Character>().skillOne.GetComponent<Spell>().coolDown -= 1;
@@ -96,10 +97,12 @@ public class CharacterControl : MonoBehaviour
         if (selectedCharacter.GetComponent<Character>().skillTwo.GetComponent<Spell>().coolDown > 0)
             if (selectedCharacter.GetComponent<Character>().skillTwo.GetComponent<Spell>().spellType == collectedTileType || collectedTileType == "Mana")
                 selectedCharacter.GetComponent<Character>().skillTwo.GetComponent<Spell>().coolDown -= 1;
+        */
     }
 
     public bool searchActiveCharacterTraits(string trait) //Searches the active character if they have a specific trait
     {
+        /*
         if(selectedCharacter.GetComponent<Character>().traitOne.name == trait || selectedCharacter.GetComponent<Character>().traitTwo.name == trait)
         {
             return true;
@@ -107,11 +110,13 @@ public class CharacterControl : MonoBehaviour
         else
         {
             return false;
-        }       
+        }       */
+        return false;
     }
 
     public bool searchSkillExists(string skill) //Checks if the Skill is on the Active Character
     {
+        /*
         if (selectedCharacter.GetComponent<Character>().skillOne.name == skill || selectedCharacter.GetComponent<Character>().skillTwo.name == skill)
         {
             return true;
@@ -119,7 +124,8 @@ public class CharacterControl : MonoBehaviour
         else
         {
             return false;
-        }
+        }*/
+        return false;
     }
     public double getAttack() //Returns the active character's Attack value
     {

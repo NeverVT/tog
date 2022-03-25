@@ -129,11 +129,9 @@ public class GameScript : MonoBehaviour
     public void init()
     {       
         PlayerPrefs.SetString("Boss Stage", "Stage One");
-        ScoreControl.partyOne = Team.selectedCharacter;      
-        bossSpawner = UnityEngine.Random.Range(15, 21);
-        shopSpawner = UnityEngine.Random.Range(9, 15);
-        shopSpawner = 1;
-        GameControl.gold = 100;
+        ScoreControl.partyOne = Team.selectedCharacter;
+        bossSpawner = -1;//UnityEngine.Random.Range(15, 21);
+        shopSpawner = -1;//UnityEngine.Random.Range(9, 15);
         /*
         if(characterControl.getTraitOne("Hunter") != -1)
         {
@@ -1054,6 +1052,7 @@ public class GameScript : MonoBehaviour
                         goldCollected++;
                         gold++;
                     }
+                    /*
                     else if (temp <= 205) //Turn Rubble into Artifact (0.5% | 1% | 2%)
                     {
                         int col = obj.GetComponent<Tile>().mCol;
@@ -1061,7 +1060,7 @@ public class GameScript : MonoBehaviour
                         Vector3 pos = obj.transform.position;
                         Destroy(board[row, col].gameObject);
                         GetComponent<Artifacts>().createArtifact(col, row, pos, GetComponent<Artifacts>().rollArtifactRubble());
-                    }
+                    }*/
                     Destroy(obj.gameObject);
                 }
                 else if (obj.GetComponent<Tile>().mType == "Mana")
@@ -2591,6 +2590,7 @@ public class GameScript : MonoBehaviour
                             }
                             else if (temp.GetComponent<Enemy>().shouldntAttack)
                             {
+                                Debug.Log("wake2");
                                 temp.GetComponent<Enemy>().shouldntAttack = false;
                                 temp.transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");
                                 temp.transform.GetChild(9).GetComponent<Animator>().SetBool("awake", true);
@@ -2634,7 +2634,7 @@ public class GameScript : MonoBehaviour
                 else if (board[i, j].mType == "Goblin")
                 {
                     if (!board[i, j].GetComponent<Enemy>().justSpawned && !board[i, j].GetComponent<Enemy>().shouldntAttack)
-                        return true;
+                        return true;                 
                 }                                        
             }            
         }
@@ -2685,10 +2685,12 @@ public class GameScript : MonoBehaviour
                     }
                     else if (board[i, j].GetComponent<Enemy>().shouldntAttack)
                     {
-                        board[i, j].GetComponent<Enemy>().shouldntAttack = false;
-                        if (board[i, j].transform.GetChild(9).TryGetComponent<Tile>(out var Tile))
-                            if(board[i, j].transform.GetChild(9).GetComponent<Tile>().boss == "")
-                                board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");                      
+                        board[i, j].GetComponent<Enemy>().shouldntAttack = false;                      
+                        if (board[i, j].GetComponent<Tile>().boss == "")
+                        {
+                            Debug.Log("wake");
+                            board[i, j].transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");
+                        }                                                                                          
                     }
                 }
             }
@@ -2855,7 +2857,7 @@ public class GameScript : MonoBehaviour
                     float Y = 2 - i - (i * spacing);
                     Vector3 position = new Vector3(X, Y, 0.0F);                 
                     Destroy(board[i, j].gameObject);
-                    Debug.Log("Turn Counter: " + turnCounter + "  |  Boss Spawner: " + bossSpawner + " | Shop Spawner: " + shopSpawner);
+                    //Debug.Log("Turn Counter: " + turnCounter + "  |  Boss Spawner: " + bossSpawner + " | Shop Spawner: " + shopSpawner);
                     if (turnCounter == shopSpawner)
                     {
                         shopSpawner += UnityEngine.Random.Range(10, 16);

@@ -38,7 +38,6 @@ public class Barracks : MonoBehaviour
         for(int i = 0; i < 9; i++)
         {
             names[i] = PlayerPrefs.GetString((i).ToString());
-            Debug.Log((i).ToString());
         }
         
         if (names[0] == null || names[0] == "" || names[0] == "Soldier")

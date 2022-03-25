@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     float newY = 0;
+    float change = 0;
     void Start()
     {
         Input.gyro.enabled = true;
@@ -26,10 +27,11 @@ public class CameraMovement : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, change, 0);
         */
+        
         if(this.transform.position.x == 0 && this.transform.position.y == 0)
         {
             newY += (-Input.gyro.rotationRateUnbiased.y/8);
-            newY = Mathf.Clamp(newY, -7f, 6f);
+            newY = Mathf.Clamp(newY, -2f, 2f);
             transform.eulerAngles = new Vector3(0, newY, 0);
             this.transform.GetChild(1).gameObject.SetActive(false);
             this.transform.GetChild(2).gameObject.SetActive(false);
@@ -42,6 +44,7 @@ public class CameraMovement : MonoBehaviour
             this.transform.GetChild(2).gameObject.SetActive(true);
             this.transform.GetChild(3).gameObject.SetActive(true);
         }
+        
         
     } 
 }
