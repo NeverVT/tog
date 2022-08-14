@@ -16,7 +16,7 @@ public class weaponGS : MonoBehaviour
         damage.GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().weapon.damage.ToString(); //Set damage text
         tooltip.transform.GetChild(1).GetComponent<TextMesh>().text = characterControl.selectedCharacter.GetComponent<Character>().weapon.damage.ToString(); //Set damage value in tooltip
         icon.GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().weapon.GetComponent<CharacterWeapon>().icon.GetComponent<SpriteRenderer>().sprite; //Set Sprite  
-        tooltip.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite; //Set the sprite in the tooltip
+        //tooltip.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite; //Set the sprite in the tooltip
         if (characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne != null ) //Turn on Attributes if they exists
         {
             attributeOne.transform.Find(characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne).gameObject.SetActive(true);

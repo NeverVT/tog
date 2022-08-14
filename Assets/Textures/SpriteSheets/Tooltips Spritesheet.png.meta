@@ -138,6 +138,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -146,9 +147,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -169,6 +170,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -1022,6 +1025,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      FreezeToolTip: 21300050
+      VanishToolTip: 21300060
+      TrapToolTip: 21300072
+      HelixToolTip: 21300014
+      MagicMissleToolTip: 21300054
+      BlinkToolTip: 21300048
+      ArtifactToolTip: 21300028
+      RatToolTip: 21300018
+      SkeletonMageToolTip: 21300016
+      CriticalHitToolTip: 21300058
+      GatherToolTip: 21300066
+      ExecuteToolTip: 21300038
+      Tooltips Spritesheet_28: 21300052
+      SwordToolTip: 21300004
+      CoinToolTip: 21300006
+      BloodlustToolTip: 21300040
+      BombToolTip: 21300012
+      BlueGenieToolTip: 21300024
+      SlimeToolTip: 21300026
+      HideToolTip: 21300074
+      DisciplineToolTip: 21300042
+      ShopKeeperToolTip: 21300034
+      ManaToolTip: 21300000
+      AppraiseToolTip: 21300056
+      RubbleToolTip: 21300010
+      HealthToolTip: 21300008
+      EnrageToolTip: 21300044
+      MurderToolTip: 21300064
+      DoubleShotToolTip: 21300070
+      BloodshotToolTip: 21300062
+      SkeletonKnightToolTip: 21300020
+      DummyToolTip: 21300068
+      GreenGenieToolTip: 21300022
+      GoblinToolTip: 21300002
+      OverpowerToolTip: 21300036
+      CrystalmancyToolTip: 21300046
+      EquipmentToolTip: 21300030
+      SkillToolTip: 21300032
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -22,8 +22,8 @@ public class Character : MonoBehaviour
 
     public void Awake()
     {
-        /*
         this.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = portrait;
+        Debug.Log(Team.getLevel(characterName));
         switch (Team.getLevel(characterName)) //Check the level of the selected character and set up the selected build for that character
         {
             case 0:
@@ -40,12 +40,13 @@ public class Character : MonoBehaviour
             case 4:
                 setupBuild(relicOne, relicTwo, "Relic");
                 goto case 3;
-        }*/
+        }
     }
 
     private void setupBuild(GameObject objOne, GameObject objTwo, string type) //Determine wether the character should be using the first or second version of their build
     {
-        if (PlayerPrefs.GetString(characterName + type) == null || PlayerPrefs.GetString(characterName + type) == objOne.name) //use first
+        Debug.Log(PlayerPrefs.GetString(characterName + type));
+        if (PlayerPrefs.GetString(characterName + type) == "" || PlayerPrefs.GetString(characterName + type) == objOne.name) //use first
         {
             objOne.SetActive(true);
             objTwo.SetActive(false);

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour
 {
+    public static GameScript gameScript;
+    public static Artifacts artifactScript;
+
     public static GameControl control;
+    public static bool firstTime = true;
 
     public static int score;
     public static int monstersKilled;
@@ -14,6 +18,7 @@ public class GameControl : MonoBehaviour
 
     public static bool bossUp = false;
     public static bool miniBossUp = false;
+    public static bool screenUp = false;
 
     public static double gold = 0;
 
@@ -32,6 +37,8 @@ public class GameControl : MonoBehaviour
     public static bool smite = false;
     public static bool targeted = false;
     public static bool calculated = false;
+
+
 
     public static GameObject shopArtifact;
 

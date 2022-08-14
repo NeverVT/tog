@@ -144,6 +144,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -153,11 +154,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -175,6 +176,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -1094,6 +1097,47 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Buttons_Sprite 1_34: -6166078993866413154
+      Buttons_Sprite 1_36: 7460042023126858024
+      Buttons_Sprite 1_33: 3848695645786087026
+      Buttons_Sprite 1_4: -7533469356815451306
+      Buttons_Sprite 1_8: 470241993204965296
+      Buttons_Sprite 1_17: 6461489997781050040
+      Buttons_Sprite 1_3: 8161323312202688321
+      Buttons_Sprite 1_35: 1116009015960080817
+      Buttons_Sprite 1_9: -8882592758298810538
+      Buttons_Sprite 1_38: 3958532814912590726
+      Buttons_Sprite 1_13: -1415666486887461187
+      Buttons_Sprite 1_21: -9028340305116585977
+      Buttons_Sprite 1_24: -6524904465627245050
+      Buttons_Sprite 1_18: 3115818776741079213
+      Buttons_Sprite 1_1: 4512801679325179979
+      Buttons_Sprite 1_7: 6113956656248842463
+      Buttons_Sprite 1_20: 4000602753338232810
+      Buttons_Sprite 1_28: 8211268569331723646
+      Buttons_Sprite 1_25: -5096632063921406183
+      Buttons_Sprite 1_27: 5315601725845360756
+      Buttons_Sprite 1_31: -8836906587010351637
+      Buttons_Sprite 1_23: -4073133962823263800
+      Buttons_Sprite 1_6: -8937089823535749579
+      Buttons_Sprite 1_29: -1960884483590555186
+      Buttons_Sprite 1_2: 1252317523761920365
+      Buttons_Sprite 1_11: 3862027454046502010
+      Buttons_Sprite 1_10: -679595653528897223
+      Buttons_Sprite 1_19: -993665174108180893
+      Buttons_Sprite 1_16: 1308246701482445119
+      Buttons_Sprite 1_5: 5190735668599631656
+      Buttons_Sprite 1_14: -5731634791146368213
+      Buttons_Sprite 1_39: -1403960606750919769
+      Buttons_Sprite 1_32: -4874171022462909342
+      Buttons_Sprite 1_37: -3594955949774175233
+      Buttons_Sprite 1_26: 373404097914631911
+      Buttons_Sprite 1_22: 2818559108262040281
+      Buttons_Sprite 1_30: 7519271779480781662
+      Buttons_Sprite 1_0: 4186917442939546855
+      Buttons_Sprite 1_12: 8515131188103470526
+      Buttons_Sprite 1_15: 4889878493549136161
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

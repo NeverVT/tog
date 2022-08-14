@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PredictDamageText : MonoBehaviour
 {		
@@ -9,13 +10,13 @@ public class PredictDamageText : MonoBehaviour
             this.GetComponent<TextMesh>().text = "";
         else if (this.gameObject.transform.parent.name == "Skull(Clone)")
         {
-            if(Enemy.currentHealth <= (this.GetComponentInParent<Enemy>().predictedDamage / 2))
+            if(Enemy.currentHealth <= (Math.Ceiling(this.GetComponentInParent<Enemy>().predictedDamage / 2)))
             {
                 this.GetComponent<TextMesh>().text = "X";
             }
             else
             {
-                this.GetComponent<TextMesh>().text = ((int)(this.GetComponentInParent<Enemy>().predictedDamage / 2)).ToString();
+                this.GetComponent<TextMesh>().text = ((int)(Math.Ceiling(this.GetComponentInParent<Enemy>().predictedDamage / 2))).ToString();
             }
         }
         else if (Enemy.currentHealth <= (this.GetComponentInParent<Enemy>().predictedDamage))

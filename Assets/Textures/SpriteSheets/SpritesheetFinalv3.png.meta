@@ -774,6 +774,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -783,8 +784,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -805,6 +806,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -6086,6 +6089,257 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      SpritesheetFinalv3_196: 21300382
+      SpritesheetFinalv3_252: 21300494
+      SpritesheetFinalv3_169: 21300328
+      SpritesheetFinalv3_116: 21300222
+      SpritesheetFinalv3_181: 21300352
+      SpritesheetFinalv3_208: 21300406
+      SpritesheetFinalv3_32: 21300062
+      SpritesheetFinalv3_101: 21300192
+      SpritesheetFinalv3_1: 21300002
+      SpritesheetFinalv3_88: 21300166
+      SpritesheetFinalv3_175: 21300340
+      SpritesheetFinalv3_19: 21300036
+      SpritesheetFinalv3_23: 21300044
+      SpritesheetFinalv3_42: 21300082
+      SpritesheetFinalv3_135: 21300260
+      SpritesheetFinalv3_188: 21300366
+      SpritesheetFinalv3_226: 21300442
+      SpritesheetFinalv3_228: 21300446
+      SpritesheetFinalv3_104: 21300198
+      SpritesheetFinalv3_202: 21300394
+      SpritesheetFinalv3_222: 21300434
+      SpritesheetFinalv3_198: 21300386
+      SpritesheetFinalv3_230: 21300450
+      SpritesheetFinalv3_63: 21300116
+      SpritesheetFinalv3_99: 21300188
+      SpritesheetFinalv3_233: 21300456
+      SpritesheetFinalv3_133: 21300256
+      SpritesheetFinalv3_128: 21300246
+      SpritesheetFinalv3_129: 21300248
+      SpritesheetFinalv3_47: 21300088
+      SpritesheetFinalv3_107: 21300204
+      SpritesheetFinalv3_232: 21300454
+      SpritesheetFinalv3_204: 21300398
+      SpritesheetFinalv3_72: 21300134
+      SpritesheetFinalv3_193: 21300376
+      SpritesheetFinalv3_57: 21300104
+      SpritesheetFinalv3_171: 21300332
+      SpritesheetFinalv3_56: 21300102
+      SpritesheetFinalv3_155: 21300300
+      SpritesheetFinalv3_81: 21300152
+      SpritesheetFinalv3_199: 21300388
+      SpritesheetFinalv3_4: 21300008
+      SpritesheetFinalv3_54: 21300098
+      SpritesheetFinalv3_82: 21300154
+      SpritesheetFinalv3_34: 21300066
+      SpritesheetFinalv3_162: 21300314
+      SpritesheetFinalv3_165: 21300320
+      SpritesheetFinalv3_152: 21300294
+      SpritesheetFinalv3_92: 21300174
+      SpritesheetFinalv3_77: 21300144
+      SpritesheetFinalv3_151: 21300292
+      SpritesheetFinalv3_160: 21300310
+      SpritesheetFinalv3_161: 21300312
+      SpritesheetFinalv3_220: 21300430
+      SpritesheetFinalv3_148: 21300286
+      SpritesheetFinalv3_44: 21300086
+      SpritesheetFinalv3_173: 21300336
+      SpritesheetFinalv3_212: 21300414
+      SpritesheetFinalv3_6: 21300012
+      SpritesheetFinalv3_62: 21300114
+      SpritesheetFinalv3_157: 21300304
+      SpritesheetFinalv3_55: 21300100
+      SpritesheetFinalv3_105: 21300200
+      SpritesheetFinalv3_189: 21300368
+      SpritesheetFinalv3_178: 21300346
+      SpritesheetFinalv3_153: 21300296
+      SpritesheetFinalv3_118: 21300226
+      SpritesheetFinalv3_231: 21300452
+      SpritesheetFinalv3_168: 21300326
+      SpritesheetFinalv3_80: 21300150
+      SpritesheetFinalv3_17: 21300034
+      SpritesheetFinalv3_123: 21300236
+      SpritesheetFinalv3_219: 21300428
+      SpritesheetFinalv3_197: 21300384
+      SpritesheetFinalv3_163: 21300316
+      SpritesheetFinalv3_185: 21300360
+      SpritesheetFinalv3_38: 21300074
+      SpritesheetFinalv3_70: 21300130
+      SpritesheetFinalv3_184: 21300358
+      SpritesheetFinalv3_246: 21300482
+      SpritesheetFinalv3_71: 21300132
+      SpritesheetFinalv3_29: 21300056
+      SpritesheetFinalv3_240: 21300470
+      SpritesheetFinalv3_3: 21300006
+      SpritesheetFinalv3_244: 21300478
+      SpritesheetFinalv3_11: 21300022
+      SpritesheetFinalv3_182: 21300354
+      SpritesheetFinalv3_106: 21300202
+      SpritesheetFinalv3_180: 21300350
+      SpritesheetFinalv3_130: 21300250
+      SpritesheetFinalv3_187: 21300364
+      SpritesheetFinalv3_79: 21300148
+      SpritesheetFinalv3_89: 21300168
+      SpritesheetFinalv3_96: 21300182
+      SpritesheetFinalv3_210: 21300410
+      SpritesheetFinalv3_66: 21300122
+      SpritesheetFinalv3_112: 21300214
+      SpritesheetFinalv3_248: 21300486
+      SpritesheetFinalv3_138: 21300266
+      SpritesheetFinalv3_8: 21300016
+      SpritesheetFinalv3_121: 21300232
+      SpritesheetFinalv3_147: 21300284
+      SpritesheetFinalv3_158: 21300306
+      SpritesheetFinalv3_200: 21300390
+      SpritesheetFinalv3_170: 21300330
+      SpritesheetFinalv3_164: 21300318
+      SpritesheetFinalv3_224: 21300438
+      SpritesheetFinalv3_217: 21300424
+      SpritesheetFinalv3_65: 21300120
+      SpritesheetFinalv3_236: 21300462
+      SpritesheetFinalv3_10: 21300020
+      SpritesheetFinalv3_85: 21300160
+      SpritesheetFinalv3_211: 21300412
+      SpritesheetFinalv3_20: 21300038
+      SpritesheetFinalv3_221: 21300432
+      SpritesheetFinalv3_37: 21300072
+      SpritesheetFinalv3_195: 21300380
+      SpritesheetFinalv3_41: 21300080
+      SpritesheetFinalv3_26: 21300050
+      SpritesheetFinalv3_35: 21300068
+      SpritesheetFinalv3_243: 21300476
+      SpritesheetFinalv3_25: 21300048
+      SpritesheetFinalv3_159: 21300308
+      SpritesheetFinalv3_179: 21300348
+      SpritesheetFinalv3_5: 21300010
+      SpritesheetFinalv3_115: 21300220
+      SpritesheetFinalv3_131: 21300252
+      SpritesheetFinalv3_143: 21300276
+      SpritesheetFinalv3_145: 21300280
+      SpritesheetFinalv3_97: 21300184
+      SpritesheetFinalv3_100: 21300190
+      SpritesheetFinalv3_207: 21300404
+      SpritesheetFinalv3_214: 21300418
+      SpritesheetFinalv3_93: 21300176
+      SpritesheetFinalv3_24: 21300046
+      SpritesheetFinalv3_227: 21300444
+      SpritesheetFinalv3_242: 21300474
+      SpritesheetFinalv3_191: 21300372
+      SpritesheetFinalv3_176: 21300342
+      SpritesheetFinalv3_136: 21300262
+      SpritesheetFinalv3_94: 21300178
+      SpritesheetFinalv3_122: 21300234
+      SpritesheetFinalv3_245: 21300480
+      SpritesheetFinalv3_73: 21300136
+      SpritesheetFinalv3_50: 21300090
+      SpritesheetFinalv3_134: 21300258
+      SpritesheetFinalv3_183: 21300356
+      SpritesheetFinalv3_205: 21300400
+      SpritesheetFinalv3_140: 21300270
+      SpritesheetFinalv3_154: 21300298
+      SpritesheetFinalv3_141: 21300272
+      SpritesheetFinalv3_109: 21300208
+      SpritesheetFinalv3_124: 21300238
+      SpritesheetFinalv3_215: 21300420
+      SpritesheetFinalv3_27: 21300052
+      SpritesheetFinalv3_238: 21300466
+      SpritesheetFinalv3_60: 21300110
+      SpritesheetFinalv3_67: 21300124
+      SpritesheetFinalv3_28: 21300054
+      SpritesheetFinalv3_166: 21300322
+      SpritesheetFinalv3_110: 21300210
+      SpritesheetFinalv3_43: 21300084
+      SpritesheetFinalv3_177: 21300344
+      SpritesheetFinalv3_216: 21300422
+      SpritesheetFinalv3_250: 21300490
+      SpritesheetFinalv3_13: 21300026
+      SpritesheetFinalv3_139: 21300268
+      SpritesheetFinalv3_192: 21300374
+      SpritesheetFinalv3_203: 21300396
+      SpritesheetFinalv3_132: 21300254
+      SpritesheetFinalv3_206: 21300402
+      SpritesheetFinalv3_69: 21300128
+      SpritesheetFinalv3_218: 21300426
+      SpritesheetFinalv3_2: 21300004
+      SpritesheetFinalv3_86: 21300162
+      SpritesheetFinalv3_229: 21300448
+      SpritesheetFinalv3_144: 21300278
+      SpritesheetFinalv3_235: 21300460
+      SpritesheetFinalv3_247: 21300484
+      SpritesheetFinalv3_102: 21300194
+      SpritesheetFinalv3_239: 21300468
+      SpritesheetFinalv3_249: 21300488
+      SpritesheetFinalv3_254: 21300498
+      SpritesheetFinalv3_234: 21300458
+      SpritesheetFinalv3_167: 21300324
+      SpritesheetFinalv3_137: 21300264
+      SpritesheetFinalv3_201: 21300392
+      SpritesheetFinalv3_174: 21300338
+      SpritesheetFinalv3_22: 21300042
+      SpritesheetFinalv3_14: 21300028
+      SpritesheetFinalv3_111: 21300212
+      SpritesheetFinalv3_53: 21300096
+      SpritesheetFinalv3_172: 21300334
+      SpritesheetFinalv3_150: 21300290
+      SpritesheetFinalv3_225: 21300440
+      SpritesheetFinalv3_0: 21300000
+      SpritesheetFinalv3_103: 21300196
+      SpritesheetFinalv3_9: 21300018
+      SpritesheetFinalv3_95: 21300180
+      SpritesheetFinalv3_113: 21300216
+      SpritesheetFinalv3_76: 21300142
+      SpritesheetFinalv3_59: 21300108
+      SpritesheetFinalv3_87: 21300164
+      SpritesheetFinalv3_12: 21300024
+      SpritesheetFinalv3_40: 21300078
+      SpritesheetFinalv3_149: 21300288
+      SpritesheetFinalv3_223: 21300436
+      SpritesheetFinalv3_213: 21300416
+      SpritesheetFinalv3_237: 21300464
+      SpritesheetFinalv3_209: 21300408
+      SpritesheetFinalv3_251: 21300492
+      SpritesheetFinalv3_16: 21300032
+      SpritesheetFinalv3_7: 21300014
+      SpritesheetFinalv3_146: 21300282
+      SpritesheetFinalv3_58: 21300106
+      SpritesheetFinalv3_83: 21300156
+      SpritesheetFinalv3_120: 21300230
+      SpritesheetFinalv3_91: 21300172
+      SpritesheetFinalv3_51: 21300092
+      SpritesheetFinalv3_61: 21300112
+      SpritesheetFinalv3_90: 21300170
+      SpritesheetFinalv3_253: 21300496
+      SpritesheetFinalv3_75: 21300140
+      SpritesheetFinalv3_84: 21300158
+      SpritesheetFinalv3_108: 21300206
+      SpritesheetFinalv3_241: 21300472
+      SpritesheetFinalv3_119: 21300228
+      SpritesheetFinalv3_68: 21300126
+      SpritesheetFinalv3_126: 21300242
+      SpritesheetFinalv3_21: 21300040
+      SpritesheetFinalv3_15: 21300030
+      SpritesheetFinalv3_52: 21300094
+      SpritesheetFinalv3_74: 21300138
+      SpritesheetFinalv3_127: 21300244
+      SpritesheetFinalv3_156: 21300302
+      SpritesheetFinalv3_194: 21300378
+      SpritesheetFinalv3_186: 21300362
+      SpritesheetFinalv3_78: 21300146
+      SpritesheetFinalv3_190: 21300370
+      SpritesheetFinalv3_36: 21300070
+      SpritesheetFinalv3_64: 21300118
+      SpritesheetFinalv3_31: 21300060
+      SpritesheetFinalv3_39: 21300076
+      SpritesheetFinalv3_114: 21300218
+      SpritesheetFinalv3_142: 21300274
+      SpritesheetFinalv3_98: 21300186
+      SpritesheetFinalv3_125: 21300240
+      SpritesheetFinalv3_30: 21300058
+      SpritesheetFinalv3_33: 21300064
+      SpritesheetFinalv3_117: 21300224
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

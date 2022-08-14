@@ -32,6 +32,11 @@ public class Artifacts : MonoBehaviour
 
     public Stack<string> artifacts = new Stack<string>();
 
+    private void Start()
+    {
+        GameControl.artifactScript = this;
+    }
+
     public void createArtifact(int col, int row, Vector3 pos, string artifact)
     {
         GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(GetComponent<GameScript>().artifacts[getIndex(artifact)], pos, Quaternion.identity);
@@ -59,47 +64,21 @@ public class Artifacts : MonoBehaviour
         while (reroll)
         {
             reroll = false;
-            int roll = UnityEngine.Random.Range(1, 21);
-            if (roll == 1 && !amuletOfPain)
-                artifact = "amuletOfPain";
-            else if (roll == 2 && !bait)
-                artifact = "bait";
-            else if (roll == 3 && !bombBag)
+            int roll = UnityEngine.Random.Range(1, 8);
+            if (roll == 1 && !bombBag)
                 artifact = "bombBag";
-            else if (roll == 4 && !chaosStone)
-                artifact = "chaosStone";
-            else if (roll == 5 && !coupon)
-                artifact = "coupon";
-            else if (roll == 6 && !dragonSickness)
-                artifact = "dragonSickness";
-            else if (roll == 7 && !faetouchedAmulet)
-                artifact = "faetouchedAmulet";
-            else if (roll == 8 && !fourLeafClover)
-                artifact = "fourLeafClover";
-            else if (roll == 9 && !hitList)
-                artifact = "hitList";
-            else if (roll == 10 && !isaacsBinding)
-                artifact = "isaacsBinding";
-            else if (roll == 11 && !leatherGloves)
+            else if (roll == 2 && !leatherGloves)
                 artifact = "leatherGloves";
-            else if (roll == 12 && !loadedDie)
-                artifact = "loadedDie";
-            else if (roll == 13 && !potionOfGiantsStrength)
-                artifact = "potionOfGiantsStrength";
-            else if (roll == 14 && !prism)
+            else if (roll == 3 && !prism)
                 artifact = "prism";
-            else if (roll == 15 && !reanimateStone)
-                artifact = "reanimateStone";
-            else if (roll == 16 && !stoneShell)
+            else if (roll == 4 && !stoneShell)
                 artifact = "stoneShell";
-            else if (roll == 17 && !thorns)
+            else if (roll == 5 && !thorns)
                 artifact = "thorns";
-            else if (roll == 18 && !vampireFang)
-                artifact = "vampireFang";
-            else if (roll == 19 && !whetstone)
+            else if (roll == 6 && !whetstone)
                 artifact = "whetstone";
-            else if (roll == 20 && !yellowBird)
-                artifact = "yellowBird";
+            else if (roll == 7 && !fourLeafClover)
+                artifact = "fourLeafClover";
             else reroll = true;    
         }
         return artifact;
@@ -146,7 +125,7 @@ public class Artifacts : MonoBehaviour
                 roll = Random.Range(1, 14);
             if (roll == 1 && !amuletOfPain)
                 artifact = "amuletOfPain";
-            else if (roll == 2 && !bombBag)
+            else if (roll == 2)
                 artifact = "bombBag";
             else if (roll == 3 && !chaosStone)
                 artifact = "chaosStone";

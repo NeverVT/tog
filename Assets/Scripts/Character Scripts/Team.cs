@@ -12,12 +12,24 @@ public class Team : MonoBehaviour
 
     private void Start()
     {
+        //PlayerPrefs.SetString("Skeleton Killed", "");
+        //PlayerPrefs.SetString("selectedCharacter", "");
         selectedCharacter = PlayerPrefs.GetString("selectedCharacter");
-        if (selectedCharacter == "") selectedCharacter = "Urp";
+        if (selectedCharacter == "")
+        {
+            if(PlayerPrefs.GetString("Skeleton Killed") == "true")
+            {
+                selectedCharacter = "Urp";
+            }             
+            else
+            {
+                selectedCharacter = "Empty";
+            }
+        }  
 
         urpLvl = PlayerPrefs.GetInt("UrpLvl");
         if(urpLvl == 0)
-            urpLvl = 1;
+            urpLvl = 2;
         chrisaLvl = PlayerPrefs.GetInt("ChrisaLvl");
         if(chrisaLvl == 0)
             chrisaLvl = 1;
@@ -52,11 +64,11 @@ public class Team : MonoBehaviour
     {
         switch(character)
         {
-            case "UrpLvl":
+            case "Urp":
                 return urpLvl;
-            case "ChrisaLvl":
+            case "Chrisa":
                 return chrisaLvl;
-            case "KurtzleLvl":
+            case "Kurtzle":
                 return kurtzleLvl;
         }
         return 0;

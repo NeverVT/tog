@@ -84,6 +84,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -93,11 +94,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -115,6 +116,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -467,6 +470,20 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      swords axes spears_18: 4950316964110316690
+      swords axes spears_11: -2668718714107317095
+      swords axes spears_7: -7866317744669978944
+      swords axes spears_5: 7731939994176890192
+      swords axes spears_6: 5519778565025205618
+      swords axes spears_1: -1650469900698677927
+      swords axes spears_4: -5275649754319573849
+      swords axes spears_16: -6034860297756006008
+      swords axes spears_15: 7764290521318082596
+      swords axes spears_9: -7714956040509692616
+      swords axes spears_3: 551805548753198220
+      swords axes spears_0: 4336495417894667401
+      swords axes spears_8: -2637527190340131209
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

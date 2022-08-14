@@ -41,11 +41,12 @@ public class Barracks : MonoBehaviour
         }
         
         if (names[0] == null || names[0] == "" || names[0] == "Soldier")
-            names[0] = "Urp";
-        if (names[1] == null || names[1] == "" || names[0] == "Mummy")
-            names[1] = "Chrisa";
-        if (names[2] == null || names[2] == "" || names[0] == "Doll")
-            names[2] = "Kurtzle";
+            names[0] = "Urp";      
+        if (names[2] == null || names[2] == "" || names[2] == "Mummy")
+            names[2] = "Chrisa";
+        if (names[3] == null || names[3] == "" || names[3] == "Doll")
+            names[3] = "Kurtzle";
+
         cOneName = names[0];
         cTwoName = names[1];
         cThreeName = names[2];
@@ -53,14 +54,14 @@ public class Barracks : MonoBehaviour
 
     private void loadPositions()
     {
-        positions[0] = new Vector3(-110F, 12F, -9.59F);
-        positions[1] = new Vector3(-101F, 12F, -9.59F);
-        positions[2] = new Vector3(-92F, 12F, -9.59F);
+        positions[0] = new Vector3(-110F, 15F, -9.59F);
+        positions[1] = new Vector3(-110F, -2F, -9.59F);
+        positions[2] = new Vector3(-101F, -2F, -9.59F);
     }
 
     private IEnumerator loadPrefabs()
     {
-        yield return null;
+        yield return null;     
         for (int i = 0; i < 9; i++)
         {         
             if (names[i] == urp.name)
@@ -74,7 +75,15 @@ public class Barracks : MonoBehaviour
             {
                 gameObjects[i].transform.parent = content.transform;
                 gameObjects[i].name = names[i];
-            }                    
+                if (i == 0)
+                {
+                    gameObjects[i].transform.GetChild(2).gameObject.SetActive(true);
+                    /*if (PlayerPrefs.GetString(names[i] + "Skill") == "" || PlayerPrefs.GetString(names[i] + "Skill") == gameObjects[i].transform.GetChild(2).transform.GetChild(0).name) //use first
+                    {
+                        gameObjects[i].transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
+                    }*/
+                }
+            }                               
         }
     }
 

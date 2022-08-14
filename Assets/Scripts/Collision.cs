@@ -124,10 +124,10 @@ public class Collision : MonoBehaviour
     {
         if (other.CompareTag("OptionsGame"))
         {
-            if (!gameScript.GetComponent<GameScript>().screenUp)
+            if (!GameControl.screenUp)
             {
                 GameObject screen = (GameObject)Instantiate(Resources.Load("Options"), new Vector3(3.21F, -5.31F, -2.93f), Quaternion.identity);
-                gameScript.GetComponent<GameScript>().screenUp = true;
+                GameControl.screenUp = true;
             }
         }
         else if (other.CompareTag("Exit"))
@@ -141,7 +141,7 @@ public class Collision : MonoBehaviour
                 UpdateText.updateText = "";
                 Destroy(other.transform.parent.gameObject);
                 Destroy(other.gameObject);
-                gameScript.GetComponent<GameScript>().screenUp = false;
+                GameControl.screenUp = false;
             }
             for (int i = 0; i < 3; i++)
             {
@@ -189,7 +189,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "ArtifactsButton")
         {
             GameObject artifactsPage = (GameObject)Instantiate(Resources.Load("ArtifactsPage"), new Vector3(3.2F, -5.33F, -23.61F), Quaternion.identity);
-            gameScript.GetComponent<GameScript>().screenUp = true;
+            GameControl.screenUp = true;
             gameScript.GetComponent<Artifacts>().displayArtifacts();
         }
         else if (other.CompareTag("Trinkets"))
@@ -209,7 +209,7 @@ public class Collision : MonoBehaviour
                         gameScript.GetComponent<GameScript>().items[i].gameObject.SetActive(false);
                 }
                 gameScript.GetComponent<GameScript>().shopUp = false;
-                gameScript.GetComponent<GameScript>().screenUp = false;
+                GameControl.screenUp = false;
             }
         }
         else if (other.CompareTag("Attributes"))
@@ -312,6 +312,7 @@ public class Collision : MonoBehaviour
         else if (other.transform.name == "Reset")
         {
             Debug.Log("Player Prefs Reset");
+            Team.selectedCharacter = "Empty";
             PlayerPrefs.DeleteAll();
         }
         else if (other.transform.name == "Recruit Button") //Buying a Character in the Ship Screen
@@ -348,7 +349,7 @@ public class Collision : MonoBehaviour
             Destroy(gameScript.GetComponent<GameScript>().items[0].gameObject);
             Destroy(gameScript.GetComponent<GameScript>().items[1].gameObject);
             Destroy(gameScript.GetComponent<GameScript>().items[2].gameObject);
-            gameScript.GetComponent<GameScript>().screenUp = false;
+            GameControl.screenUp = false;
         }
         else if (other.transform.name == "Shop Back")
         {
@@ -400,6 +401,11 @@ public class Collision : MonoBehaviour
                     selectedItem.GetComponent<Item>().mCost = other.GetComponent<Item>().mCost;
                     selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite = other.gameObject.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite;
                     string type = selectedItem.GetComponent<Item>().mTitle;
+                    for(int i = 0; i < 3; i++)
+                    {
+                        gameScript.GetComponent<GameScript>().items[i].transform.GetChild(2).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
+                    }
+                    other.transform.GetChild(2).GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
                     /*
                     //selectedItem.transform.position = new Vector3(3.24F, -4.03F, -5.86F);
                     //Destroy(gameScript.GetComponent<GameScript>().Shop.gameObject);
@@ -480,9 +486,9 @@ public class Collision : MonoBehaviour
             {
                 gameScript.GetComponent<Artifacts>().collectArtifact(GameControl.shopArtifact);
                 Destroy(GameControl.shopArtifact.gameObject);
-                GameControl.gold -= 20;
+                GameControl.gold -= 30;
             }              
-            else if (itemType == "Armor")
+            else if (selectedItem.GetComponent<Item>().mArmor > 0.0)
             {
                 Debug.Log("Here Armor");
                 characterControl.selectedCharacter.GetComponent<Character>().armor.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
@@ -491,9 +497,10 @@ public class Collision : MonoBehaviour
                 characterControl.selectedCharacter.GetComponent<Character>().armor.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
                 characterControl.selectedCharacter.GetComponent<Character>().armor.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
                 GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
-                    
+                Destroy(selectedItem.gameObject);
+
             }
-            else if (itemType == "Weapon")
+            else if (selectedItem.GetComponent<Item>().mDamage > 0.0)
             {
                 Debug.Log("Here Weapon");
                 characterControl.selectedCharacter.GetComponent<Character>().weapon.icon.GetComponent<SpriteRenderer>().sprite = selectedItem.gameObject.GetComponent<SpriteRenderer>().sprite;
@@ -501,7 +508,8 @@ public class Collision : MonoBehaviour
                 characterControl.selectedCharacter.GetComponent<Character>().weapon.traitOne = selectedItem.GetComponent<Item>().mAttributeOne;
                 characterControl.selectedCharacter.GetComponent<Character>().weapon.traitTwo = selectedItem.GetComponent<Item>().mAttributeTwo;
                 characterControl.selectedCharacter.GetComponent<Character>().weapon.traitThree = selectedItem.GetComponent<Item>().mAttributeThree;
-                GameControl.gold -= selectedItem.GetComponent<Item>().mCost;                   
+                GameControl.gold -= selectedItem.GetComponent<Item>().mCost;
+                Destroy(selectedItem.gameObject);
             }          
         }
        
@@ -550,7 +558,7 @@ public class Collision : MonoBehaviour
 
             length = gameScript.GetComponent<GameScript>().collected.Count;
 
-            if (!gameScript.GetComponent<GameScript>().screenUp)
+            if (!GameControl.screenUp)
             {
 
                 if (length == 0 && other.GetComponent<Tile>().frozen == false)
@@ -799,8 +807,19 @@ public class Collision : MonoBehaviour
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
                         }
                         else if (type == "Rubble")
-                        {                         
-                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().rubble, pos, Quaternion.identity);                                                                                                           
+                        {
+                            if (gameScript.GetComponent<GameScript>().board[row, col].name == "Rubble One(Clone)")
+                            {
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().rubble[0], pos, Quaternion.identity);
+                            }
+                            else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Rubble Two(Clone)")
+                            {
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().rubble[1], pos, Quaternion.identity);
+                            }
+                            else if (gameScript.GetComponent<GameScript>().board[row, col].name == "Rubble Three(Clone)")
+                            {
+                                gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().rubble[2], pos, Quaternion.identity);
+                            }
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(10).gameObject.SetActive(false);
                             gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(11).gameObject.SetActive(true);
                         }
@@ -1093,20 +1112,23 @@ public class Collision : MonoBehaviour
                     }
                     else //Swapping a PartyMember with a Non-PartyMember
                     {
+                        other.transform.GetChild(2).gameObject.SetActive(true);
+                        swapCharacter.transform.parent.GetChild(2).gameObject.SetActive(false);
                         Team.selectedCharacter = swapCharacter.transform.parent.name;
-                        PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);
-                        Debug.Log("Selected Character: " + Team.selectedCharacter);
+                        PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);                     
                         StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
-                        swapActive = false;
+                        swapActive = false;                      
                     }
                 }
                 else if (swapCharacter.transform.parent.name == Team.selectedCharacter)
-                {                   
+                {
+                    swapCharacter.transform.parent.GetChild(2).gameObject.SetActive(true);
+                    other.transform.GetChild(2).gameObject.SetActive(false);
                     Team.selectedCharacter = other.transform.name;
-                    PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);
-                    Debug.Log("Selected Character: " + Team.selectedCharacter);
+                    PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);                   
                     StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
                     swapActive = false;
+                    
                 }
                 else //Both characters are Non-PartyMembers
                 {

@@ -12,6 +12,7 @@ public class CharacterControl : MonoBehaviour
     public GameObject[] characters;
     public GameObject selectedCharacter;
     public GameObject[] skills;
+    public GameObject cameraObject;
     public Ship ship;
     private int totalMaxHealth;
     private int totalCurrentHealth;
@@ -32,7 +33,14 @@ public class CharacterControl : MonoBehaviour
             characterName = Team.selectedCharacter;
         else
         {
-            characterName = "Urp";
+            if(PlayerPrefs.GetString("Skeleton Killed") == "true")
+            {
+                characterName = "Urp";
+            }
+            else
+            {
+                characterName = "Empty";
+            }           
             Team.urpLvl = 1;
         }
         for(int i = 0; i < characters.Length; i++)
@@ -41,7 +49,8 @@ public class CharacterControl : MonoBehaviour
             {
                 selectedCharacter = Instantiate(characters[i], selectedCharacter.transform);
             }
-        }
+        }        
+        selectedCharacter.transform.position = new Vector3(1.15f, -9.25f, -1);
         setStats(characterName);
         selectedCharacter.GetComponent<Character>().maxHealth = maxHealth;
         totalMaxHealth += maxHealth;
@@ -64,12 +73,16 @@ public class CharacterControl : MonoBehaviour
             }
             else
             {
+                cameraObject.GetComponent<Animator>().SetTrigger("FadeToBlack");
+                yield return new WaitForSeconds(2f);
+                loadingDoors.GetComponent<Animator>().SetBool("close", true);
+                yield return new WaitForSeconds(2.5f);
                 Debug.Log("----- GAME OVER -----");
                 ScoreControl.saveHighScore();
                 GameControl.gold = 0;
                 setCurrentHealth(getMaxHealth());
                 SceneManager.LoadScene("Scenes/GameOver");
-                loadingDoors.GetComponent<Animator>().SetBool("close", true);
+                
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
                 asyncLoad.allowSceneActivation = false;
                 while (!asyncLoad.isDone)
@@ -89,7 +102,7 @@ public class CharacterControl : MonoBehaviour
     }
     public void manageSkillCDs(string collectedTileType)
     {
-        /*
+        
         if (selectedCharacter.GetComponent<Character>().skillOne.GetComponent<Spell>().coolDown > 0)
             if (selectedCharacter.GetComponent<Character>().skillOne.GetComponent<Spell>().spellType == collectedTileType || collectedTileType == "Mana")
                 selectedCharacter.GetComponent<Character>().skillOne.GetComponent<Spell>().coolDown -= 1;
@@ -97,7 +110,7 @@ public class CharacterControl : MonoBehaviour
         if (selectedCharacter.GetComponent<Character>().skillTwo.GetComponent<Spell>().coolDown > 0)
             if (selectedCharacter.GetComponent<Character>().skillTwo.GetComponent<Spell>().spellType == collectedTileType || collectedTileType == "Mana")
                 selectedCharacter.GetComponent<Character>().skillTwo.GetComponent<Spell>().coolDown -= 1;
-        */
+        
     }
 
     public bool searchActiveCharacterTraits(string trait) //Searches the active character if they have a specific trait
@@ -188,12 +201,22 @@ public class CharacterControl : MonoBehaviour
         if (name != "")
             name = name.Replace("(Clone)", "").Trim();
         characterName = name;
-        if (name == "Urp")
+        if (name == "Empty")
         {
             if (Team.urpLvl == 1 || Team.urpLvl == 2) //Level One
             {
                 maxHealth = 30;
                 currentHealth = 30;
+                weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
+                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
+            }
+        }
+            if (name == "Urp")
+        {
+            if (Team.urpLvl == 1 || Team.urpLvl == 2) //Level One
+            {
+                maxHealth = 35;
+                currentHealth = 35;
                 weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
                 armorDefense = 3 + PlayerPrefs.GetInt("UrpArmorBonus");
             }

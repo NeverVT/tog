@@ -59,7 +59,7 @@ public class Item : MonoBehaviour
     public string RollType()
     {
         string type = "";
-        temp = UnityEngine.Random.Range(1, 5);
+        temp = UnityEngine.Random.Range(1, 4);
         //temp = 1;
         switch (temp)
         {
@@ -70,9 +70,6 @@ public class Item : MonoBehaviour
                 type = "Swords";
                 break;
             case 3:
-                type = "Bows";
-                break;
-            case 4:
                 type = "Armor";
                 break;
         }

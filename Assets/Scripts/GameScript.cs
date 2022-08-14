@@ -12,6 +12,7 @@ public class GameScript : MonoBehaviour
     public GameObject Shop;
     public GameObject game;
     public PredictText predictText;
+    public GameObject tutorialTextBox;
     public CharacterControl characterControl;
     public Camera cam;
     public  int gold = 0;
@@ -30,11 +31,11 @@ public class GameScript : MonoBehaviour
     public Tile[] healthCrystals = new Tile[3];
     public Tile[] coins = new Tile[3];
     public Tile[] swords = new Tile[3];
+    public Tile[] rubble = new Tile[3];
     public Tile[] manaCrystals = new Tile[3];
     public Tile[] goblins = new Tile[4];
     public Tile[] collectedGoblins = new Tile[4];
     public Tile[] artifacts = new Tile[24];
-    public Tile rubble;
     public Tile helix;
     public Tile bomb;
     public Tile barrel;
@@ -71,7 +72,7 @@ public class GameScript : MonoBehaviour
     public Stack<Tile> enemies = new Stack<Tile>();
     public List<GameObject> spellsOnCD = new List<GameObject>();
     //public static List<GameObject> artifacts = new List<GameObject>();
-    public bool screenUp = false;
+    
 
     public float spacing = 0.01F;
     private int temp;
@@ -112,7 +113,8 @@ public class GameScript : MonoBehaviour
     {
         //collected = new Stack<GameObject>(0);
         //GetComponent<Collision>().gameScript = GameObject.Find("GameScript").gameObject;
-        screenUp = false;
+        GameControl.screenUp = false;
+        GameControl.gameScript = this;
         init();  
     }
     /*
@@ -128,10 +130,15 @@ public class GameScript : MonoBehaviour
     */
     public void init()
     {       
+        
         PlayerPrefs.SetString("Boss Stage", "Stage One");
         ScoreControl.partyOne = Team.selectedCharacter;
-        bossSpawner = -1;//UnityEngine.Random.Range(15, 21);
-        shopSpawner = -1;//UnityEngine.Random.Range(9, 15);
+        bossSpawner = UnityEngine.Random.Range(15, 21);
+        //bossSpawner = 2;
+        shopSpawner = UnityEngine.Random.Range(9, 15);
+        //shopSpawner = 2;
+        GameControl.firstTime = false;
+        //GameControl.gold = 40;
         /*
         if(characterControl.getTraitOne("Hunter") != -1)
         {
@@ -146,7 +153,21 @@ public class GameScript : MonoBehaviour
             //Comforting Function
         }
         */
-        fillBoard();
+        //PlayerPrefs.SetString("Tracing Tutorial Done", "");       
+        if (PlayerPrefs.GetString("Tracing Tutorial Done") == "")
+        {
+            tutorialBoard();
+        }
+        else
+            fillBoard();
+        if (PlayerPrefs.GetString("Skeleton Killed") == "true" && PlayerPrefs.GetString("Tracing Tutorial Done") == "Three")
+        {
+            tutorialTextBox.gameObject.SetActive(true);
+            StartCoroutine(tutorialTextBox.GetComponent<TextBox>().typeText("Congratulations! You have unlocked Urp!\nHe comes with both a passive trait and\na skill you can activate to blow stuff up!\nCollect enough swords to recharge this skill.\nLet us know in the Discord that you got past\nthe skeleton!!!"));
+            //tutorialTextBox.GetComponent<TextBox>(). = "Congratulations! You have unlocked Urp!\nHe comes with both a passive trait and\na skill you can activate to blow stuff up!\nCollect enough swords to recharge this skill.\nLet us know in the Discord that you got past\nthe skeleton!!!";
+            tutorialTextBox.transform.GetChild(1).gameObject.SetActive(false);
+            PlayerPrefs.SetString("Tracing Tutorial Done", "Four");
+        }
     }
     public void predict()
     {   
@@ -313,7 +334,7 @@ public class GameScript : MonoBehaviour
                     }
                     if (checkIfPickPocket())
                         damage /= 2;
-                    damage = Math.Round(damage);
+                    damage = Math.Ceiling(damage);
                     board[row, col].GetComponent<Enemy>().predictedDamage = damage + board[row, col].GetComponent<Enemy>().pDamage;
                     predictText.pDamage = (int)damage;
                 }
@@ -341,7 +362,7 @@ public class GameScript : MonoBehaviour
                 
 
         }
-        else if(!screenUp)
+        else if(!GameControl.screenUp)
         {
             predictText.pHealth = 0;
             predictText.pGold = 0;
@@ -365,15 +386,15 @@ public class GameScript : MonoBehaviour
     {
         if (temp.gameObject.transform.GetChild(1).gameObject.activeSelf)
         {
-            temp.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            //temp.gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
         else
         {
             currentSpell = temp;
             temp.transform.GetChild(1).gameObject.SetActive(true);
-            int bigCD = 15;
-            int medCD = 10;
-            int smallCD = 5;
+            int bigCD = 20;
+            int medCD = 15;
+            int smallCD = 10;
 
             int CD = 0;
 
@@ -598,6 +619,13 @@ public class GameScript : MonoBehaviour
 
     public IEnumerator collect()
     {
+        if (PlayerPrefs.GetString("Tracing Tutorial Done") == "One")
+        {
+            tutorialTextBox.gameObject.SetActive(true);
+            StartCoroutine(tutorialTextBox.GetComponent<TextBox>().typeText("The board will fill back up after each turn.\nPress and hold on a tile to see what they do.\nEnemies will take their turn after you collect,\nattacking you for their damage value.\nTrace through swords + enemies to attack\nthem first!"));
+            PlayerPrefs.SetString("Tracing Tutorial Done", "Two");
+        }
+             
         int collectAmount;
         if (cunningInCollected)
             collectAmount = 4;
@@ -620,8 +648,8 @@ public class GameScript : MonoBehaviour
                 Destroy(collected.Pop().gameObject);
                 shiftBoard();
                 shopKeeperUp = false;
-                screenUp = true;
-                Shop = (GameObject)Instantiate(shop, new Vector3(3.64F, -3.25F, -3.06F), Quaternion.identity);
+                GameControl.screenUp = true;
+                Shop = (GameObject)Instantiate(shop, new Vector3(2.83F, -4.62F, -7.75F), Quaternion.identity);
                 Shop.transform.parent = canvas.transform;
                 shopUp = true;
                 for (int i = 0; i < 3; i++)
@@ -629,11 +657,11 @@ public class GameScript : MonoBehaviour
                     Item item = new Item();
                     Vector3 pos;
                     if (i == 0)
-                        pos = new Vector3(0.8F, -3.64F, -5.86F);
+                        pos = new Vector3(1.22F, -2.83F, -10.5F);
                     else if (i == 1)
-                        pos = new Vector3(2.93F, -3.64F, -5.86F);
+                        pos = new Vector3(3.31F, -2.83F, -10.5F);
                     else
-                        pos = new Vector3(5.03F, -3.64F, -5.86F);
+                        pos = new Vector3(5.36F, -2.83F, -10.5F);
 
                     tier = item.RollTier();
                     type = item.RollType();
@@ -678,23 +706,23 @@ public class GameScript : MonoBehaviour
                     if (tier == 2)
                     {
                         items[i].GetComponent<Item>().mAttributeOne = item.RollAttributes(items[i].GetComponent<Item>().mType, "One");
-                        items[i].transform.Find("Attribute One").Find(items[i].GetComponent<Item>().mAttributeOne).gameObject.SetActive(true);                        
+                        //items[i].transform.Find("Attribute One").Find(items[i].GetComponent<Item>().mAttributeOne).gameObject.SetActive(true);                        
                     }
                     else if (tier == 3)
                     {
                         items[i].GetComponent<Item>().mAttributeOne = item.RollAttributes(items[i].GetComponent<Item>().mType, "One");
-                        items[i].transform.Find("Attribute One").Find(items[i].GetComponent<Item>().mAttributeOne).gameObject.SetActive(true);
+                        //items[i].transform.Find("Attribute One").Find(items[i].GetComponent<Item>().mAttributeOne).gameObject.SetActive(true);
                         items[i].GetComponent<Item>().mAttributeTwo = item.RollAttributes(items[i].GetComponent<Item>().mType, "Two");
-                        items[i].transform.Find("Attribute Two").Find(items[i].GetComponent<Item>().mAttributeTwo).gameObject.SetActive(true);
+                        //items[i].transform.Find("Attribute Two").Find(items[i].GetComponent<Item>().mAttributeTwo).gameObject.SetActive(true);
                     }
                     else if (tier == 4)
                     {
                         items[i].GetComponent<Item>().mAttributeOne = item.RollAttributes(items[i].GetComponent<Item>().mType, "One");
-                        items[i].transform.Find("Attribute One").Find(items[i].GetComponent<Item>().mAttributeOne).gameObject.SetActive(true);
+                        //items[i].transform.Find("Attribute One").Find(items[i].GetComponent<Item>().mAttributeOne).gameObject.SetActive(true);
                         items[i].GetComponent<Item>().mAttributeTwo = item.RollAttributes(items[i].GetComponent<Item>().mType, "Two");
-                        items[i].transform.Find("Attribute Two").Find(items[i].GetComponent<Item>().mAttributeTwo).gameObject.SetActive(true);
+                        //items[i].transform.Find("Attribute Two").Find(items[i].GetComponent<Item>().mAttributeTwo).gameObject.SetActive(true);
                         items[i].GetComponent<Item>().mAttributeThree = item.RollAttributes(items[i].GetComponent<Item>().mType, "Three");
-                        items[i].transform.Find("Attribute Three").Find(items[i].GetComponent<Item>().mAttributeThree).gameObject.SetActive(true);
+                        //items[i].transform.Find("Attribute Three").Find(items[i].GetComponent<Item>().mAttributeThree).gameObject.SetActive(true);
                     }
                     
                     title = item.createTitle(type);
@@ -702,9 +730,9 @@ public class GameScript : MonoBehaviour
                     items[i].GetComponent<Item>().mTitle = title + " " + bonus;
                     items[i].GetComponent<Item>().mBonus = bonus;                   
                 }
-                Tile artifactOne = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(0.8F, -5.6F, -5.86F), Quaternion.identity);
-                Tile artifactTwo = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(2.93F, -5.6F, -5.86F), Quaternion.identity);
-                Tile artifactThree = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(5.03F, -5.6F, -5.86F), Quaternion.identity);
+                Tile artifactOne = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(1.17F, -5.77F, -10F), Quaternion.identity);
+                Tile artifactTwo = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(3.29F, -5.77F, -10F), Quaternion.identity);
+                Tile artifactThree = (Tile)Instantiate(artifacts[GetComponent<Artifacts>().getIndex(GetComponent<Artifacts>().rollArtifact())], new Vector3(5.4F, -5.77F, -10F), Quaternion.identity);
                 artifactOne.GetComponent<Tile>().enabled = false;
                 artifactTwo.GetComponent<Tile>().enabled = false;
                 artifactThree.GetComponent<Tile>().enabled = false;
@@ -727,6 +755,7 @@ public class GameScript : MonoBehaviour
                 Destroy(board[row, col].gameObject, 2.10F);
                 Vector3 position = new Vector3(X, Y, 0.0F);
                 GetComponent<Artifacts>().createArtifact(col, row, position, GetComponent<Artifacts>().rollArtifactBoss());
+                board[row, col].gameObject.transform.parent = canvas.transform;
             }
             else if (collected.Peek().GetComponent<Tile>().mType == "Artifact")
             {
@@ -781,7 +810,7 @@ public class GameScript : MonoBehaviour
                 }
                 unfreeze();
                 turnCounter++;
-                screenUp = false;
+                GameControl.screenUp = false;
             }
             else if(GameControl.dragonShot)
             {
@@ -922,7 +951,22 @@ public class GameScript : MonoBehaviour
         }
         else //Collected more than 3 tiles
         {
-            screenUp = true;
+            if (PlayerPrefs.GetString("Tracing Tutorial Done") == "")
+            {
+                new WaitForSeconds(2f);
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        Destroy(board[i, j].gameObject);
+                    }
+                }
+                fillBoard();
+                tutorialTextBox.gameObject.SetActive(true);
+                StartCoroutine(tutorialTextBox.GetComponent<TextBox>().typeText("There are several different tiles that each\nhave their own effects.\nSwords add to the damage you deal to enemies.\nCoins are used to buy better items from the\nshop (Not yet in the demo).\nRubble can have Crystals, Coins, Or even\nitems hidden inside!"));
+                PlayerPrefs.SetString("Tracing Tutorial Done", "One");
+            }
+            GameControl.screenUp = true;
             for(int i = 0; i < gameScreenParts.Length; i++)
             {
                 if(gameScreenParts[i].TryGetComponent<SpriteRenderer>(out var spriteRenderer))
@@ -959,7 +1003,8 @@ public class GameScript : MonoBehaviour
                 }
                 if (type == "Health")
                 {
-                    spawnScoreAddition(collected.Count, count, "Health");
+                    if(PlayerPrefs.GetString("Tracing Tutorial Done") != "One")
+                        spawnScoreAddition(collected.Count, count, "Health");
                     Tile.numCollectedH++;
                     obj.transform.gameObject.SetActive(true);
                     obj.GetComponent<Tile>().collected = true;      
@@ -1027,7 +1072,7 @@ public class GameScript : MonoBehaviour
                     if(GetComponent<Artifacts>().loadedDie) //Loaded Die Function
                         temp = UnityEngine.Random.Range(1, 501);
                     if(GetComponent<Artifacts>().leatherGloves) //Leather Gloves Function
-                        temp = UnityEngine.Random.Range(1, 206);
+                        temp = UnityEngine.Random.Range(1, 201);
                     //temp = 204;
                     if (temp <= 100) //Turn Rubble into Health (10% | 20% | 49%)
                     {
@@ -1051,8 +1096,7 @@ public class GameScript : MonoBehaviour
                         tempGold.GetComponent<Tile>().collected = true;
                         goldCollected++;
                         gold++;
-                    }
-                    /*
+                    }                   
                     else if (temp <= 205) //Turn Rubble into Artifact (0.5% | 1% | 2%)
                     {
                         int col = obj.GetComponent<Tile>().mCol;
@@ -1060,7 +1104,8 @@ public class GameScript : MonoBehaviour
                         Vector3 pos = obj.transform.position;
                         Destroy(board[row, col].gameObject);
                         GetComponent<Artifacts>().createArtifact(col, row, pos, GetComponent<Artifacts>().rollArtifactRubble());
-                    }*/
+                        board[row, col].gameObject.transform.parent = canvas.transform;
+                    }
                     Destroy(obj.gameObject);
                 }
                 else if (obj.GetComponent<Tile>().mType == "Mana")
@@ -1229,7 +1274,7 @@ public class GameScript : MonoBehaviour
             counter = 0;
             cunningInCollected = false;
             attackPhase = false;
-            screenUp = false;
+            GameControl.screenUp = false;
             for(int i = 0; i < gameScreenParts.Length; i++)
             {
                 if (gameScreenParts[i].TryGetComponent<SpriteRenderer>(out var spriteRenderer))
@@ -1539,21 +1584,21 @@ public class GameScript : MonoBehaviour
         GameObject score = Instantiate(scoreAddition, new Vector3(4.3f+(.2f*(totalCount - currentCount)), -0.1f-(.2f*(totalCount - currentCount)), -2.5f), Quaternion.identity);
         if (type == "Health")
         {
-            score.GetComponent<ScoreAddition>().number = 5 + (totalCount - currentCount);
-            ScoreText.score += (5 + (totalCount - currentCount));
-            ScoreControl.healthScore += (5 + (totalCount - currentCount));
+            score.GetComponent<ScoreAddition>().number = 1 + (totalCount - currentCount);
+            ScoreText.score += (1 + (totalCount - currentCount));
+            ScoreControl.healthScore += (1 + (totalCount - currentCount));
         }
         if(type == "Coin")
         {
-            score.GetComponent<ScoreAddition>().number = 5 + (totalCount - currentCount);
-            ScoreText.score += (5 + (totalCount - currentCount));
-            ScoreControl.goldScore += (5 + (totalCount - currentCount));
+            score.GetComponent<ScoreAddition>().number = 1 + (totalCount - currentCount);
+            ScoreText.score += (1 + (totalCount - currentCount));
+            ScoreControl.goldScore += (1 + (totalCount - currentCount));
         }
         if(type == "Sword")
         {
-            score.GetComponent<ScoreAddition>().number = 5 + (totalCount - currentCount);
-            ScoreText.score += (5 + (totalCount - currentCount));
-            ScoreControl.swordScore += (5 + (totalCount - currentCount));
+            score.GetComponent<ScoreAddition>().number = 1 + (totalCount - currentCount);
+            ScoreText.score += (1 + (totalCount - currentCount));
+            ScoreControl.swordScore += (1 + (totalCount - currentCount));
         }
         if(type == "Goblin")
         {
@@ -1693,7 +1738,7 @@ public class GameScript : MonoBehaviour
                     damage += 2;
             }
             if (enemy.GetComponent<Tile>().boss == "Skull")
-                damage /= 2;
+                damage = Math.Ceiling(damage/2);
             //int critChance = UnityEngine.Random.Range(1, 100);
             /*if (critChance < Character.crit)
             {
@@ -1745,7 +1790,7 @@ public class GameScript : MonoBehaviour
             {
                 damage *= .75;
             }
-            damage = Math.Round(damage);
+            damage = Math.Ceiling(damage);
             if (damage < enemy.GetComponent<Enemy>().health)
             {
                 if(enemy.GetComponent<Tile>().boss == "BossArms")
@@ -1867,6 +1912,8 @@ public class GameScript : MonoBehaviour
                     {
                         if (tempType != "" && tempType != "RatClone" && tempType != "BossArms" && tempType != "BossBody" && tempType != "Ghost")
                         {
+                            if(tempType == "Skull")
+                                PlayerPrefs.SetString("Skeleton Killed", "true");
                             spawnChest = true;
                             GameControl.miniBossUp = false;
                             spawnScoreAddition(collected.Count, count, "Boss");
@@ -2096,6 +2143,8 @@ public class GameScript : MonoBehaviour
                 }
                 else
                 {   //Kill Boss
+                    if (board[row, col].boss == "Skull")
+                        PlayerPrefs.SetString("Skeleton Killed", "true");
                     spawnChest = true;
                     GameControl.miniBossUp = false;
                     spawnScoreAddition(0, 0, "Boss");
@@ -2103,7 +2152,10 @@ public class GameScript : MonoBehaviour
             }
             else if (board[row, col].GetComponent<Tile>().mType == "Collected")
             {
-                
+                if (board[row, col].transform.GetChild(8).TryGetComponent<Animator>(out var animator))
+                {
+                    board[row, col].transform.GetChild(8).GetComponent<Animator>().SetTrigger("Explode");
+                }              
             }
             else
             {
@@ -2241,7 +2293,7 @@ public class GameScript : MonoBehaviour
         temp.mCol = col;
         if(type == "Goblin")
         {
-            temp.GetComponent<Enemy>().health = UnityEngine.Random.Range(2, 5) + (goblinScalar * 2);
+            temp.GetComponent<Enemy>().health = UnityEngine.Random.Range(2, 4) + (goblinScalar * 2);
             temp.GetComponent<Enemy>().damage = UnityEngine.Random.Range(0, 2) + goblinScalar;
             temp.GetComponent<Enemy>().justSpawned = true;
             temp.transform.GetChild(9).GetComponent<Animator>().SetTrigger("sleep");
@@ -2261,9 +2313,10 @@ public class GameScript : MonoBehaviour
             case "Sword":
                 return swords[ran];
             case "Goblin":
-                return goblins[0];
+                ran = UnityEngine.Random.Range(0, 2);
+                return goblins[ran];
             case "Rubble":
-                return rubble;
+                return rubble[ran];
             case "Chest":
                 return chest;
             case "Shopkeeper":
@@ -2339,7 +2392,41 @@ public class GameScript : MonoBehaviour
             }
         }
     }
- 
+    void tutorialBoard()
+    {
+        temp = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                float X = 0.515F + j + (j * 0.1F);
+                float Y = 2 - i - (i * spacing);
+                Vector3 position = new Vector3(X, Y, 0.0F);
+                temp = UnityEngine.Random.Range(1, 100);
+                temp = 3;
+                if (temp <= 30)
+                {
+                    board[i, j] = spawnTile("Health", i, j, position);
+                }
+                else if (temp <= 60)
+                {
+                    board[i, j] = spawnTile("Coin", i, j, position);
+                }
+                else if (temp <= 75)
+                {
+                    board[i, j] = spawnTile("Sword", i, j, position);
+                    board[i, j].transform.GetChild(8).GetComponent<SpriteRenderer>().sprite = characterControl.getWeaponIcon().GetComponent<SpriteRenderer>().sprite;
+                }
+                else if (temp <= 99)
+                {
+                    board[i, j] = spawnTile("Rubble", i, j, position);
+                }
+            }
+        }
+        tutorialTextBox.gameObject.SetActive(true);
+        StartCoroutine(tutorialTextBox.GetComponent<TextBox>().typeText("These are Healing Crystals.\nTrace through at least 3 to collect them\nand end a turn.\nYou can trace through any adjacent/diagonal\ntile of the same type.\nTry to collect as many tiles as possible\neach turn!"));
+        tutorialTextBox.transform.GetChild(1).gameObject.SetActive(true);
+    }
     void fillBoard()
     {
         temp = 0;
@@ -2588,9 +2675,8 @@ public class GameScript : MonoBehaviour
                                 temp.GetComponent<Enemy>().justSpawned = false;
                                 temp.GetComponent<Enemy>().shouldntAttack = true;                           
                             }
-                            else if (temp.GetComponent<Enemy>().shouldntAttack)
+                            else if (temp.GetComponent<Enemy>().shouldntAttack && temp.boss == "")
                             {
-                                Debug.Log("wake2");
                                 temp.GetComponent<Enemy>().shouldntAttack = false;
                                 temp.transform.GetChild(9).GetComponent<Animator>().SetTrigger("wake");
                                 temp.transform.GetChild(9).GetComponent<Animator>().SetBool("awake", true);
@@ -2869,7 +2955,8 @@ public class GameScript : MonoBehaviour
                         bossSpawner += UnityEngine.Random.Range(10, 16);
                             if(GetComponent<Artifacts>().bait)
                                 bossSpawner -= baitValue;
-                        temp = UnityEngine.Random.Range(1, 7);
+                        temp = UnityEngine.Random.Range(3, 7);
+                        //temp = 6;
                         if (PlayerPrefs.GetString("Boss Stage") == "")
                             PlayerPrefs.SetString("Boss Stage", "Stage One");
                         Debug.Log(PlayerPrefs.GetString("Boss Stage"));
@@ -2886,16 +2973,15 @@ public class GameScript : MonoBehaviour
                         if(ScoreControl.bossScore == 400 && PlayerPrefs.GetString("Boss Stage") == "Stage Three")
                         {
                             temp = 9;
-                        }  */                                        
+                        }  */
                         //temp = 5;
-                        if(temp == 1)
+                        if (temp == 1)
                         {
-                            board[i, j] = Instantiate(slime, position, Quaternion.identity);
-                            board[i, j].boss = "Slime";
-                            board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
-                            board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
-                            slimeNeedsToEat = false;
-                        }                         
+                            board[i, j] = Instantiate(greenGenie, position, Quaternion.identity);
+                            board[i, j].boss = "GreenGenie";
+                            board[i, j].GetComponent<Enemy>().health = 9 + (goblinScalar * 2);
+                            board[i, j].GetComponent<Enemy>().damage = 1 + goblinScalar;
+                        }
                         else if (temp == 2)
                         {
                             board[i, j] = Instantiate(blueGenie, position, Quaternion.identity);
@@ -2904,11 +2990,12 @@ public class GameScript : MonoBehaviour
                             board[i, j].GetComponent<Enemy>().damage = 5 + goblinScalar;
                         }
                         else if (temp == 3)
-                        {
-                            board[i, j] = Instantiate(greenGenie, position, Quaternion.identity);
-                            board[i, j].boss = "GreenGenie";
-                            board[i, j].GetComponent<Enemy>().health = 9 + (goblinScalar * 2);
-                            board[i, j].GetComponent<Enemy>().damage = 1 + goblinScalar;
+                        {                         
+                            board[i, j] = Instantiate(slime, position, Quaternion.identity);
+                            board[i, j].boss = "Slime";
+                            board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
+                            board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
+                            slimeNeedsToEat = false;
                         }
                         else if (temp == 4)
                         {
@@ -2917,21 +3004,42 @@ public class GameScript : MonoBehaviour
                             board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
                             ratSpawning++;
-                        }                           
+                            if (PlayerPrefs.GetString("Tracing Tutorial Done") == "Two")
+                            {
+                                tutorialTextBox.gameObject.SetActive(true);
+                                StartCoroutine(tutorialTextBox.GetComponent<TextBox>().typeText("This is a mini-boss. Every mini-boss has\n their own power.\nThe Rats power is in numbers.\nKill the Rats to get powerful loot and\nunlock a playable character!"));
+                                tutorialTextBox.transform.GetChild(1).gameObject.SetActive(false);
+                                PlayerPrefs.SetString("Tracing Tutorial Done", "Three");
+                            }
+                        }
                         else if (temp == 5)
                         {
                             board[i, j] = Instantiate(lich, position, Quaternion.identity);
                             board[i, j].boss = "Lich";
                             board[i, j].GetComponent<Enemy>().health = 5 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
-                        }                          
+                            if (PlayerPrefs.GetString("Tracing Tutorial Done") == "Two")
+                            {
+                                tutorialTextBox.gameObject.SetActive(true);
+                                StartCoroutine(tutorialTextBox.GetComponent<TextBox>().typeText("This is a mini-boss. Every mini-boss has\n their own power.\nThe Lich's power freezing surrounding tiles.\nKill the Lich to get powerful loot and\nunlock a playable character!"));
+                                tutorialTextBox.transform.GetChild(1).gameObject.SetActive(false);
+                                PlayerPrefs.SetString("Tracing Tutorial Done", "Three");
+                            }
+                        }
                         else if (temp == 6)
                         {
                             board[i, j] = Instantiate(skeleton, position, Quaternion.identity);
                             board[i, j].boss = "Skull";
                             board[i, j].GetComponent<Enemy>().isSkull = true;
-                            board[i, j].GetComponent<Enemy>().health = 7 + (goblinScalar * 2);
+                            board[i, j].GetComponent<Enemy>().health = 5 + (goblinScalar * 2);
                             board[i, j].GetComponent<Enemy>().damage = 2 + goblinScalar;
+                            if (PlayerPrefs.GetString("Tracing Tutorial Done") == "Two")
+                            {
+                                tutorialTextBox.gameObject.SetActive(true);
+                                StartCoroutine(tutorialTextBox.GetComponent<TextBox>().typeText("This is a mini-boss. Every mini-boss has\n their own power.\nThe skeleton's power is taking half damage.\nKill the skeleton to get powerful loot and\nunlock a playable character!"));
+                                tutorialTextBox.transform.GetChild(1).gameObject.SetActive(false);
+                                PlayerPrefs.SetString("Tracing Tutorial Done", "Three");
+                            }
                         }
                         else if (temp == 7)
                         {
@@ -2994,9 +3102,9 @@ public class GameScript : MonoBehaviour
                         if(GetComponent<Artifacts>().stoneShell || GetComponent<Artifacts>().bombBag) //Stone Shell Function
                         {
                             if(GetComponent<Artifacts>().loadedDie)
-                                temp = UnityEngine.Random.Range(1, 121);
+                                temp = UnityEngine.Random.Range(1, 109);
                             else
-                                temp = UnityEngine.Random.Range(1, 106);
+                                temp = UnityEngine.Random.Range(1, 104);
                         }
                         else
                             temp = UnityEngine.Random.Range(1, 101);
