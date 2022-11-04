@@ -50,8 +50,8 @@ public class GameScript : MonoBehaviour
     public Tile greenGenie;
     public Tile lich;
     public Tile skeleton;
-    public Tile bossArms;
-    public Tile bossBody;
+    public Tile[] bossArms = new Tile[4];
+    public Tile[] bossBody = new Tile[6];
     public GameObject scoreAddition;
 
     public int bossSpawner;
@@ -133,9 +133,9 @@ public class GameScript : MonoBehaviour
         
         PlayerPrefs.SetString("Boss Stage", "Stage One");
         ScoreControl.partyOne = Team.selectedCharacter;
-        bossSpawner = UnityEngine.Random.Range(15, 21);
+        bossSpawner = UnityEngine.Random.Range(19, 31);
         //bossSpawner = 2;
-        shopSpawner = UnityEngine.Random.Range(9, 15);
+        shopSpawner = UnityEngine.Random.Range(14, 19);
         //shopSpawner = 2;
         GameControl.firstTime = false;
         //GameControl.gold = 40;
@@ -400,9 +400,10 @@ public class GameScript : MonoBehaviour
 
             // if (lastTurnSpellCast != turnCounter)
             //{
+            temp.transform.name = temp.transform.name.Replace("(Clone)", "").Trim();
             if (temp.transform.name == ("Alchemy") && temp.gameObject.GetComponent<Spell>().coolDown == 0)
             {
-                swapAllOfTwoTileTypes("Health", "Mana");
+                swapAllOfTwoTileTypes("Health", "Gold");
                 CD = medCD;
                 setSpellCD(temp, CD);
             }
@@ -1383,7 +1384,9 @@ public class GameScript : MonoBehaviour
                     {
                         if(board[k,l].GetComponent<Tile>().mType == "Health")
                         {
-                            lowestHealth = 20;
+                            board[k, l].GetComponent<Tile>().mType = "Collected";
+                            board[3, 3].GetComponent<Enemy>().health += 1;
+                            /*lowestHealth = 20;
                             for(int m = 0; m < body.Length; m++)
                             {
                                 
@@ -1397,7 +1400,7 @@ public class GameScript : MonoBehaviour
                             {
                                 board[k,l].GetComponent<Tile>().mType = "Collected";
                                 body[bodyIndex].GetComponent<Enemy>().health += 1;                                                                                                           
-                            }
+                            }*/
                         }
                     }
                 }
@@ -1413,45 +1416,54 @@ public class GameScript : MonoBehaviour
                 {
                     int row = body[k].GetComponent<Tile>().mRow;
                     int col = body[k].GetComponent<Tile>().mCol;
-                    if(board[row - 1, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    int tempNum = UnityEngine.Random.Range(1, 3);
+                    if (board[row - 1, col - tempNum].GetComponent<Tile>().mType != "Goblin" && board[row - 1, col - tempNum].GetComponent<Tile>().mType != "Shopkeeper" && board[row - 1, col - tempNum].GetComponent<Tile>().mType != "Bomb" && !board[row - 1, col - tempNum].GetComponent<Tile>().frozenLastTurn)
                     {
-                        board[row - 1, col - 1].GetComponent<Tile>().frozen = true;
-                        board[row - 1, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                        board[row - 1, col - tempNum].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col - tempNum].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if(board[row - 1, col].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col].GetComponent<Tile>().frozenLastTurn)
+                    if(board[row - 1, col].GetComponent<Tile>().mType != "Goblin" && board[row - 1, col].GetComponent<Tile>().mType != "Shopkeeper" && board[row - 1, col].GetComponent<Tile>().mType != "Bomb" && !board[row - 1, col].GetComponent<Tile>().frozenLastTurn)
                     {
                         board[row - 1, col].GetComponent<Tile>().frozen = true;
                         board[row - 1, col].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if(board[row - 1, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row - 1, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    tempNum = UnityEngine.Random.Range(1, 3);
+                    if (board[row - 1, col + tempNum].GetComponent<Tile>().mType != "Goblin" && board[row - 1, col + tempNum].GetComponent<Tile>().mType != "Shopkeeper" && board[row - 1, col + tempNum].GetComponent<Tile>().mType != "Bomb" && !board[row - 1, col + tempNum].GetComponent<Tile>().frozenLastTurn)
                     {
-                        board[row - 1, col + 1].GetComponent<Tile>().frozen = true;
-                        board[row - 1, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                        board[row - 1, col + tempNum].GetComponent<Tile>().frozen = true;
+                        board[row - 1, col + tempNum].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if(board[row, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    tempNum = UnityEngine.Random.Range(1, 3);
+                    if (board[row, col - tempNum].GetComponent<Tile>().mType != "Goblin" && board[row, col - tempNum].GetComponent<Tile>().mType != "Shopkeeper" && board[row, col - tempNum].GetComponent<Tile>().mType != "Bomb" && !board[row, col - tempNum].GetComponent<Tile>().frozenLastTurn)
                     {
-                        board[row, col - 1].GetComponent<Tile>().frozen = true;
-                        board[row, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                        board[row, col - tempNum].GetComponent<Tile>().frozen = true;
+                        board[row, col - tempNum].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if(board[row, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    tempNum = UnityEngine.Random.Range(1, 3);
+                    if (board[row, col + tempNum].GetComponent<Tile>().mType != "Goblin" && board[row, col + tempNum].GetComponent<Tile>().mType != "Shopkeeper" && board[row, col + tempNum].GetComponent<Tile>().mType != "Bomb" && !board[row, col + tempNum].GetComponent<Tile>().frozenLastTurn)
                     {
-                        board[row, col + 1].GetComponent<Tile>().frozen = true;
-                        board[row, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                        board[row, col + tempNum].GetComponent<Tile>().frozen = true;
+                        board[row, col + tempNum].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if(board[row + 1, col - 1].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col - 1].GetComponent<Tile>().frozenLastTurn)
+                    tempNum = UnityEngine.Random.Range(1, 3);
+                    int tempNum2 = UnityEngine.Random.Range(1, 3);
+                    if (board[row + tempNum, col - tempNum2].GetComponent<Tile>().mType != "Goblin" && board[row + tempNum, col - tempNum2].GetComponent<Tile>().mType != "Shopkeeper" && board[row + tempNum, col - tempNum2].GetComponent<Tile>().mType != "Bomb" && !board[row + tempNum, col - tempNum2].GetComponent<Tile>().frozenLastTurn)
                     {
-                        board[row + 1, col - 1].GetComponent<Tile>().frozen = true;
-                        board[row + 1, col - 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                        board[row + tempNum, col - tempNum2].GetComponent<Tile>().frozen = true;
+                        board[row + tempNum, col - tempNum2].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if(board[row + 1, col].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col].GetComponent<Tile>().frozenLastTurn)
+                    tempNum = UnityEngine.Random.Range(1, 3);
+                    if (board[row + tempNum, col].GetComponent<Tile>().mType != "Goblin" && board[row + tempNum, col].GetComponent<Tile>().mType != "Shopkeeper" && board[row + tempNum, col].GetComponent<Tile>().mType != "Bomb" && !board[row + tempNum, col].GetComponent<Tile>().frozenLastTurn)
                     {
-                        board[row + 1, col].GetComponent<Tile>().frozen = true;
-                        board[row + 1, col].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                        board[row + tempNum, col].GetComponent<Tile>().frozen = true;
+                        board[row + tempNum, col].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }
-                    if(board[row + 1, col + 1].GetComponent<Tile>().mType != "Goblin" && !board[row + 1, col + 1].GetComponent<Tile>().frozenLastTurn)
+                    tempNum = UnityEngine.Random.Range(1, 3);
+                    tempNum2 = UnityEngine.Random.Range(1, 3);
+                    if (board[row + tempNum, col + tempNum2].GetComponent<Tile>().mType != "Goblin" && board[row + tempNum, col + tempNum2].GetComponent<Tile>().mType != "Shopkeeper" && board[row + tempNum, col + tempNum2].GetComponent<Tile>().mType != "Bomb" && !board[row + tempNum, col + tempNum2].GetComponent<Tile>().frozenLastTurn)
                     {
-                        board[row + 1, col + 1].GetComponent<Tile>().frozen = true;
-                        board[row + 1, col + 1].gameObject.transform.GetChild(18).gameObject.SetActive(true);
+                        board[row + tempNum, col + tempNum2].GetComponent<Tile>().frozen = true;
+                        board[row + tempNum, col + tempNum2].gameObject.transform.GetChild(18).gameObject.SetActive(true);
                     }                                       
                 }
             }
@@ -1639,7 +1651,7 @@ public class GameScript : MonoBehaviour
 
     bool checkBossArms(Tile arm)
     {
-        if(arm.mRow - 1 < 6) //Check Tile Above
+        if(arm.mRow - 1 < 6 && arm.mRow > 0) //Check Tile Above
             if(board[arm.mRow - 1, arm.mCol].boss == "BossArms")
                 return true;
         if(arm.mRow + 1 < 6) //Check Tile Below
@@ -1704,9 +1716,25 @@ public class GameScript : MonoBehaviour
                 }
             }
             if(bossDead)
-            {               
+            {
+                PlayerPrefs.SetString("Boss Stage", "Stage Four");
                 endRun();
             }    
+        }
+        else if (PlayerPrefs.GetString("Boss Stage") == "Stage Four")
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    if (board[i, j].GetComponent<Tile>().boss == "BossBody")
+                        bossDead = false;
+                }
+            }
+            if (bossDead)
+            {               
+                endRun();
+            }
         }
     }
 
@@ -1721,7 +1749,8 @@ public class GameScript : MonoBehaviour
     {
         int healthGain = 0;
         int damageDone = 0;               
-        int count = enemies.Count;     
+        int count = enemies.Count;
+        bool bossBodyDead = false;
         for (int i = 0; i < count; i++)
         {
             double damage = characterControl.getAttack() + swords;
@@ -1795,36 +1824,41 @@ public class GameScript : MonoBehaviour
             {
                 if(enemy.GetComponent<Tile>().boss == "BossArms")
                 {
-                    if(checkBossArms(enemy))
-                    {
+                    //if(checkBossArms(enemy))
+                    //{
                         enemy.GetComponent<Enemy>().health -= (int)damage;
                         damageDone += (int)damage;
-                    }
-                    else
-                    {
-                        enemy.GetComponent<Tile>().frozen = true;
-                        enemy.transform.GetChild(18).gameObject.SetActive(true);
-                    }                  
+                   // }
+                   // else
+                    //{
+                        //enemy.GetComponent<Tile>().frozen = true;
+                        //enemy.transform.GetChild(18).gameObject.SetActive(true);
+                   // }                  
                     Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].gameObject);
                     board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol] = enemy;
                     enemy.transform.gameObject.SetActive(true);
                 }
                 else if (enemy.GetComponent<Tile>().boss == "BossBody")
                 {
-                    if(!checkBoardForTile("Goblin", "BossArms"))
-                    {
-                        enemy.GetComponent<Enemy>().health -= (int)damage;
+                    
+                    //if(!checkBoardForTile("Goblin", "BossArms"))
+                    //{
+                        board[3,3].GetComponent<Enemy>().health -= (int)Math.Ceiling(damage /6);
+                        if (board[3, 3].GetComponent<Enemy>().health <= 0)
+                            bossBodyDead = true;
+                        enemy.GetComponent<Enemy>().health = board[3, 3].GetComponent<Enemy>().health;
                         damageDone += (int)damage;
                         Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].gameObject);
                         board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol] = enemy;
                         enemy.transform.gameObject.SetActive(true);
-                    }
-                    else
+                      
+                    //}
+                    /*else
                     {
                         Destroy(board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].gameObject);
                         board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol] = enemy;
                         enemy.transform.gameObject.SetActive(true);
-                    }
+                    }*/
                 }
                 else
                 {
@@ -1885,28 +1919,35 @@ public class GameScript : MonoBehaviour
                     string tempType = enemy.boss;                        
                     if(tempType == "BossArms")
                     {
-                        if(checkBossArms(enemy))
-                        {
+                        //if(checkBossArms(enemy))
+                       // {
                             board[enemy.GetComponent<Tile>().mRow, enemy.GetComponent<Tile>().mCol].GetComponent<Tile>().boss = "";
                             Destroy(enemy.gameObject);
                             spawnScoreAddition(0, 0, "Goblin");
                             damageDone += enemy.GetComponent<Enemy>().health;
-                            checkIfGameWon();
-                        }
-                        else
-                        {
-                            enemy.GetComponent<Tile>().frozen = true;
-                            enemy.transform.GetChild(18).gameObject.SetActive(true);
-                        }                      
+                            
+                       // }
+                        //else
+                        //{
+                            //enemy.GetComponent<Tile>().frozen = true;
+                            //enemy.transform.GetChild(18).gameObject.SetActive(true);
+                        //}                      
                     }
                     else if (tempType == "BossBody")
                     {
-                        if(!checkBoardForTile("Goblin", "BossArms"))
-                        {
-                            Destroy(enemy.gameObject);
-                            spawnScoreAddition(0, 0, "Goblin");
-                            damageDone += enemy.GetComponent<Enemy>().health;
-                        }
+                        //if(!checkBoardForTile("Goblin", "BossArms"))
+                        //{                       
+                        //Destroy(enemy.gameObject);
+                        /*
+                        Destroy(board[1, 2].gameObject);
+                        Destroy(board[1, 3].gameObject);
+                        Destroy(board[2, 2].gameObject);
+                        Destroy(board[2, 3].gameObject);
+                        Destroy(board[3, 2].gameObject);
+                        Destroy(board[3, 3].gameObject);*/
+                        spawnScoreAddition(0, 0, "Goblin");
+                        damageDone += enemy.GetComponent<Enemy>().health;
+                        //}
                     }
                     else
                     {
@@ -1944,6 +1985,17 @@ public class GameScript : MonoBehaviour
                 characterControl.setCurrentHealth(characterControl.getMaxHealth());
             else
                 characterControl.setCurrentHealth(characterControl.getCurrentHealth() + 1);
+        }
+        if(bossBodyDead)
+        {
+            replaceTile(1, 2, healthCrystals[0], "Health");
+            replaceTile(1, 3, healthCrystals[0], "Health");
+            replaceTile(2, 2, healthCrystals[0], "Health");
+            replaceTile(2, 3, healthCrystals[0], "Health");
+            replaceTile(3, 2, healthCrystals[0], "Health");
+            replaceTile(3, 3, healthCrystals[0], "Health");
+            bossBodyDead = false;
+            checkIfGameWon();
         }
         GameControl.targeted = false;
         GameControl.calculated = false;
@@ -2017,7 +2069,7 @@ public class GameScript : MonoBehaviour
                             numGhosts -=2 ;
                             if (numGhosts == 0)
                             {
-                                spawnChest = true;
+                                //spawnChest = true;
                                 GameControl.miniBossUp = false;
                                 spawnScoreAddition(0, 0, "Boss");
                             }
@@ -2946,13 +2998,13 @@ public class GameScript : MonoBehaviour
                     //Debug.Log("Turn Counter: " + turnCounter + "  |  Boss Spawner: " + bossSpawner + " | Shop Spawner: " + shopSpawner);
                     if (turnCounter == shopSpawner)
                     {
-                        shopSpawner += UnityEngine.Random.Range(10, 16);
+                        shopSpawner += UnityEngine.Random.Range(15, 21);
                         shopKeeperUp = true;
                         board[i, j] = spawnTile("Shopkeeper", i, j, position);
                     }
                     else if (turnCounter == bossSpawner) 
                     {
-                        bossSpawner += UnityEngine.Random.Range(10, 16);
+                        bossSpawner += UnityEngine.Random.Range(15, 21);
                             if(GetComponent<Artifacts>().bait)
                                 bossSpawner -= baitValue;
                         temp = UnityEngine.Random.Range(3, 7);
@@ -2961,20 +3013,20 @@ public class GameScript : MonoBehaviour
                             PlayerPrefs.SetString("Boss Stage", "Stage One");
                         Debug.Log(PlayerPrefs.GetString("Boss Stage"));
                         //temp = 1;
-                        /*
-                        if (ScoreControl.bossScore == 150)
+                        
+                        if (ScoreControl.bossScore == 100)
                         {
                             temp = 7;
                         }
-                        if(ScoreControl.bossScore == 250 && PlayerPrefs.GetString("Boss Stage") != "Stage One")
+                        if(ScoreControl.bossScore == 200)
                         {
                             temp = 8;
                         }
-                        if(ScoreControl.bossScore == 400 && PlayerPrefs.GetString("Boss Stage") == "Stage Three")
+                        if(ScoreControl.bossScore == 300)
                         {
                             temp = 9;
-                        }  */
-                        //temp = 5;
+                        }  
+                        //temp = 9;
                         if (temp == 1)
                         {
                             board[i, j] = Instantiate(greenGenie, position, Quaternion.identity);
@@ -3046,7 +3098,8 @@ public class GameScript : MonoBehaviour
                             GameControl.bossUp = true;
                             board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
                             board[i, j].mType = "Health";
-                            spawnBossArms();
+                            spawnBossBody();
+                            
                         }
                         else if (temp == 8)
                         {
@@ -3054,13 +3107,14 @@ public class GameScript : MonoBehaviour
                             board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
                             board[i, j].mType = "Health";
                             spawnBossBody();
+                            spawnBossArms(1);
                         }
                         else if (temp == 9)
                         {
                             GameControl.bossUp = true;
                             board[i, j] = Instantiate(healthCrystals[0], position, Quaternion.identity);
                             board[i, j].mType = "Health";
-                            spawnBossArms();
+                            spawnBossArms(2);
                             spawnBossBody();
                         }
                         
@@ -3165,24 +3219,47 @@ public class GameScript : MonoBehaviour
         }      
     }
 
-    public void spawnBossArms()
+    public void spawnBossArms(int lvl)
     {
-        replaceTile(0, 0, bossArms, "BossArms", 3, 15);
-        replaceTile(0, 5, bossArms, "BossArms", 3, 15);
-        replaceTile(5, 0, bossArms, "BossArms", 3, 15);
-        replaceTile(5, 5, bossArms, "BossArms", 3, 15);
+        switch (lvl)
+        {
+            case 4:
+                replaceTile(0, 2, bossArms[2], "BossArms", 4, 20);
+                replaceTile(5, 2, bossArms[3], "BossArms", 4, 20);
+                replaceTile(5, 0, bossArms[2], "BossArms", 4, 20);
+                replaceTile(5, 5, bossArms[3], "BossArms", 4, 20);
+                replaceTile(0, 0, bossArms[0], "BossArms", 4, 20);
+                replaceTile(0, 5, bossArms[1], "BossArms", 4, 20);
+                break;
+            case 3:
+                replaceTile(0, 2, bossArms[2], "BossArms", 3, 15);
+                replaceTile(5, 2, bossArms[3], "BossArms", 3, 15);
+                goto case 2;
+            case 2:
+                replaceTile(5, 0, bossArms[2], "BossArms", 3, 15);
+                replaceTile(5, 5, bossArms[3], "BossArms", 3, 15);
+                goto case 1;
+            case 1: 
+                replaceTile(0, 0, bossArms[0], "BossArms", 3, 15);
+                replaceTile(0, 5, bossArms[1], "BossArms", 3, 15);
+                break;
+        }
+
+        
+       
+        
     }
 
     private void spawnBossBody()
     {
-        replaceTile(1, 2, bossBody, "BossBody", 0, 20);
-        replaceTile(1, 3, bossBody, "BossBody", 0, 20);
-        replaceTile(2, 2, bossBody, "BossBody", 0, 20);
-        replaceTile(2, 3, bossBody, "BossBody", 0, 20);
-        replaceTile(3, 2, bossBody, "BossBody", 0, 20);
-        replaceTile(3, 3, bossBody, "BossBody", 0, 20);
+        replaceTile(1, 2, bossBody[0], "BossBody", 0, 66);
+        replaceTile(1, 3, bossBody[1], "BossBody", 0, 66);
+        replaceTile(2, 2, bossBody[2], "BossBody", 0, 66);
+        replaceTile(2, 3, bossBody[3], "BossBody", 0, 66);
+        replaceTile(3, 2, bossBody[4], "BossBody", 6, 66);
+        replaceTile(3, 3, bossBody[5], "BossBody", 0, 66);
     }
-    private void replaceTile(int row, int col, Tile obj)
+    private void replaceTile(int row, int col, Tile obj, string type)
     {
         Tile tempObj = board[row, col];
         Vector3 pos = tempObj.transform.position;
@@ -3190,6 +3267,7 @@ public class GameScript : MonoBehaviour
         board[row, col] = Instantiate(obj, pos, Quaternion.identity);            
         board[row, col].mRow = row;
         board[row, col].mCol = col;
+        board[row, col].mType = type;
     }
 
     private void replaceTile(int row, int col, Tile obj, string boss, int damage, int health)

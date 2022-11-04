@@ -35,6 +35,4 @@ public class Enemy : MonoBehaviour
         else
             currentDamage = damage;
     }
-
-    
 }

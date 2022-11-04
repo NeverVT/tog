@@ -715,6 +715,33 @@ public class Collision : MonoBehaviour
                                     case "Skull":
                                         gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().skeleton, pos, Quaternion.identity);
                                         break;
+                                    case "Ghost":
+                                        gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().ghost, pos, Quaternion.identity);
+                                        break;
+                                    case "BossArms":
+                                        if(row != 5 && col == 0)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossArms[0], pos, Quaternion.identity);
+                                        else if(row != 5 && col == 5)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossArms[1], pos, Quaternion.identity);
+                                        else if (row == 5 && col == 0)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossArms[2], pos, Quaternion.identity);
+                                        else if (row == 5 && col == 5)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossArms[3], pos, Quaternion.identity);
+                                        break;
+                                    case "BossBody":
+                                        if(row == 1 && col == 2)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossBody[0], pos, Quaternion.identity);
+                                        else if (row == 1 && col == 3)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossBody[1], pos, Quaternion.identity);
+                                        else if (row == 2 && col == 2)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossBody[2], pos, Quaternion.identity);
+                                        else if (row == 2 && col == 3)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossBody[3], pos, Quaternion.identity);
+                                        else if (row == 3 && col == 2)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossBody[4], pos, Quaternion.identity);
+                                        else if (row == 3 && col == 3)
+                                            gameScript.GetComponent<GameScript>().board[row, col] = (Tile)Instantiate(gameScript.GetComponent<GameScript>().bossBody[5], pos, Quaternion.identity);
+                                        break;
                                 }
                                 gameScript.GetComponent<GameScript>().board[row, col].transform.GetChild(15).gameObject.SetActive(true);
                             }

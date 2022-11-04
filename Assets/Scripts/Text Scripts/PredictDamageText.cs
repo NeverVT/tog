@@ -19,6 +19,10 @@ public class PredictDamageText : MonoBehaviour
                 this.GetComponent<TextMesh>().text = ((int)(Math.Ceiling(this.GetComponentInParent<Enemy>().predictedDamage / 2))).ToString();
             }
         }
+        else if (this.gameObject.transform.parent.GetComponent<Tile>().boss == "BossBody")
+        {
+            this.GetComponent<TextMesh>().text = ((int)(Math.Ceiling(this.GetComponentInParent<Enemy>().predictedDamage / 6))).ToString();
+        }
         else if (Enemy.currentHealth <= (this.GetComponentInParent<Enemy>().predictedDamage))
             this.GetComponent<TextMesh>().text = "X";
         else

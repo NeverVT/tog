@@ -38,7 +38,13 @@ public class GameControl : MonoBehaviour
     public static bool targeted = false;
     public static bool calculated = false;
 
-
+    public static List<Sprite> characters = new List<Sprite>();
+    public static List<string> names = new List<string>();
+    public static List<CharacterWeapon> weapons = new List<CharacterWeapon>();
+    public static List<CharacterArmor> armors = new List<CharacterArmor>();
+    public static List<Spell> spells = new List<Spell>();
+    public static List<Trait> traits = new List<Trait>();
+    public static List<Artifacts> artifacts = new List<Artifacts>();
 
     public static GameObject shopArtifact;
 
@@ -53,5 +59,9 @@ public class GameControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+
+
 	}
 }

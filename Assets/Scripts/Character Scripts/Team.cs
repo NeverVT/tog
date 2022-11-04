@@ -25,8 +25,8 @@ public class Team : MonoBehaviour
             {
                 selectedCharacter = "Empty";
             }
-        }  
-
+        }
+        selectedCharacter = "Empty";
         urpLvl = PlayerPrefs.GetInt("UrpLvl");
         if(urpLvl == 0)
             urpLvl = 2;

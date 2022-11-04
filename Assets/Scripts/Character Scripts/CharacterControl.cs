@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 
 public class CharacterControl : MonoBehaviour
@@ -12,6 +13,7 @@ public class CharacterControl : MonoBehaviour
     public GameObject[] characters;
     public GameObject selectedCharacter;
     public GameObject[] skills;
+    public Sprite[] art;
     public GameObject cameraObject;
     public Ship ship;
     private int totalMaxHealth;
@@ -43,7 +45,8 @@ public class CharacterControl : MonoBehaviour
             }           
             Team.urpLvl = 1;
         }
-        for(int i = 0; i < characters.Length; i++)
+        characterName = "Empty";
+        for (int i = 0; i < characters.Length; i++)
         {
             if(characters[i].name == characterName)
             {
@@ -56,8 +59,7 @@ public class CharacterControl : MonoBehaviour
         totalMaxHealth += maxHealth;
         selectedCharacter.GetComponent<Character>().currentHealth = selectedCharacter.GetComponent<Character>().maxHealth;
         selectedCharacter.GetComponent<Character>().weapon.damage = weaponAttack;
-        selectedCharacter.GetComponent<Character>().armor.defense = armorDefense;
-           
+        selectedCharacter.GetComponent<Character>().armor.defense = armorDefense;  
         
         totalCurrentHealth = totalMaxHealth;
      
@@ -203,13 +205,16 @@ public class CharacterControl : MonoBehaviour
         characterName = name;
         if (name == "Empty")
         {
-            if (Team.urpLvl == 1 || Team.urpLvl == 2) //Level One
-            {
-                maxHealth = 30;
-                currentHealth = 30;
-                weaponAttack = 2 + PlayerPrefs.GetInt("UrpWeaponBonus");
-                armorDefense = 2 + PlayerPrefs.GetInt("UrpArmorBonus");
-            }
+            maxHealth = UnityEngine.Random.Range(20, 51);
+            currentHealth = maxHealth;
+            weaponAttack = UnityEngine.Random.Range(1, 6) + PlayerPrefs.GetInt("UrpWeaponBonus");
+            armorDefense = UnityEngine.Random.Range(1, 6) + PlayerPrefs.GetInt("UrpArmorBonus");
+
+            selectedCharacter.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = art[UnityEngine.Random.Range(0, art.Length)];
+            GameObject tempSkill = Instantiate(skills[UnityEngine.Random.Range(0, skills.Length)], selectedCharacter.transform);
+            tempSkill.transform.position = new Vector3(4.55f, -10.3f, -1.166f);
+            GameObject tempSkill2 = Instantiate(skills[UnityEngine.Random.Range(0, skills.Length)], selectedCharacter.transform);
+            tempSkill2.transform.position = new Vector3(5.85f, -10.3f, -1.166f);          
         }
             if (name == "Urp")
         {
