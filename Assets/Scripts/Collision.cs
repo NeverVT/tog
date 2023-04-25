@@ -1138,9 +1138,7 @@ public class Collision : MonoBehaviour
                         swapActive = false;                                               
                     }
                     else //Swapping a PartyMember with a Non-PartyMember
-                    {
-                        other.transform.GetChild(2).gameObject.SetActive(true);
-                        swapCharacter.transform.parent.GetChild(2).gameObject.SetActive(false);
+                    {                     
                         Team.selectedCharacter = swapCharacter.transform.parent.name;
                         PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);                     
                         StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
@@ -1148,9 +1146,7 @@ public class Collision : MonoBehaviour
                     }
                 }
                 else if (swapCharacter.transform.parent.name == Team.selectedCharacter)
-                {
-                    swapCharacter.transform.parent.GetChild(2).gameObject.SetActive(true);
-                    other.transform.GetChild(2).gameObject.SetActive(false);
+                {                  
                     Team.selectedCharacter = other.transform.name;
                     PlayerPrefs.SetString("selectedCharacter", Team.selectedCharacter);                   
                     StartCoroutine(swapBarracksCharacter(swapCharacter.gameObject, other.gameObject));
@@ -1282,7 +1278,16 @@ public class Collision : MonoBehaviour
         yield return new WaitForSeconds(1f);
         objOne.transform.parent.position = objTwoPos;
         objTwo.transform.position = objOnePos;
-        
+        /*
+        if(objOne.transform.parent.name == Team.selectedCharacter)
+            objOne.transform.parent.GetChild(2).gameObject.SetActive(true);
+        else
+            objOne.transform.parent.GetChild(2).gameObject.SetActive(false);
+        if (objTwo.transform.name == Team.selectedCharacter)
+            objTwo.transform.GetChild(2).gameObject.SetActive(true);
+        else
+            objTwo.transform.GetChild(2).gameObject.SetActive(false);
+        */
         objOne.transform.parent.Find("Icon").GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
         objTwo.transform.Find("Icon").GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, .25f);
         yield return new WaitForSeconds(.15f);

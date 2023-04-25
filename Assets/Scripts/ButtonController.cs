@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ButtonController : MonoBehaviour
 {
     public GameObject tooltip;
+    public GameObject[] titleScreenUI = new GameObject[3];
     public string buildType;
     public void triggerTooltip()
     {
-        if(!GameControl.screenUp)
+        if (!GameControl.screenUp)
         {
             if (!this.CompareTag("Artifact"))
                 tooltip.SetActive(true);
@@ -23,7 +25,7 @@ public class ButtonController : MonoBehaviour
 
     public void tutorialTextBoxClicked()
     {
-        if (PlayerPrefs.GetString("Tracing Tutorial Done") != "")    
+        if (PlayerPrefs.GetString("Tracing Tutorial Done") != "")
             this.gameObject.SetActive(false);
     }
 
@@ -81,7 +83,7 @@ public class ButtonController : MonoBehaviour
 
     private void swapBackgrounds(GameObject obj, bool on)
     {
-        if(on)
+        if (on)
         {
             obj.transform.GetChild(0).gameObject.SetActive(false);
             obj.transform.GetChild(1).gameObject.SetActive(true);
@@ -92,4 +94,32 @@ public class ButtonController : MonoBehaviour
             obj.transform.GetChild(1).gameObject.SetActive(false);
         }
     }
+
+    public void toGameScreen()
+    {
+        SceneManager.LoadScene("GameScreen");
+    }
+    public void toBarracks()
+    {
+        tooltip.transform.position = new Vector3(-100, tooltip.transform.position.y, tooltip.transform.position.z);
+        setTitleScreenUI(false);
+    }
+    public void toTitleScreen()
+    {
+        SceneManager.LoadScene("TitleScreen");
+        setTitleScreenUI(true);
+    }
+    public void toGameOverScreen()
+    {
+        SceneManager.LoadScene("GameOver");
+    }
+
+    private void setTitleScreenUI(bool setting)
+    {
+        for(int i = 0; i < titleScreenUI.Length; i++)
+        {
+            titleScreenUI[i].SetActive(setting);
+        }
+    }
+
 }

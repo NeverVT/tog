@@ -1,0 +1,602 @@
+fileFormatVersion: 2
+guid: bcf146f186e353040952a4e76a868e0c
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 300
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_2
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 983
+        width: 357
+        height: 367
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d20a0bdc880064d46a8a1f573470a14e
+      internalID: 1656547756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_3
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 977
+        width: 248
+        height: 339
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efb83fbe3731c614b9b5175a942d897b
+      internalID: -831402677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_5
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 963
+        width: 375
+        height: 357
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c0ed96f7ec7f27409bcd4d36fa10ae3
+      internalID: 297665485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1447
+        y: 955
+        width: 386
+        height: 375
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 990ed5e387f418241a80876e816ee73e
+      internalID: -1595940672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1964
+        y: 762
+        width: 469
+        height: 543
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0de1a876c90fb0841b93b66c3875f21c
+      internalID: 1033972554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_8
+      rect:
+        serializedVersion: 2
+        x: 2545
+        y: 803
+        width: 468
+        height: 531
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9054be5c4d989142ba1645f71192d41
+      internalID: -1684941773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_9
+      rect:
+        serializedVersion: 2
+        x: 3084
+        y: 748
+        width: 467
+        height: 557
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 801d1fa87dc381340b3a24e6d500ab2a
+      internalID: 1590107514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_10
+      rect:
+        serializedVersion: 2
+        x: 3632
+        y: 729
+        width: 444
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d6abc7ce1a745045a934761ff570342
+      internalID: -1010092527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_11
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 492
+        width: 389
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75a410dceb0c7194daddee22a0d13f0b
+      internalID: -1667636410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_12
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 543
+        width: 404
+        height: 334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 806391b9525b9a5448384f28f76903b1
+      internalID: -1466412298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_13
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 498
+        width: 380
+        height: 389
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeb6cd14a7c2e154e8fc70e0a246017e
+      internalID: 277622420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_14
+      rect:
+        serializedVersion: 2
+        x: 1435
+        y: 526
+        width: 379
+        height: 315
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c2e37f4c9f056948b1dbd86ed5bc8ff
+      internalID: -612273575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_15
+      rect:
+        serializedVersion: 2
+        x: 1964
+        y: 90
+        width: 470
+        height: 548
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f3552fdb30353340905c3dac41c0ac3
+      internalID: 2050649093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_18
+      rect:
+        serializedVersion: 2
+        x: 2506
+        y: 86
+        width: 491
+        height: 524
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12b47162dbda8fe4ba34ee44513ce8e1
+      internalID: 497373482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_19
+      rect:
+        serializedVersion: 2
+        x: 3064
+        y: 82
+        width: 485
+        height: 527
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1dc7cc595362144ea1a072d627b5b64
+      internalID: -1297059824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_20
+      rect:
+        serializedVersion: 2
+        x: 3593
+        y: 52
+        width: 540
+        height: 551
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 785c21e6cd3771642bc25d23d8ccb5c0
+      internalID: 1462362072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_21
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 19
+        width: 411
+        height: 424
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b335efe3ba3383c43ab235d1276b36e5
+      internalID: -46804023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_22
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 126
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d77ccfc4bc4ac7d43bce18eb6db23352
+      internalID: -658966829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_23
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 62
+        width: 394
+        height: 371
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa2deacec76ac2347a94fc8ac70e49d5
+      internalID: 1133706897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_24
+      rect:
+        serializedVersion: 2
+        x: 985
+        y: 51
+        width: 369
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 337e28084c14e624ca77853b61e190ef
+      internalID: -1282391223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToG Weapons and Armor sprite sheet_25
+      rect:
+        serializedVersion: 2
+        x: 1379
+        y: 48
+        width: 498
+        height: 381
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16db7549d81caca45a58c5da762151e5
+      internalID: -1732835354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 8056e45de60a2884bb73a1636664f542
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      ToG Weapons and Armor sprite sheet_6: -1595940672
+      ToG Weapons and Armor sprite sheet_4: -1445395896
+      ToG Weapons and Armor sprite sheet_9: 1590107514
+      ToG Weapons and Armor sprite sheet_0: 1880335275
+      ToG Weapons and Armor sprite sheet_2: 1656547756
+      ToG Weapons and Armor sprite sheet_5: 297665485
+      ToG Weapons and Armor sprite sheet_8: -1684941773
+      ToG Weapons and Armor sprite sheet_10: -1010092527
+      ToG Weapons and Armor sprite sheet_25: -1732835354
+      ToG Weapons and Armor sprite sheet_12: -1466412298
+      ToG Weapons and Armor sprite sheet_23: 1133706897
+      ToG Weapons and Armor sprite sheet_13: 277622420
+      ToG Weapons and Armor sprite sheet_7: 1033972554
+      ToG Weapons and Armor sprite sheet_26: 674247587
+      ToG Weapons and Armor sprite sheet_17: 362909925
+      ToG Weapons and Armor sprite sheet_19: -1297059824
+      ToG Weapons and Armor sprite sheet_20: 1462362072
+      ToG Weapons and Armor sprite sheet_14: -612273575
+      ToG Weapons and Armor sprite sheet_22: -658966829
+      ToG Weapons and Armor sprite sheet_11: -1667636410
+      ToG Weapons and Armor sprite sheet_1: -490078501
+      ToG Weapons and Armor sprite sheet_3: -831402677
+      ToG Weapons and Armor sprite sheet_15: 2050649093
+      ToG Weapons and Armor sprite sheet_16: -97646096
+      ToG Weapons and Armor sprite sheet_18: 497373482
+      ToG Weapons and Armor sprite sheet_24: -1282391223
+      ToG Weapons and Armor sprite sheet_21: -46804023
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

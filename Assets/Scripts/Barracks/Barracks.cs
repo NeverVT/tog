@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Barracks : MonoBehaviour
 {
-    private string[] names;
+    public string[] names;
     private Vector3[] positions;
     private GameObject[] gameObjects;
 
@@ -25,7 +25,6 @@ public class Barracks : MonoBehaviour
 
     void Start()
     {
-        names = new string[9];
         positions = new Vector3[9];
         gameObjects = new GameObject[9];
         loadNames();
@@ -35,34 +34,29 @@ public class Barracks : MonoBehaviour
 
     private void loadNames()
     {
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < names.Length; i++)
         {
+            Debug.Log(names[i]);
             names[i] = PlayerPrefs.GetString((i).ToString());
         }
-        
-        if (names[0] == null || names[0] == "" || names[0] == "Soldier")
-            names[0] = "Urp";      
-        if (names[2] == null || names[2] == "" || names[2] == "Mummy")
-            names[2] = "Chrisa";
-        if (names[3] == null || names[3] == "" || names[3] == "Doll")
-            names[3] = "Kurtzle";
-
+       
         cOneName = names[0];
         cTwoName = names[1];
         cThreeName = names[2];
+        Team.selectedCharacter = cOneName;
     }
 
     private void loadPositions()
     {
         positions[0] = new Vector3(-110F, 15F, -9.59F);
         positions[1] = new Vector3(-110F, -2F, -9.59F);
-        positions[2] = new Vector3(-101F, -2F, -9.59F);
+        positions[2] = new Vector3(-110F, -17F, -9.59F);
     }
 
     private IEnumerator loadPrefabs()
     {
         yield return null;     
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < names.Length; i++)
         {         
             if (names[i] == urp.name)
                 gameObjects[i] = (GameObject)Instantiate(urp, positions[i], Quaternion.identity);

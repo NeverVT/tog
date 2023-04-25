@@ -12,21 +12,22 @@ public class Team : MonoBehaviour
 
     private void Start()
     {
+        /*
         //PlayerPrefs.SetString("Skeleton Killed", "");
         //PlayerPrefs.SetString("selectedCharacter", "");
         selectedCharacter = PlayerPrefs.GetString("selectedCharacter");
         if (selectedCharacter == "")
         {
-            if(PlayerPrefs.GetString("Skeleton Killed") == "true")
-            {
+            //if(PlayerPrefs.GetString("Skeleton Killed") == "true")
+            //{
                 selectedCharacter = "Urp";
-            }             
-            else
-            {
-                selectedCharacter = "Empty";
-            }
+            //}             
+            //else
+            //{
+                //selectedCharacter = "Empty";
+            //}
         }
-        selectedCharacter = "Empty";
+        //selectedCharacter = "Empty";
         urpLvl = PlayerPrefs.GetInt("UrpLvl");
         if(urpLvl == 0)
             urpLvl = 2;
@@ -35,7 +36,8 @@ public class Team : MonoBehaviour
             chrisaLvl = 1;
         kurtzleLvl = PlayerPrefs.GetInt("KurtzleLvl");
         if(kurtzleLvl == 0)
-            kurtzleLvl = 1;    
+            kurtzleLvl = 1;*/
+        Debug.Log(selectedCharacter);
     }
 
     public void addLevelToCharacter(string character) //Adds a level to the character bought in the Ship Screen

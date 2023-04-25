@@ -33,16 +33,16 @@ public class CameraMovement : MonoBehaviour
             newY += (-Input.gyro.rotationRateUnbiased.y/8);
             newY = Mathf.Clamp(newY, -2f, 2f);
             transform.eulerAngles = new Vector3(0, newY, 0);
-            this.transform.GetChild(1).gameObject.SetActive(false);
-            this.transform.GetChild(2).gameObject.SetActive(false);
-            this.transform.GetChild(3).gameObject.SetActive(false);
+            //this.transform.GetChild(1).gameObject.SetActive(false);
+            //this.transform.GetChild(2).gameObject.SetActive(false);
+            //this.transform.GetChild(3).gameObject.SetActive(false);
         }
         else
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
-            this.transform.GetChild(1).gameObject.SetActive(true);
-            this.transform.GetChild(2).gameObject.SetActive(true);
-            this.transform.GetChild(3).gameObject.SetActive(true);
+            //this.transform.GetChild(1).gameObject.SetActive(true);
+            //this.transform.GetChild(2).gameObject.SetActive(true);
+            //this.transform.GetChild(3).gameObject.SetActive(true);
         }
         
         

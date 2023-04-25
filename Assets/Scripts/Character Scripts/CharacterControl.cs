@@ -45,7 +45,6 @@ public class CharacterControl : MonoBehaviour
             }           
             Team.urpLvl = 1;
         }
-        characterName = "Empty";
         for (int i = 0; i < characters.Length; i++)
         {
             if(characters[i].name == characterName)
@@ -117,7 +116,7 @@ public class CharacterControl : MonoBehaviour
 
     public bool searchActiveCharacterTraits(string trait) //Searches the active character if they have a specific trait
     {
-        /*
+        
         if(selectedCharacter.GetComponent<Character>().traitOne.name == trait || selectedCharacter.GetComponent<Character>().traitTwo.name == trait)
         {
             return true;
@@ -125,8 +124,7 @@ public class CharacterControl : MonoBehaviour
         else
         {
             return false;
-        }       */
-        return false;
+        }       
     }
 
     public bool searchSkillExists(string skill) //Checks if the Skill is on the Active Character
@@ -216,9 +214,29 @@ public class CharacterControl : MonoBehaviour
             GameObject tempSkill2 = Instantiate(skills[UnityEngine.Random.Range(0, skills.Length)], selectedCharacter.transform);
             tempSkill2.transform.position = new Vector3(5.85f, -10.3f, -1.166f);          
         }
-            if (name == "Urp")
+        if (name == "Urp")
         {
-            if (Team.urpLvl == 1 || Team.urpLvl == 2) //Level One
+            maxHealth = 45;
+            currentHealth = maxHealth;
+            weaponAttack = 4;
+            armorDefense = 2;
+            GameObject tempSkill;
+            for (int i = 0; i < skills.Length; i++)
+            {
+                if (skills[i].name == "Bomber Shot")
+                {
+                    tempSkill = Instantiate(skills[i], selectedCharacter.transform);
+                    tempSkill.transform.position = new Vector3(4.55f, -10.3f, -1.166f);
+                    selectedCharacter.GetComponent<Character>().skillOne = tempSkill;
+                }
+                if (skills[i].name == "Missle")
+                {
+                    tempSkill = Instantiate(skills[i], selectedCharacter.transform);
+                    tempSkill.transform.position = new Vector3(5.85f, -10.3f, -1.166f);
+                    selectedCharacter.GetComponent<Character>().skillTwo = tempSkill;
+                }
+            }
+            /*if (Team.urpLvl == 1 || Team.urpLvl == 2) //Level One
             {
                 maxHealth = 35;
                 currentHealth = 35;
@@ -245,10 +263,31 @@ public class CharacterControl : MonoBehaviour
                 currentHealth = 40;
                 weaponAttack = 4 + PlayerPrefs.GetInt("UrpWeaponBonus");
                 armorDefense = 3 + PlayerPrefs.GetInt("UrpArmorBonus");
-            }
+            }*/
         }
         if (name == "Chrisa")
         {
+            maxHealth = 35;
+            currentHealth = maxHealth;
+            weaponAttack = 4;
+            armorDefense = 2;
+            GameObject tempSkill;
+            for (int i = 0; i < skills.Length; i++)
+            {
+                if (skills[i].name == "Powder Keg")
+                {
+                    tempSkill = Instantiate(skills[i], selectedCharacter.transform);
+                    tempSkill.transform.position = new Vector3(4.55f, -10.3f, -1.166f);
+                    selectedCharacter.GetComponent<Character>().skillOne = tempSkill;
+                }
+                if(skills[i].name == "Flash Bang")
+                {
+                    tempSkill = Instantiate(skills[i], selectedCharacter.transform);
+                    tempSkill.transform.position = new Vector3(5.85f, -10.3f, -1.166f);
+                    selectedCharacter.GetComponent<Character>().skillTwo = tempSkill;
+                }
+            }          
+            /*
             tribe = "Pirate";
             if (Team.chrisaLvl == 1 || Team.chrisaLvl == 2) //Level One
             {
@@ -349,11 +388,31 @@ public class CharacterControl : MonoBehaviour
                 }
                 skillTwo = "";
                 PlayerPrefs.SetString("ChrisaSkillTwo", skillTwo);
-            }
+            }*/
         }
         if (name == "Kurtzle")
         {
-            tribe = "Pirate";
+            maxHealth = 40;
+            currentHealth = maxHealth;
+            weaponAttack = 3;
+            armorDefense = 3;
+            GameObject tempSkill;
+            for (int i = 0; i < skills.Length; i++)
+            {
+                if (skills[i].name == "Double Shot")
+                {
+                    tempSkill = Instantiate(skills[i], selectedCharacter.transform);
+                    tempSkill.transform.position = new Vector3(4.55f, -10.3f, -1.166f);
+                    selectedCharacter.GetComponent<Character>().skillOne = tempSkill;
+                }
+                if (skills[i].name == "Overpower")
+                {
+                    tempSkill = Instantiate(skills[i], selectedCharacter.transform);
+                    tempSkill.transform.position = new Vector3(5.85f, -10.3f, -1.166f);
+                    selectedCharacter.GetComponent<Character>().skillTwo = tempSkill;
+                }
+            }
+            /*tribe = "Pirate";
             if (Team.kurtzleLvl == 1 || Team.kurtzleLvl == 2) //Level One
             {
                 maxHealth = 16;
@@ -476,7 +535,7 @@ public class CharacterControl : MonoBehaviour
                     skillTwo = "Double Shot";
                     PlayerPrefs.SetString("KurtzleSkillTwo", skillTwo);
                 }
-            }
+            }*/
         }
         if (name == "Dobby")
         {
